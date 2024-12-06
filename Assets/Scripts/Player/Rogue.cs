@@ -11,18 +11,39 @@ public class Rogue : BasePlayer
         base.Start();  // Calls the base Start() method to initialize common properties
     }
 
-    // Override Dash ability
-    public  void Attack()
+    protected override void Update()
     {
+        base.Update();  // Keeps the movement handling
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            SmokeBomb(); // Call the Bash method when Space is pressed
+        }
+    }
+
+    public void Arrow()
+    {
+        base.animator.SetTrigger("IsArrow");
+    }
+
+    public  void SmokeBomb()
+    {
+        base.animator.SetTrigger("IsSmoke");
         Debug.Log("Arrow Attack");
         // Special Rogue attack logic goes here
     }
 
     public void Dash()
     {
+        base.animator.SetBool("IsDash", true);
         Debug.Log("Dash Activated");
         // Implement dash logic (speed boost for movement)
         navMeshAgent.speed = dashSpeed;
         audioSource.PlayOneShot(dashSound); // Play dash sound
+    }
+
+    public void ShoweOfArrows()
+    {
+        base.animator.SetTrigger("IsShower");
     }
 }

@@ -12,6 +12,7 @@ public class LilithBehavior : Enemy
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform; // Find the player GameObject
+        StartCoroutine(DiveBombRoutine()); // Start the divebomb coroutine
     }
 
     void Update()
@@ -26,6 +27,19 @@ public class LilithBehavior : Enemy
         }
     }
 
+    // Coroutine for the divebomb action every 5 seconds
+    private IEnumerator DiveBombRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f); // Wait for 5 seconds
+            if (animator != null)
+            {
+                animator.SetTrigger("DiveBomb"); // Trigger the divebomb animation
+            }
+        }
+    }
+
     void OnCollisionEnter(Collider other)
     {
         Debug.Log($"Collider entered: {other.name}");
@@ -35,8 +49,8 @@ public class LilithBehavior : Enemy
             Debug.Log(base.health.ToString());
             isCombatStarted = true;
             base.health = base.health - 5;
-            //Debug.Log("Lilith Die");
-            //animator.SetTrigger("Die");
+            // Debug.Log("Lilith Die");
+            // animator.SetTrigger("Die");
         }
     }
 }

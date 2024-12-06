@@ -1,3 +1,4 @@
+// PlayerStats.cs
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -9,6 +10,9 @@ public class PlayerStats : MonoBehaviour
     public int maxHP = 100;
     public int currentHP;
 
+    public int healingPotions = 0; // Added
+    public int runeFragments = 0; // Added
+
     private void Start()
     {
         currentHP = maxHP;
@@ -18,8 +22,9 @@ public class PlayerStats : MonoBehaviour
     {
         currentXP += amount;
 
-        if (currentXP >= requiredXP)
+        while (currentXP >= requiredXP)
         {
+            currentXP -= requiredXP;
             LevelUp();
         }
     }

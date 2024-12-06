@@ -1,46 +1,81 @@
+// Sorcerer.cs
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Sorcerer : BasePlayer
 {
     // Sorcerer-specific abilities
     public AudioClip fireballSound;
+    public AudioClip teleportSound;
+    public AudioClip cloneSound;
+    public AudioClip infernoSound;
+
+    public GameObject clonePrefab; // Assign the Clone prefab in the Inspector
+    public GameObject infernoPrefab; // Assign the Inferno prefab in the Inspector
+
     public float fireballDamage = 20f;
+    public float infernoInitialDamage = 10f;
+    public float infernoDamagePerSecond = 2f;
+    public float infernoDuration = 5f;
 
     protected override void Start()
     {
-        base.Start();  // Calls the base Start() method to initialize common properties
+        base.Start();
     }
 
-    protected override void Update()
+    // Fireball ability targeting an enemy
+    public void Fireball(GameObject enemy)
     {
-        base.Update();  // Keeps the movement handling
+        animator.SetTrigger("IsFireball");
+        audioSource.PlayOneShot(fireballSound);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (enemy != null)
         {
-            Inferno();
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage((int)fireballDamage);
+                playerStats.GainXP(enemyScript.GetXP());
+            }
         }
     }
 
-    // Sorcerer attack overrides (e.g., Fireball)
-    public  void Fireball()
+    // Teleport ability to a position
+    public void Teleport(Vector3 position)
     {
-        base.animator.SetTrigger("IsFireball");
-        Debug.Log("Fireball Attack");
-        audioSource.PlayOneShot(fireballSound); // Play fireball sound
+        animator.SetTrigger("Teleport");
+        audioSource.PlayOneShot(teleportSound);
+
+        navMeshAgent.Warp(position);
     }
 
-    public void Teleport()
+    // Clone ability at a position
+    public void Clone(Vector3 position)
     {
+        animator.SetTrigger("Clone");
+        audioSource.PlayOneShot(cloneSound);
 
+        // Instantiate clone
+        GameObject clone = Instantiate(clonePrefab, position, Quaternion.identity);
+        CloneBehavior cloneBehavior = clone.GetComponent<CloneBehavior>();
+        if (cloneBehavior != null)
+        {
+            cloneBehavior.Initialize(this);
+        }
     }
 
-    public void Clone()
+    // Inferno ability at a position
+    public void Inferno(Vector3 position)
     {
+        animator.SetTrigger("Inferno");
+        audioSource.PlayOneShot(infernoSound);
 
-    }
-
-    public void Inferno()
-    {
-        base.animator.SetTrigger("IsInferno");
+        // Instantiate Inferno effect
+        GameObject inferno = Instantiate(infernoPrefab, position, Quaternion.identity);
+        InfernoBehavior infernoBehavior = inferno.GetComponent<InfernoBehavior>();
+        if (infernoBehavior != null)
+        {
+            infernoBehavior.Initialize(this, infernoInitialDamage, infernoDamagePerSecond, infernoDuration);
+        }
     }
 }

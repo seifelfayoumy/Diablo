@@ -1972,11 +1972,21 @@ MonoBehaviour:
   playerStats: {fileID: 498009945210046940}
   playerHealth: {fileID: 7000361444055819601}
   audioSource: {fileID: 1740382569368529864}
+  healingPotions: 0
+  runeFragments: 0
   walkSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   deathSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   attackSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   fireballSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
+  teleportSound: {fileID: 0}
+  cloneSound: {fileID: 0}
+  infernoSound: {fileID: 0}
+  clonePrefab: {fileID: 7210724374823513515, guid: cf1931f62a64545fe81f25638ecd3bde, type: 3}
+  infernoPrefab: {fileID: 2117882238797756286, guid: 115e089c0f2f943a78ae6d4281332aa0, type: 3}
   fireballDamage: 20
+  infernoInitialDamage: 10
+  infernoDamagePerSecond: 2
+  infernoDuration: 5
 --- !u!114 &498009945210046940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1995,6 +2005,8 @@ MonoBehaviour:
   abilityPoints: 0
   maxHP: 100
   currentHP: 0
+  healingPotions: 0
+  runeFragments: 0
 --- !u!114 &7000361444055819601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,6 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a5c1da3335e4f208836c2445e30962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvincible: 0
 --- !u!82 &1740382569368529864
 AudioSource:
   m_ObjectHideFlags: 0

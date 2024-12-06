@@ -15,6 +15,13 @@ public class BasePlayer : MonoBehaviour
     // Animation Variables
     protected Animator animator;
 
+        // Healing Potions and Rune Fragments
+    public int healingPotions = 0;
+    public int runeFragments = 0;
+
+    // Reference to HUDManager for updating UI
+    private HUDManager hudManager;
+
 
     // Sound Effects
     public AudioClip walkSound;
@@ -39,6 +46,7 @@ public class BasePlayer : MonoBehaviour
         {
             playerHealth.Initialize(playerStats); // Initialize with stats
         }
+         hudManager = FindObjectOfType<HUDManager>();
     }
 
     // Update function for movement
@@ -59,13 +67,9 @@ public class BasePlayer : MonoBehaviour
                 //adjust rotation
                 Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 transform.LookAt(lookAt);
-                
+
                 navMeshAgent.destination = hit.point;
             }
-            // Vector3 destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // destination.y = transform.position.y; // Keep y-axis level constant
-            // Debug.Log("Destination: " + destination);
-            // navMeshAgent.SetDestination(destination);
 
 
         }
@@ -96,4 +100,26 @@ public class BasePlayer : MonoBehaviour
     }
 
 
+    // Handle picking up items
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("HealingPotion"))
+        {
+            if (healingPotions < 3)
+            {
+                healingPotions++;
+                hudManager.UpdateHUD();
+                Destroy(other.gameObject);
+                // Optionally, play a pickup sound
+            }
+        }
+        else if (other.CompareTag("RuneFragment"))
+        {
+            // Assuming each Rune Fragment is unique per camp
+            runeFragments++;
+            hudManager.UpdateHUD();
+            Destroy(other.gameObject);
+            // Optionally, play a pickup sound
+        }
+    }
 }

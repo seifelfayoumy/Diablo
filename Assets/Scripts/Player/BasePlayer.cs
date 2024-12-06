@@ -56,6 +56,10 @@ public class BasePlayer : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) )
             {
+                //adjust rotation
+                Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                transform.LookAt(lookAt);
+                
                 navMeshAgent.destination = hit.point;
             }
             // Vector3 destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);

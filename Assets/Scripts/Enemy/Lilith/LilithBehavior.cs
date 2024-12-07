@@ -46,9 +46,9 @@ public class LilithBehavior : Enemy
 
         if (other.CompareTag("Axe") && !isCombatStarted)
         {
-            Debug.Log(base.health.ToString());
+           // Debug.Log(base.health.ToString());
             isCombatStarted = true;
-            base.health = base.health - 5;
+            //base.health = base.health - 5;
             // Debug.Log("Lilith Die");
             // animator.SetTrigger("Die");
         }

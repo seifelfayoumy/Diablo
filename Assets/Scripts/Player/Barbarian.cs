@@ -4,93 +4,120 @@ using System.Collections;
 
 public class Barbarian : BasePlayer
 {
-    // Ability-specific variables
-    public AudioClip shieldSound;
-    public AudioClip bashSound;
-    public AudioClip chargeSound;
-    public AudioClip ironMaelstormSound;
-    public float bashDamage = 15f;
-    public float ironMaelstormDamage = 10f;
-    public GameObject shieldObject;
+  // Ability-specific variables
+  public AudioClip shieldSound;
+  public AudioClip bashSound;
+  public AudioClip chargeSound;
+  public AudioClip ironMaelstormSound;
+  public float bashDamage = 15f;
+  public float ironMaelstormDamage = 10f;
+  public GameObject shieldObject;
 
-    protected override void Start()
+  protected override void Start()
+  {
+    base.Start();
+  }
+
+  // Bash ability targeting an enemy
+  public void Bash(GameObject enemy)
+  {
+    animator.SetTrigger("Bash");
+    audioSource.PlayOneShot(bashSound);
+
+    if (enemy != null)
     {
-        base.Start();
+      Enemy enemyScript = enemy.GetComponent<Enemy>();
+      if (enemyScript != null)
+      {
+        enemyScript.TakeDamage((int)bashDamage);
+        playerStats.GainXP(enemyScript.GetXP());
+      }
     }
+  }
 
-    // Bash ability targeting an enemy
-    public void Bash(GameObject enemy)
+  // Shield ability
+  public void Shield(GameObject enemy = null, Vector3? position = null)
+  {
+    animator.SetTrigger("Shield");
+    audioSource.PlayOneShot(shieldSound);
+
+    // Spawn and activate shield
+    GameObject shield = Instantiate(shieldObject, transform.position, Quaternion.identity);
+    shield.transform.SetParent(transform);
+    Destroy(shield, 3f);
+  }
+
+  // Iron Maelstorm ability
+  public void IronMaelstorm(GameObject enemy = null, Vector3? position = null)
+  {
+    animator.SetTrigger("IronMaelstorm");
+    audioSource.PlayOneShot(ironMaelstormSound);
+
+    // Area damage around the player
+    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
+    foreach (var hit in hitColliders)
     {
-        animator.SetTrigger("Bash");
-        audioSource.PlayOneShot(bashSound);
-
-        if (enemy != null)
+      if (hit.CompareTag("Enemy"))
+      {
+        Enemy enemyScript = hit.GetComponent<Enemy>();
+        if (enemyScript != null)
         {
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            if (enemyScript != null)
-            {
-                enemyScript.TakeDamage((int)bashDamage);
-                playerStats.GainXP(enemyScript.GetXP());
-            }
+          enemyScript.TakeDamage((int)ironMaelstormDamage);
+          playerStats.GainXP(enemyScript.GetXP());
         }
+      }
     }
+  }
 
-    // Shield ability
-    public void Shield(GameObject enemy = null, Vector3? position = null)
+  // Charge ability towards a position
+  public void Charge(Vector3 position)
+  {
+    animator.SetBool("Charge", true);
+    Debug.Log("Charging");
+    audioSource.PlayOneShot(chargeSound);
+
+    // Implement charging logic
+    StartCoroutine(PerformCharge(position));
+  }
+
+private IEnumerator PerformCharge(Vector3 position)
+{
+    float originalSpeed = navMeshAgent.speed;
+    navMeshAgent.speed = 10f; // Increased speed for charge
+
+    // Adjust rotation
+    Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+    transform.LookAt(lookAt);
+    navMeshAgent.SetDestination(position);
+
+
+    // Move towards the target position, checking both animation and movement completion
+    while (true)
     {
-        animator.SetTrigger("Shield");
-        audioSource.PlayOneShot(shieldSound);
 
-        // Spawn and activate shield
-        GameObject shield = Instantiate(shieldObject, transform.position, Quaternion.identity);
-        shield.transform.SetParent(transform);
-        Destroy(shield, 3f);
-    }
-
-    // Iron Maelstorm ability
-    public void IronMaelstorm(GameObject enemy = null, Vector3? position = null)
-    {
-        animator.SetTrigger("IronMaelstorm");
-        audioSource.PlayOneShot(ironMaelstormSound);
-
-        // Area damage around the player
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
-        foreach (var hit in hitColliders)
+        // Check if the animation is finished
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            if (hit.CompareTag("Enemy"))
-            {
-                Enemy enemyScript = hit.GetComponent<Enemy>();
-                if (enemyScript != null)
-                {
-                    enemyScript.TakeDamage((int)ironMaelstormDamage);
-                    playerStats.GainXP(enemyScript.GetXP());
-                }
-            }
+            break; // Animation is finished
         }
-    }
 
-    // Charge ability towards a position
-    public void Charge(Vector3 position)
-    {
-        animator.SetTrigger("Charge");
-        audioSource.PlayOneShot(chargeSound);
-
-        // Implement charging logic
-        StartCoroutine(PerformCharge(position));
-    }
-
-    private IEnumerator PerformCharge(Vector3 position)
-    {
-        float originalSpeed = navMeshAgent.speed;
-        navMeshAgent.speed = 10f; // Increased speed for charge
-
-        navMeshAgent.SetDestination(position);
-        while (navMeshAgent.remainingDistance > 0.1f)
+        // Check if the agent has reached the destination (taking stopping distance into account)
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
         {
-            yield return null;
+            break; // Agent has completed its path
         }
 
-        navMeshAgent.speed = originalSpeed;
-        // Implement damage to enemies in the path if needed
+        // If neither condition is met, continue waiting
+        yield return null;
     }
+
+
+
+    // Set the Charge bool to false and reset speed
+    animator.SetBool("Charge", false);
+    navMeshAgent.speed = originalSpeed;
+}
+
+
+
 }

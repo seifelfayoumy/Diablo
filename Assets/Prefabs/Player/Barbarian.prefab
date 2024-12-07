@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 6079487721747541956}
   m_Layer: 0
   m_Name: Barbarian
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -966,7 +966,7 @@ MonoBehaviour:
   ironMaelstormSound: {fileID: 0}
   bashDamage: 15
   ironMaelstormDamage: 10
-  shieldObject: {fileID: 0}
+  shieldObject: {fileID: 5743484195760402370, guid: b5a760dabea104d2993c050ab238023d, type: 3}
 --- !u!114 &3277653159248197762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,7 +1108,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0136fbbdb27948238ed3c115bc18600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilities: []
+  abilities:
+  - abilityName: Bash
+    abilityType: 0
+    activationType: 2
+    damage: 5
+    cooldown: 1
+    isUnlocked: 1
+    isOnCooldown: 0
+    cooldownTimer: 1
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: Shield
+    abilityType: 1
+    activationType: 0
+    damage: 0
+    cooldown: 10
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 1
+    delayCooldownStart: 1
+    cooldownDelay: 3
+  - abilityName: IronMaelstorm
+    abilityType: 2
+    activationType: 0
+    damage: 10
+    cooldown: 5
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 1
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: Charge
+    abilityType: 3
+    activationType: 1
+    damage: 20
+    cooldown: 10
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 1
+    delayCooldownStart: 0
+    cooldownDelay: 0
   player: {fileID: 0}
   playerStats: {fileID: 0}
 --- !u!1 &2450793562810839690

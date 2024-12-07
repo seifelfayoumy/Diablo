@@ -1,4 +1,3 @@
-// Ability.cs
 using UnityEngine;
 using System;
 
@@ -17,6 +16,11 @@ public class Ability
     public bool isOnCooldown = false;
     public float cooldownTimer = 0f; // Changed to public
 
+    public bool delayCooldownStart = false; // New flag to specify delayed cooldown start
+    public float cooldownDelay = 0f; // Time to delay cooldown start
+
+    private float delayTimer = 0f; // Timer to track the cooldown delay
+
     public Action<GameObject, Vector3?> UseAbilityAction; // Delegate for ability behavior
 
     // Method to use the ability
@@ -24,9 +28,22 @@ public class Ability
     {
         if (isUnlocked && !isOnCooldown)
         {
+            // Execute ability action
             UseAbilityAction?.Invoke(enemy, position);
-            isOnCooldown = true;
-            cooldownTimer = cooldown;
+
+            // If cooldown is delayed, start the delay timer
+            if (delayCooldownStart)
+            {
+                isOnCooldown = true;
+                cooldownTimer = cooldown;
+                delayTimer = cooldownDelay;  // Set delay timer instead of cooldown immediately
+            }
+            else
+            {
+                // No delay, start the cooldown immediately
+                isOnCooldown = true;
+                cooldownTimer = cooldown;
+            }
         }
     }
 
@@ -35,11 +52,26 @@ public class Ability
     {
         if (isOnCooldown)
         {
-            cooldownTimer -= deltaTime;
-            if (cooldownTimer <= 0f)
+            if (delayCooldownStart)
             {
-                isOnCooldown = false;
-                cooldownTimer = 0f;
+                // Handle the cooldown delay
+                delayTimer -= deltaTime;
+                if (delayTimer <= 0f)
+                {
+                    // Once the delay is over, start the actual cooldown timer
+                    cooldownTimer = cooldown;
+                    delayCooldownStart = false; // Reset the delay flag
+                }
+            }
+            else
+            {
+                // Regular cooldown countdown
+                cooldownTimer -= deltaTime;
+                if (cooldownTimer <= 0f)
+                {
+                    isOnCooldown = false;
+                    cooldownTimer = 0f;
+                }
             }
         }
     }

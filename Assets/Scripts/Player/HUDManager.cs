@@ -32,7 +32,13 @@ public class HUDManager : MonoBehaviour
 
     void Start()
     {
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        
+
         UpdateHUD();
+        //get player stats and health components form object tagged Player
+
     }
 
     void Update()

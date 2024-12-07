@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;  // Needed for checking UI interaction
 
 public class BasePlayer : MonoBehaviour
 {
@@ -27,10 +28,13 @@ public class BasePlayer : MonoBehaviour
     public AudioClip walkSound;
     public AudioClip deathSound;
     public AudioClip attackSound;
+        private AbilityManager abilityManager;
 
     // Start and Initialization
     protected virtual void Start()
     {
+                abilityManager = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityManager>();
+
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -62,9 +66,20 @@ public class BasePlayer : MonoBehaviour
         if (navMeshAgent.enabled && Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
+
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return; // Do nothing if clicking on UI
+            }
+            
             if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) )
             {
-                //adjust rotation
+                // If the click is on the UI layer, don't do anything
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI"))
+                {
+                    return;
+                }
+
                 Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 transform.LookAt(lookAt);
 
@@ -75,7 +90,6 @@ public class BasePlayer : MonoBehaviour
         }
 
             bool isWalking = navMeshAgent.velocity != Vector3.zero;
-
             animator.SetBool("IsWalking", isWalking);
             if (isWalking && !audioSource.isPlaying)
             {

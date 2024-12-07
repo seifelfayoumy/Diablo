@@ -81,9 +81,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1030692063636000166}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3416409288016669998}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6732178615096260623}
     - targetCorrespondingSourceObject: {fileID: 7678847183246101999, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6116859549626735563}
+    - targetCorrespondingSourceObject: {fileID: 7678847183246101999, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5111807875516166784}
   m_SourcePrefab: {fileID: 100100000, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
 --- !u!1 &3680776633224216974 stripped
 GameObject:
@@ -123,7 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0d505c5de1a42fd8968e7a9226a482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  maxHP: 20
+  currentHP: 0
+  xpReward: 10
+  healthBar: {fileID: 0}
 --- !u!65 &1030692063636000166
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -143,8 +155,51 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 5, z: 1}
+  m_Size: {x: 3, y: 5, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3416409288016669998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3680776633224216974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d0ab78a2687bb4fb5b292de260283d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 20
+  currentHP: 0
+  xpReward: 10
+  healthBar: {fileID: 0}
+--- !u!54 &6732178615096260623
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3680776633224216974}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6144433666623467824 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7678847183246101999, guid: 681a7cc21ebf9234cbdeffef2a4c2b0d, type: 3}
@@ -171,3 +226,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5111807875516166784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6144433666623467824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d0ab78a2687bb4fb5b292de260283d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 20
+  currentHP: 0
+  xpReward: 10
+  healthBar: {fileID: 0}

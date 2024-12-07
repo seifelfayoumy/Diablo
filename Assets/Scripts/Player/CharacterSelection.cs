@@ -1,27 +1,28 @@
+// CharacterSelection.cs
 using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
 {
     public GameObject barbarianPrefab;
-    public GameObject sorcererPrefab;
     public GameObject roguePrefab;
+    public GameObject sorcererPrefab;
+    public Transform spawnPoint;
 
-    public void SelectCharacter(string characterClass)
+    public void SelectBarbarian()
     {
-        switch (characterClass)
-        {
-            case "Barbarian":
-                Instantiate(barbarianPrefab);
-                break;
-            case "Sorcerer":
-                Instantiate(sorcererPrefab);
-                break;
-            case "Rogue":
-                Instantiate(roguePrefab);
-                break;
-            default:
-                Debug.LogError("Invalid Character Class");
-                break;
-        }
+        Instantiate(barbarianPrefab, spawnPoint.position, spawnPoint.rotation);
+        // Load the main game scene if necessary
+    }
+
+    public void SelectRogue()
+    {
+        Instantiate(roguePrefab, spawnPoint.position, spawnPoint.rotation);
+        // Load the main game scene if necessary
+    }
+
+    public void SelectSorcerer()
+    {
+        Instantiate(sorcererPrefab, spawnPoint.position, spawnPoint.rotation);
+        // Load the main game scene if necessary
     }
 }

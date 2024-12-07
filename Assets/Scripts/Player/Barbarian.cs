@@ -1,76 +1,96 @@
-
 using UnityEngine;
+using UnityEngine.AI;
+using System.Collections;
 
 public class Barbarian : BasePlayer
 {
     // Ability-specific variables
     public AudioClip shieldSound;
     public AudioClip bashSound;
+    public AudioClip chargeSound;
+    public AudioClip ironMaelstormSound;
     public float bashDamage = 15f;
+    public float ironMaelstormDamage = 10f;
     public GameObject shieldObject;
 
     protected override void Start()
     {
-        base.Start();  // Calls the base Start() method to initialize common properties
+        base.Start();
     }
 
-    protected override void Update()
+    // Bash ability targeting an enemy
+    public void Bash(GameObject enemy)
     {
-        base.Update();  // Keeps the movement handling
+        animator.SetTrigger("Bash");
+        audioSource.PlayOneShot(bashSound);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (enemy != null)
         {
-            IronMaelstorm(); // Call the Bash method when Space is pressed
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Bash(); // Call the Bash method when B is pressed
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Shield(); // Call the Shield method when S is pressed
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            charge(); // Call the charge method when C is pressed
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage((int)bashDamage);
+                playerStats.GainXP(enemyScript.GetXP());
+            }
         }
     }
 
-    // Override for Barbarian-specific attack (Bash)
-    public  void Bash()
+    // Shield ability
+    public void Shield(GameObject enemy = null, Vector3? position = null)
     {
-        base.animator.SetTrigger("Bash");
+        animator.SetTrigger("Shield");
+        audioSource.PlayOneShot(shieldSound);
 
-
-        // Add Bash functionality
-        Debug.Log("Bash attack");
-        audioSource.PlayOneShot(bashSound); // Play bash sound
-    }
-
-    public void IronMaelstorm()
-    {
-        base.animator.SetTrigger("IronMaelstorm");
-        Debug.Log("Iron Maelstorm attack");
-    }
-
-    // Override Shield (specific for Barbarian)
-    public  void Shield()
-    {
-        base.animator.SetTrigger("Shield");
-
-        // Add Shield functionality
-        //spawn shield object
+        // Spawn and activate shield
         GameObject shield = Instantiate(shieldObject, transform.position, Quaternion.identity);
-        shield.transform.SetParent(transform);  // Attach shield to player
+        shield.transform.SetParent(transform);
         Destroy(shield, 3f);
-        audioSource.PlayOneShot(shieldSound);  // Play shield sound
-        Debug.Log("Shield Activated");
     }
 
-    public void charge()
+    // Iron Maelstorm ability
+    public void IronMaelstorm(GameObject enemy = null, Vector3? position = null)
     {
-        base.animator.SetTrigger("Charge");
-        Debug.Log("Charge Activated");
+        animator.SetTrigger("IronMaelstorm");
+        audioSource.PlayOneShot(ironMaelstormSound);
+
+        // Area damage around the player
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
+        foreach (var hit in hitColliders)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                Enemy enemyScript = hit.GetComponent<Enemy>();
+                if (enemyScript != null)
+                {
+                    enemyScript.TakeDamage((int)ironMaelstormDamage);
+                    playerStats.GainXP(enemyScript.GetXP());
+                }
+            }
+        }
     }
 
+    // Charge ability towards a position
+    public void Charge(Vector3 position)
+    {
+        animator.SetTrigger("Charge");
+        audioSource.PlayOneShot(chargeSound);
+
+        // Implement charging logic
+        StartCoroutine(PerformCharge(position));
+    }
+
+    private IEnumerator PerformCharge(Vector3 position)
+    {
+        float originalSpeed = navMeshAgent.speed;
+        navMeshAgent.speed = 10f; // Increased speed for charge
+
+        navMeshAgent.SetDestination(position);
+        while (navMeshAgent.remainingDistance > 0.1f)
+        {
+            yield return null;
+        }
+
+        navMeshAgent.speed = originalSpeed;
+        // Implement damage to enemies in the path if needed
+    }
 }

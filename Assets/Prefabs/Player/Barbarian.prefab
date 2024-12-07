@@ -871,6 +871,7 @@ GameObject:
   - component: {fileID: 3277653159248197762}
   - component: {fileID: 7558773638692852083}
   - component: {fileID: 5686881150175876593}
+  - component: {fileID: 6079487721747541956}
   m_Layer: 0
   m_Name: Barbarian
   m_TagString: Untagged
@@ -954,12 +955,18 @@ MonoBehaviour:
   playerStats: {fileID: 3277653159248197762}
   playerHealth: {fileID: 7558773638692852083}
   audioSource: {fileID: 5686881150175876593}
+  healingPotions: 0
+  runeFragments: 0
   walkSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   deathSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   attackSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   shieldSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   bashSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
+  chargeSound: {fileID: 0}
+  ironMaelstormSound: {fileID: 0}
   bashDamage: 15
+  ironMaelstormDamage: 10
+  shieldObject: {fileID: 0}
 --- !u!114 &3277653159248197762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,6 +985,8 @@ MonoBehaviour:
   abilityPoints: 0
   maxHP: 100
   currentHP: 0
+  healingPotions: 0
+  runeFragments: 0
 --- !u!114 &7558773638692852083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,6 +999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a5c1da3335e4f208836c2445e30962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvincible: 0
 --- !u!82 &5686881150175876593
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1086,6 +1096,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6079487721747541956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2308520113231828281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0136fbbdb27948238ed3c115bc18600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilities: []
+  player: {fileID: 0}
+  playerStats: {fileID: 0}
 --- !u!1 &2450793562810839690
 GameObject:
   m_ObjectHideFlags: 0

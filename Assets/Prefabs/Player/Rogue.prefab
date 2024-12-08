@@ -3025,6 +3025,7 @@ GameObject:
   - component: {fileID: 5232358480466030664}
   - component: {fileID: 9184175147696833103}
   - component: {fileID: 3557665187820930992}
+  - component: {fileID: 3931270403833125554}
   m_Layer: 0
   m_Name: Rogue
   m_TagString: Player
@@ -3199,6 +3200,8 @@ MonoBehaviour:
   arrowDamage: 5
   showerDamage: 10
   dashSpeed: 10
+  arrowPrefab: {fileID: 2194660174540799203, guid: 0d310e41c62e74ca2ae870f5ac91b78b, type: 3}
+  smokeBombPrefab: {fileID: 2117882238797756286, guid: 6d78cea7a7b4440c091c515f72eaa5f1, type: 3}
 --- !u!114 &5232358480466030664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3254,6 +3257,61 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3931270403833125554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8831370884786387344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0136fbbdb27948238ed3c115bc18600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilities:
+  - abilityName: Arrow
+    abilityType: 0
+    activationType: 2
+    damage: 5
+    cooldown: 1
+    isUnlocked: 1
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: SmokeBomb
+    abilityType: 1
+    activationType: 0
+    damage: 0
+    cooldown: 10
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: Dash
+    abilityType: 2
+    activationType: 1
+    damage: 0
+    cooldown: 5
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: ShowerOfArrows
+    abilityType: 3
+    activationType: 1
+    damage: 10
+    cooldown: 10
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  player: {fileID: 0}
+  playerStats: {fileID: 0}
 --- !u!1 &8900187843006490343
 GameObject:
   m_ObjectHideFlags: 0

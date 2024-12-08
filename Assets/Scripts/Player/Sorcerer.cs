@@ -45,7 +45,7 @@ public class Sorcerer : BasePlayer
         Vector3 spawnPosition = transform.position + transform.forward * 2f; // 2f is the distance in front of the player
         spawnPosition.y = 1f;  // Set Y to 1
 
-        GameObject fireball = Instantiate(fireballPrefab, spawnPosition, Quaternion.identity);
+        GameObject fireball = Instantiate(fireballPrefab, spawnPosition, transform.rotation);
 
         Fireball fireballScript = fireball.GetComponent<Fireball>();
         if (fireballScript != null)

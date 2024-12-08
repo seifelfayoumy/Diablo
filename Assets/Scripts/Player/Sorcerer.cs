@@ -18,26 +18,52 @@ public class Sorcerer : BasePlayer
     public float infernoDamagePerSecond = 2f;
     public float infernoDuration = 5f;
 
+    public GameObject fireballPrefab; // Assign the enemy GameObject in the Inspector
+
     protected override void Start()
     {
         base.Start();
     }
+
+    // public void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.J))
+    //     {
+    //         Inferno(transform.position);
+    //         Debug.Log("Inferno");
+    //     }
+    // }
 
     // Fireball ability targeting an enemy
     public void Fireball(GameObject enemy)
     {
         animator.SetTrigger("IsFireball");
         audioSource.PlayOneShot(fireballSound);
+        
 
-        if (enemy != null)
+        // Spawn fireball in front of the player with Y = 1
+        Vector3 spawnPosition = transform.position + transform.forward * 2f; // 2f is the distance in front of the player
+        spawnPosition.y = 1f;  // Set Y to 1
+
+        GameObject fireball = Instantiate(fireballPrefab, spawnPosition, Quaternion.identity);
+
+        Fireball fireballScript = fireball.GetComponent<Fireball>();
+        if (fireballScript != null)
         {
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            if (enemyScript != null)
-            {
-                enemyScript.TakeDamage((int)fireballDamage);
-                playerStats.GainXP(enemyScript.GetXP());
-            }
+            fireballScript.Initialize(10, 5, enemy, playerStats);
+            Debug.Log("Fireball");
         }
+
+
+        // if (enemy != null)
+        // {
+        //     Enemy enemyScript = enemy.GetComponent<Enemy>();
+        //     if (enemyScript != null)
+        //     {
+        //         enemyScript.TakeDamage((int)fireballDamage);
+        //         playerStats.GainXP(enemyScript.GetXP());
+        //     }
+        // }
     }
 
     // Teleport ability to a position

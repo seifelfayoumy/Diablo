@@ -41,9 +41,6 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isStunned) // Assuming enemies can't take damage while stunned
-            return;
-
         currentHP -= damage;
         currentHP = Mathf.Max(0, currentHP);
         if (healthBar != null)

@@ -173,6 +173,12 @@ MonoBehaviour:
   currentHP: 0
   xpReward: 10
   healthBar: {fileID: 0}
+  minionPrefab: {fileID: 2308520113231828281, guid: b9bda58cbe4854dbe99d89ace04f7e0f, type: 3}
+  summonPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  divebombCooldown: 3
 --- !u!54 &6732178615096260623
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -242,3 +248,6 @@ MonoBehaviour:
   currentHP: 0
   xpReward: 10
   healthBar: {fileID: 0}
+  minionPrefab: {fileID: 0}
+  summonPoints: []
+  divebombCooldown: 3

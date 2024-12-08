@@ -101,7 +101,7 @@ public class BasePlayer : MonoBehaviour
 
 
     // Handle picking up items
-    void OnTriggerEnter(Collider other)
+   /** void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("HealingPotion"))
         {
@@ -121,5 +121,5 @@ public class BasePlayer : MonoBehaviour
             Destroy(other.gameObject);
             // Optionally, play a pickup sound
         }
-    }
+    } **/
 }

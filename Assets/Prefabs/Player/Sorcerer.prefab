@@ -1889,9 +1889,10 @@ GameObject:
   - component: {fileID: 498009945210046940}
   - component: {fileID: 7000361444055819601}
   - component: {fileID: 1740382569368529864}
+  - component: {fileID: 6403424960607495188}
   m_Layer: 0
   m_Name: Sorcerer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1987,6 +1988,7 @@ MonoBehaviour:
   infernoInitialDamage: 10
   infernoDamagePerSecond: 2
   infernoDuration: 5
+  fireballPrefab: {fileID: 4040895491623063369, guid: 314051baa240c451b87d17bbfa7cf683, type: 3}
 --- !u!114 &498009945210046940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2116,6 +2118,61 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6403424960607495188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397528824199192356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0136fbbdb27948238ed3c115bc18600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilities:
+  - abilityName: Fireball
+    abilityType: 0
+    activationType: 2
+    damage: 5
+    cooldown: 1
+    isUnlocked: 1
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: Teleport
+    abilityType: 1
+    activationType: 1
+    damage: 0
+    cooldown: 10
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: Clone
+    abilityType: 2
+    activationType: 1
+    damage: 10
+    cooldown: 10
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  - abilityName: Inferno
+    abilityType: 3
+    activationType: 1
+    damage: 10
+    cooldown: 15
+    isUnlocked: 0
+    isOnCooldown: 0
+    cooldownTimer: 0
+    delayCooldownStart: 0
+    cooldownDelay: 0
+  player: {fileID: 0}
+  playerStats: {fileID: 0}
 --- !u!1 &4403706022330819539
 GameObject:
   m_ObjectHideFlags: 0

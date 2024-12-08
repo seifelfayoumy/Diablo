@@ -3027,7 +3027,7 @@ GameObject:
   - component: {fileID: 3557665187820930992}
   m_Layer: 0
   m_Name: Rogue
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3187,10 +3187,17 @@ MonoBehaviour:
   playerStats: {fileID: 9184175147696833103}
   playerHealth: {fileID: 5232358480466030664}
   audioSource: {fileID: 4166168116625597726}
+  healingPotions: 0
+  runeFragments: 0
   walkSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   deathSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   attackSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   dashSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
+  arrowSound: {fileID: 0}
+  smokeBombSound: {fileID: 0}
+  showerOfArrowsSound: {fileID: 0}
+  arrowDamage: 5
+  showerDamage: 10
   dashSpeed: 10
 --- !u!114 &5232358480466030664
 MonoBehaviour:
@@ -3204,6 +3211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a5c1da3335e4f208836c2445e30962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvincible: 0
 --- !u!114 &9184175147696833103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3222,6 +3230,8 @@ MonoBehaviour:
   abilityPoints: 0
   maxHP: 100
   currentHP: 0
+  healingPotions: 0
+  runeFragments: 0
 --- !u!195 &3557665187820930992
 NavMeshAgent:
   m_ObjectHideFlags: 0

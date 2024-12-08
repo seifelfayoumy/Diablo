@@ -59,23 +59,49 @@ public class Rogue : BasePlayer
     // Dash ability towards a position
     public void Dash(Vector3 position)
     {
-        animator.SetTrigger("Dash");
+        animator.SetBool("IsDash", true);
+        Debug.Log("Dashing");
         audioSource.PlayOneShot(dashSound);
 
+        // Implement charging logic
         StartCoroutine(PerformDash(position));
     }
 
     private IEnumerator PerformDash(Vector3 position)
     {
         float originalSpeed = navMeshAgent.speed;
-        navMeshAgent.speed = dashSpeed;
+        navMeshAgent.speed = 10f; // Increased speed for charge
 
+        // Adjust rotation
+        Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+        transform.LookAt(lookAt);
         navMeshAgent.SetDestination(position);
-        while (navMeshAgent.remainingDistance > 0.1f)
+
+
+        // Move towards the target position, checking both animation and movement completion
+        while (true)
         {
+
+            // Check if the animation is finished
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                break; // Animation is finished
+            }
+
+            // Check if the agent has reached the destination (taking stopping distance into account)
+            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
+            {
+                break; // Agent has completed its path
+            }
+
+            // If neither condition is met, continue waiting
             yield return null;
         }
 
+
+
+        // Set the Charge bool to false and reset speed
+        animator.SetBool("IsDash", false);
         navMeshAgent.speed = originalSpeed;
     }
 

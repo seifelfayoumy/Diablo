@@ -5,9 +5,9 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-    public int maxHP = 20;
+    public int maxHP;
     public int currentHP;
-    public int xpReward = 10;
+    public int xpReward;
 
     public HealthBar healthBar; // Reference to a HealthBar UI component
 

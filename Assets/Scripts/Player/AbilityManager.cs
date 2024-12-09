@@ -125,8 +125,11 @@ public class AbilityManager : MonoBehaviour
         if (currentAbility.activationType == ActivationType.SelectEnemy)
         {
           GameObject enemy = hit.collider.gameObject;
-          selectedEnemy = enemy;
-          ExecuteAbility(currentAbility, enemy, null);
+          if(enemy.CompareTag("Enemy"))
+          {
+            selectedEnemy = enemy;
+            ExecuteAbility(currentAbility, enemy, null);
+          }
         }
         else if (currentAbility.activationType == ActivationType.SelectPosition)
         {

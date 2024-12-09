@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private bool isSlowed = false;
     private float originalSpeed;
     private NavMeshAgent navMeshAgent;
+    private GameObject player;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
         {
             originalSpeed = navMeshAgent.speed;
         }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour
         }
         if (currentHP <= 0)
         {
+            player.GetComponent<PlayerStats>().GainXP(xpReward);
             Die();
         }
     }

@@ -461,13 +461,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 276184927641452827, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: arrowPrefab
+      propertyPath: showerArrowsPrefab
       value: 
-      objectReference: {fileID: 2194660174540799203, guid: 0d310e41c62e74ca2ae870f5ac91b78b, type: 3}
-    - target: {fileID: 276184927641452827, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: smokeBombPrefab
-      value: 
-      objectReference: {fileID: 2117882238797756286, guid: 6d78cea7a7b4440c091c515f72eaa5f1, type: 3}
+      objectReference: {fileID: 6525702743518556265, guid: 497ccf2581d5c4ec29f5d9b1028d74e8, type: 3}
     - target: {fileID: 5598774202710310373, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.854857

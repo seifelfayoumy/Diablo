@@ -51,9 +51,13 @@ public class Enemy : MonoBehaviour
         }
         if (currentHP <= 0)
         {
-            player.GetComponent<PlayerStats>().GainXP(xpReward);
             Die();
         }
+    }
+
+    public int GetHP()
+    {
+        return currentHP;
     }
 
     public int GetXP()

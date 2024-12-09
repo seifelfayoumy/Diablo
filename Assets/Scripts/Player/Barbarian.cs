@@ -9,7 +9,7 @@ public class Barbarian : BasePlayer
   public AudioClip bashSound;
   public AudioClip chargeSound;
   public AudioClip ironMaelstormSound;
-  public float bashDamage = 15f;
+  public float bashDamage = 5f;
   public float ironMaelstormDamage = 10f;
   public GameObject shieldObject;
 
@@ -29,8 +29,18 @@ public class Barbarian : BasePlayer
       Enemy enemyScript = enemy.GetComponent<Enemy>();
       if (enemyScript != null)
       {
-        enemyScript.TakeDamage((int)bashDamage);
-        //playerStats.GainXP(enemyScript.GetXP());
+        // Adjust rotation
+        Vector3 position = enemy.transform.position;
+        Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+        transform.LookAt(lookAt);
+
+        float distanceToEnemy = Vector3.Distance(transform.position, position);
+        if (distanceToEnemy <= 5)
+        {
+          enemyScript.TakeDamage((int)bashDamage);
+          if(enemyScript.GetHP() <= 0)
+            playerStats.GainXP(enemyScript.GetXP());
+        }
       }
     }
   }
@@ -63,7 +73,8 @@ public class Barbarian : BasePlayer
         if (enemyScript != null)
         {
           enemyScript.TakeDamage((int)ironMaelstormDamage);
-          //playerStats.GainXP(enemyScript.GetXP());
+          if(enemyScript.GetHP() <= 0)
+            playerStats.GainXP(enemyScript.GetXP());
         }
       }
     }

@@ -32,19 +32,6 @@ public class Rogue : BasePlayer
 
         //wait for the animation to play
         StartCoroutine(PerformArrow(enemy));
-        
-
-
-
-        // if (enemy != null)
-        // {
-        //     Enemy enemyScript = enemy.GetComponent<Enemy>();
-        //     if (enemyScript != null)
-        //     {
-        //         enemyScript.TakeDamage((int)arrowDamage);
-        //         playerStats.GainXP(enemyScript.GetXP());
-        //     }
-        // }
     }
 
     private IEnumerator PerformArrow(GameObject enemy)
@@ -61,6 +48,17 @@ public class Rogue : BasePlayer
         {
             arrowScript.Initialize(10, 5, enemy, playerStats);
             Debug.Log("Fireball");
+        }
+
+        if (enemy != null)
+        {
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage((int)arrowDamage);
+                if(enemyScript.GetHP() <= 0)
+                    playerStats.GainXP(enemyScript.GetXP());
+            }
         }
     }
 

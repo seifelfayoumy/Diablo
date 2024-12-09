@@ -46,6 +46,11 @@ public class Sorcerer : BasePlayer
 
     IEnumerator FireballSpawn(GameObject enemy)
     {
+        // Adjust rotation
+        Vector3 position = enemy.transform.position;
+        Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+        transform.LookAt(lookAt);
+
         yield return new WaitForSeconds(2f);
         
         // Spawn fireball in front of the player with Y = 1
@@ -68,7 +73,8 @@ public class Sorcerer : BasePlayer
             if (enemyScript != null)
             {
                 enemyScript.TakeDamage((int)fireballDamage);
-                playerStats.GainXP(enemyScript.GetXP());
+                if(enemyScript.GetHP() <= 0)
+                    playerStats.GainXP(enemyScript.GetXP());
             }
         }
     }
@@ -76,7 +82,6 @@ public class Sorcerer : BasePlayer
     // Teleport ability to a position
     public void Teleport(Vector3 position)
     {
-        animator.SetTrigger("Teleport");
         audioSource.PlayOneShot(teleportSound);
 
         navMeshAgent.Warp(position);
@@ -85,7 +90,6 @@ public class Sorcerer : BasePlayer
     // Clone ability at a position
     public void Clone(Vector3 position)
     {
-        animator.SetTrigger("Clone");
         audioSource.PlayOneShot(cloneSound);
 
         // Instantiate clone
@@ -100,8 +104,12 @@ public class Sorcerer : BasePlayer
     // Inferno ability at a position
     public void Inferno(Vector3 position)
     {
-        animator.SetTrigger("Inferno");
+        animator.SetTrigger("IsInferno");
         audioSource.PlayOneShot(infernoSound);
+
+        // Adjust rotation
+        Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+        transform.LookAt(lookAt);
 
         // Instantiate Inferno effect
         GameObject inferno = Instantiate(infernoPrefab, position, Quaternion.identity);

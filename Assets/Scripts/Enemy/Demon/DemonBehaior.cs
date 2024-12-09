@@ -83,4 +83,6 @@ public class DemonBehavior : Enemy
         player.GetComponent<BasePlayer>().TakeDamage(15);
     }
 
+
+
 }

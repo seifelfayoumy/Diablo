@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0d505c5de1a42fd8968e7a9226a482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 20
-  currentHP: 0
+  maxHP: 50
+  currentHP: 50
   xpReward: 10
   healthBar: {fileID: 0}
 --- !u!65 &1030692063636000166
@@ -174,11 +174,8 @@ MonoBehaviour:
   xpReward: 10
   healthBar: {fileID: 0}
   minionPrefab: {fileID: 2308520113231828281, guid: b9bda58cbe4854dbe99d89ace04f7e0f, type: 3}
-  summonPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  divebombCooldown: 3
+  spawnRadius: 5
+  actionCooldown: 3
 --- !u!54 &6732178615096260623
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -249,5 +246,5 @@ MonoBehaviour:
   xpReward: 10
   healthBar: {fileID: 0}
   minionPrefab: {fileID: 0}
-  summonPoints: []
-  divebombCooldown: 3
+  spawnRadius: 5
+  actionCooldown: 3

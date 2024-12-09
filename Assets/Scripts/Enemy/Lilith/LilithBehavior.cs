@@ -7,21 +7,19 @@ public class LilithBehavior : Enemy
     private Animator animator;
     private Transform player; // Reference to the player's transform
     public GameObject minionPrefab; // Reference to the minion prefab
-    public Transform[] summonPoints; // Points where minions will be summoned
+    public float spawnRadius = 15f; // Radius within which minions will be spawned
 
-    private bool isSummoning = false; // To prevent multiple summoning at the same time
-    private bool isAttacking = false; // To prevent overlapping attacks
-    private bool touched = false; // If Lilith started the attacks or not
+    private bool isPerformingAction = false; // To prevent overlapping actions
+    private bool isTriggered = false; // To start actions only after the player triggers it
     private List<GameObject> activeMinions = new List<GameObject>(); // List to track active minions
 
-    public float divebombCooldown = 3f; // Cooldown between Divebomb attacks
-    private float lastDivebombTime; // Time of the last Divebomb attack
+    public float actionCooldown = 3f; // Cooldown between actions
+    private int countAttack = 0; // Tracks the sequence of actions (0 = Summon, 1 = Divebomb)
 
     void Start()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform; // Find the player GameObject
-        lastDivebombTime = -divebombCooldown; // Initialize to allow an immediate attack
     }
 
     void Update()
@@ -35,72 +33,134 @@ public class LilithBehavior : Enemy
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); // Adjust rotation speed as needed
         }
 
-        // Check if all minions are defeated
-        if (activeMinions.Count > 0)
+        // The attack sequence should only proceed if Lilith has been triggered and is not performing an action
+        if (isTriggered && !isPerformingAction && activeMinions.Count == 0)
         {
-            activeMinions.RemoveAll(minion => minion == null); // Remove destroyed minions from the list
-        }
-
-        // If Lilith has been touched and is idle, start the sequence
-        if (touched && !isAttacking && !isSummoning)
-        {
-            if (activeMinions.Count == 0) // If no minions are active, start summoning
-            {
-                StartCoroutine(SummonMinions());
-            }
-            else if (activeMinions.Count == 0 && Time.time >= lastDivebombTime + divebombCooldown) // If all minions are dead, start Divebomb attack
-            {
-                StartCoroutine(DivebombAttack());
-            }
+            StartCoroutine(PerformNextAction());
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // If the player touches Lilith, enable the attack cycle
-        if (other.CompareTag("Player"))
+        // If the player touches Lilith, start the action cycle
+        if (other.CompareTag("Player") && !isTriggered)
         {
-            touched = true;
-            Debug.Log("Player touched Lilith.");
+            isTriggered = true;
+            if (!isPerformingAction && activeMinions.Count == 0)
+            {
+                StartCoroutine(PerformNextAction());
+            }
         }
     }
 
-    private IEnumerator SummonMinions()
+    private IEnumerator PerformNextAction()
     {
-        isSummoning = true;
+        isPerformingAction = true;
 
-        // Trigger the summon animation
-        animator.SetTrigger("Summon");
-
-        // Wait for the animation to play (adjust time to match your animation)
-        yield return new WaitForSeconds(2f);
-
-        // Spawn minions at summon points
-        foreach (Transform point in summonPoints)
+        if (countAttack == 0)
         {
-            GameObject minion = Instantiate(minionPrefab, point.position, Quaternion.identity);
-            activeMinions.Add(minion); // Add the spawned minion to the activeMinions list
+            // Summon minions
+            animator.SetTrigger("Summon");
+            yield return new WaitForSeconds(1f); // Wait for the summon animation
+            SummonMinions();
+            countAttack++;
+        }
+        else if (countAttack == 1)
+        {
+            // Perform Divebomb
+            animator.SetTrigger("Divebomb");
+            yield return new WaitForSeconds(1f); // Wait for the divebomb animation
+            countAttack = 0; // Reset to summon in the next cycle
         }
 
-        isSummoning = false;
+        // Wait for cooldown
+        yield return new WaitForSeconds(actionCooldown);
+        isPerformingAction = false;
     }
 
-    private IEnumerator DivebombAttack()
+    private void SummonMinions()
     {
-        isAttacking = true;
+        int minionCount = 3; // Adjust this to change how many minions to spawn each time
+        List<Vector3> usedPositions = new List<Vector3>(); // Track used positions to avoid duplicates
 
-        // Trigger the Divebomb animation
-        animator.SetTrigger("Divebomb");
+        for (int i = 0; i < minionCount; i++)
+        {
+            if (minionPrefab != null)
+            {
+                Vector3 randomPosition = Vector3.zero; // Initialize to avoid the unassigned error
+                bool isUniquePosition = false;
 
-        // Wait for the animation to play (adjust time to match your animation)
-        yield return new WaitForSeconds(1.5f);
+                // Keep generating a new position until we find one that hasn't been used
+                while (!isUniquePosition)
+                {
+                    randomPosition = GetRandomPositionAroundLilith(spawnRadius);
+                    isUniquePosition = true;
 
-        // Simulate the Divebomb attack (e.g., applying damage or an effect to the player)
-        Debug.Log("Lilith performs a Divebomb attack!");
+                    // Check if the generated position is already in the list of used positions
+                    foreach (Vector3 position in usedPositions)
+                    {
+                        if (Vector3.Distance(randomPosition, position) < 0.1f) // Use a small tolerance to check for near duplicates
+                        {
+                            isUniquePosition = false;
+                            break;
+                        }
+                    }
+                }
 
-        // Record the time of this attack
-        lastDivebombTime = Time.time;
+                // Add the new position to the list of used positions
+                usedPositions.Add(randomPosition);
 
-        isAttacking = false;
+                // Instantiate the minion at the unique position
+                GameObject minion = Instantiate(minionPrefab, randomPosition, Quaternion.identity);
+                activeMinions.Add(minion);
+
+                // Track when the minion is destroyed
+                MinionWatcher(minion);
+            }
+        }
     }
+
+
+    private Vector3 GetRandomPositionAroundLilith(float radius)
+    {
+        // Generate a random point within a radius around the Lilith's position
+        Vector2 randomCircle = Random.insideUnitCircle * radius;
+        Vector3 randomPosition = new Vector3(randomCircle.x, 0, randomCircle.y) + transform.position;
+        return randomPosition;
+    }
+
+    private void MinionWatcher(GameObject minion)
+    {
+        StartCoroutine(WatchMinion(minion));
+    }
+
+    private IEnumerator WatchMinion(GameObject minion)
+    {
+        while (minion != null)
+        {
+            yield return null; // Wait until the minion is destroyed
+        }
+
+        // Remove the minion from the active list when it's gone
+        activeMinions.Remove(minion);
+    }
+
+
+    public void DiveBombAttack()
+    {
+        // Check if the player is within a radius of 10 units around Lilith
+        if (player != null && Vector3.Distance(transform.position, player.position) <= 10f)
+        {
+            Debug.Log("Divebomb attack executed on player: " + player.GetComponent<BasePlayer>());
+            player.GetComponent<BasePlayer>().TakeDamage(20);
+        }
+        else
+        {
+            Debug.Log("Player is not within the range for a divebomb attack.");
+        }
+    }
+
+
+
+
 }

@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
 
         stats.currentHP -= damage;
         stats.currentHP = Mathf.Max(0, stats.currentHP); // Ensure health doesn't go below 0
+        Debug.Log(stats.currentHP);
     }
 
     public void Heal(int amount)

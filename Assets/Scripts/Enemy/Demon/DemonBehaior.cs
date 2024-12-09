@@ -53,14 +53,14 @@ public class DemonBehavior : Enemy
                 if (countA < 2)
                 {
                    // sword.SetActive(true);
-                    Debug.Log("COUNT " + countA);
+                   // Debug.Log("COUNT " + countA);
                     animator.SetTrigger("StartAttack"); // Trigger sword attack
                     countA++;
                 }
                 else
                 {
                     //sword.SetActive(false);
-                    Debug.Log("COUNT " + countA);
+                   // Debug.Log("COUNT " + countA);
                     animator.SetTrigger("Throw"); // Trigger throw attack
                     countA = 0; // Reset count
                 }
@@ -72,4 +72,15 @@ public class DemonBehavior : Enemy
 
 
     }
+    public void SwordAttack()
+    {
+        Debug.Log(player.GetComponent<BasePlayer>());
+        player.GetComponent<BasePlayer>().TakeDamage(10);
+    }
+    public void ThrowAttack()
+    {
+        Debug.Log(player.GetComponent<BasePlayer>());
+        player.GetComponent<BasePlayer>().TakeDamage(15);
+    }
+
 }

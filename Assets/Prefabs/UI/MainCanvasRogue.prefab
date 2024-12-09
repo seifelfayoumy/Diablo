@@ -1998,7 +1998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940be43cf65d540a996e9914e174d28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Shower of Arrows
+  abilityName: ShowerOfArrows
   button: {fileID: 3387437104756335069}
   cooldownImage: {fileID: 5845072206410547393}
   cooldownText: {fileID: 1657977792543613852}
@@ -5082,7 +5082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940be43cf65d540a996e9914e174d28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Smoke Bomb
+  abilityName: SmokeBomb
   button: {fileID: 7137095656857554112}
   cooldownImage: {fileID: 8471653445379494483}
   cooldownText: {fileID: 52936921313479682}

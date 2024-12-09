@@ -12,7 +12,8 @@ public class Rogue : BasePlayer
     public float arrowDamage = 5f;
     public float showerDamage = 10f;
     public float dashSpeed = 10f;
-
+    public GameObject arrowPrefab; // Assign the enemy GameObject in the Inspector
+    public GameObject smokeBombPrefab; // Assign the enemy GameObject in the Inspector
     protected override void Start()
     {
         base.Start();
@@ -24,16 +25,40 @@ public class Rogue : BasePlayer
         animator.SetTrigger("IsArrow");
         audioSource.PlayOneShot(arrowSound);
 
-        if (enemy != null)
+        //wait for the animation to play
+        StartCoroutine(PerformArrow(enemy));
+        
+
+
+
+        // if (enemy != null)
+        // {
+        //     Enemy enemyScript = enemy.GetComponent<Enemy>();
+        //     if (enemyScript != null)
+        //     {
+        //         enemyScript.TakeDamage((int)arrowDamage);
+        //         playerStats.GainXP(enemyScript.GetXP());
+        //     }
+        // }
+    }
+
+    private IEnumerator PerformArrow(GameObject enemy)
+    {
+        yield return new WaitForSeconds(2f); // Wait for the animation to reach the point where the arrow is fired
+
+        Vector3 spawnPosition = transform.position; // 2f is the distance in front of the player
+        spawnPosition.y = 1f;  // Set Y to 1
+
+        GameObject arrow = Instantiate(arrowPrefab, spawnPosition, transform.rotation);
+
+        Arrow arrowScript = arrow.GetComponent<Arrow>();
+        if (arrowScript != null)
         {
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            if (enemyScript != null)
-            {
-                enemyScript.TakeDamage((int)arrowDamage);
-                playerStats.GainXP(enemyScript.GetXP());
-            }
+            arrowScript.Initialize(10, 5, enemy, playerStats);
+            Debug.Log("Fireball");
         }
     }
+
 
     // Smoke Bomb ability
     public void SmokeBomb(GameObject enemy = null, Vector3? position = null)
@@ -41,19 +66,13 @@ public class Rogue : BasePlayer
         animator.SetTrigger("IsSmoke");
         audioSource.PlayOneShot(smokeBombSound);
 
-        // Implement smoke bomb effect: stun enemies within range
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
-        foreach (var hit in hitColliders)
+        GameObject inferno = Instantiate(smokeBombPrefab, transform.position, Quaternion.identity);
+        SmokeBombBehavior infernoBehavior = inferno.GetComponent<SmokeBombBehavior>();
+        if (infernoBehavior != null)
         {
-            if (hit.CompareTag("Enemy"))
-            {
-                Enemy enemyScript = hit.GetComponent<Enemy>();
-                if (enemyScript != null)
-                {
-                    enemyScript.Stun(5f); // Assuming Enemy class has a Stun method
-                }
-            }
+            infernoBehavior.Initialize(this, 10f, 10f, 5f);
         }
+
     }
 
     // Dash ability towards a position

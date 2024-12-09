@@ -1,6 +1,7 @@
 // Sorcerer.cs
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Sorcerer : BasePlayer
 {
@@ -13,7 +14,7 @@ public class Sorcerer : BasePlayer
     public GameObject clonePrefab; // Assign the Clone prefab in the Inspector
     public GameObject infernoPrefab; // Assign the Inferno prefab in the Inspector
 
-    public float fireballDamage = 20f;
+    public float fireballDamage = 5f;
     public float infernoInitialDamage = 10f;
     public float infernoDamagePerSecond = 2f;
     public float infernoDuration = 5f;
@@ -40,12 +41,18 @@ public class Sorcerer : BasePlayer
         animator.SetTrigger("IsFireball");
         audioSource.PlayOneShot(fireballSound);
         
+        StartCoroutine(FireballSpawn(enemy));
+    }
 
+    IEnumerator FireballSpawn(GameObject enemy)
+    {
+        yield return new WaitForSeconds(2f);
+        
         // Spawn fireball in front of the player with Y = 1
         Vector3 spawnPosition = transform.position + transform.forward * 2f; // 2f is the distance in front of the player
         spawnPosition.y = 1f;  // Set Y to 1
 
-        GameObject fireball = Instantiate(fireballPrefab, spawnPosition, Quaternion.identity);
+        GameObject fireball = Instantiate(fireballPrefab, spawnPosition, transform.rotation);
 
         Fireball fireballScript = fireball.GetComponent<Fireball>();
         if (fireballScript != null)
@@ -54,16 +61,16 @@ public class Sorcerer : BasePlayer
             Debug.Log("Fireball");
         }
 
-
-        // if (enemy != null)
-        // {
-        //     Enemy enemyScript = enemy.GetComponent<Enemy>();
-        //     if (enemyScript != null)
-        //     {
-        //         enemyScript.TakeDamage((int)fireballDamage);
-        //         playerStats.GainXP(enemyScript.GetXP());
-        //     }
-        // }
+        
+        if (enemy != null)
+        {
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage((int)fireballDamage);
+                playerStats.GainXP(enemyScript.GetXP());
+            }
+        }
     }
 
     // Teleport ability to a position

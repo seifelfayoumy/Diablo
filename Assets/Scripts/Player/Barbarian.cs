@@ -26,6 +26,8 @@ public class Barbarian : BasePlayer
 
     if (enemy != null)
     {
+      Debug.Log(enemy);
+      Debug.Log("123");
       Enemy enemyScript = enemy.GetComponent<Enemy>();
       if (enemyScript != null)
       {

@@ -6,7 +6,11 @@ TagManager:
   tags:
   - Barbarian
   - Axe
+<<<<<<< HEAD
   - Sword
+=======
+  - Enemy
+>>>>>>> 2eb36e7455075e5c71645659d1b31a68ce8672be
   layers:
   - Default
   - TransparentFX

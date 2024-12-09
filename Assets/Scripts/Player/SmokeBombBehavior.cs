@@ -10,18 +10,19 @@ public class SmokeBombBehavior : MonoBehaviour
 
     public float radius = 5f; // Radius of the Inferno effect
 
-    private Rogue rogue;
+    private Rogue sorcerer;
 
-    public void Initialize(Rogue rogueInstance, float initialDmg, float dmgPerSec, float dur)
+    public void Initialize(Rogue sorcererInstance, float initialDmg, float dmgPerSec, float dur)
     {
-        rogue = rogueInstance;
+        sorcerer = sorcererInstance;
         initialDamage = initialDmg;
         damagePerSecond = dmgPerSec;
         duration = dur;
-        StartCoroutine(InfernoRoutine());
+        Debug.Log("Smoke bomb initialized");
+        StartCoroutine(SmokeRoutine());
     }
 
-    private IEnumerator InfernoRoutine()
+    private IEnumerator SmokeRoutine()
     {
         // Deal initial damage to enemies within the radius
         DealInitialDamage();
@@ -49,9 +50,8 @@ public class SmokeBombBehavior : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    // enemy.TakeDamage((int)initialDamage);
-                    // rogue.playerStats.GainXP(enemy.GetXP());
-                          enemy.Stun(1f);
+                    enemy.TakeDamage((int)initialDamage);
+                    sorcerer.playerStats.GainXP(enemy.GetXP());
                 }
             }
         }
@@ -69,9 +69,8 @@ public class SmokeBombBehavior : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    // enemy.TakeDamage((int)damagePerSecond);
-                    // sorcerer.playerStats.GainXP(enemy.GetXP());
-                    enemy.Stun(1f);
+                    enemy.TakeDamage((int)damagePerSecond);
+                    sorcerer.playerStats.GainXP(enemy.GetXP());
                 }
             }
         }

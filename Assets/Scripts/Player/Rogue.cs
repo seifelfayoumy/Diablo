@@ -14,6 +14,11 @@ public class Rogue : BasePlayer
     public float dashSpeed = 10f;
     public GameObject arrowPrefab; // Assign the enemy GameObject in the Inspector
     public GameObject smokeBombPrefab; // Assign the enemy GameObject in the Inspector
+        public float smokeBombInitialDamage = 10f;
+    public float smokeBombDamagePerSecond = 2f;
+    public float smokeBombDuration = 5f;
+    public GameObject showerArrowsPrefab; // Assign the enemy GameObject in the Inspector
+
     protected override void Start()
     {
         base.Start();
@@ -70,7 +75,7 @@ public class Rogue : BasePlayer
         SmokeBombBehavior infernoBehavior = inferno.GetComponent<SmokeBombBehavior>();
         if (infernoBehavior != null)
         {
-            infernoBehavior.Initialize(this, 10f, 10f, 5f);
+            infernoBehavior.Initialize(this, smokeBombInitialDamage, smokeBombDamagePerSecond, smokeBombDuration);
         }
 
     }
@@ -131,19 +136,21 @@ public class Rogue : BasePlayer
         audioSource.PlayOneShot(showerOfArrowsSound);
 
         // Implement area damage and slow effect
-        Collider[] hitColliders = Physics.OverlapSphere(position, 5f); // Example range
-        foreach (var hit in hitColliders)
-        {
-            if (hit.CompareTag("Enemy"))
-            {
-                Enemy enemyScript = hit.GetComponent<Enemy>();
-                if (enemyScript != null)
-                {
-                    enemyScript.TakeDamage((int)showerDamage);
-                    enemyScript.Slow(0.25f, 3f); // Assuming Enemy class has a Slow method
-                    playerStats.GainXP(enemyScript.GetXP());
-                }
-            }
-        }
+        GameObject shower = Instantiate(showerArrowsPrefab, position, Quaternion.identity);
+
+        // Collider[] hitColliders = Physics.OverlapSphere(position, 5f); // Example range
+        // foreach (var hit in hitColliders)
+        // {
+        //     if (hit.CompareTag("Enemy"))
+        //     {
+        //         Enemy enemyScript = hit.GetComponent<Enemy>();
+        //         if (enemyScript != null)
+        //         {
+        //             enemyScript.TakeDamage((int)showerDamage);
+        //             enemyScript.Slow(0.25f, 3f); // Assuming Enemy class has a Slow method
+        //             playerStats.GainXP(enemyScript.GetXP());
+        //         }
+        //     }
+        // }
     }
 }

@@ -26,13 +26,11 @@ public class Barbarian : BasePlayer
 
     if (enemy != null)
     {
-      Debug.Log(enemy);
-      Debug.Log("123");
       Enemy enemyScript = enemy.GetComponent<Enemy>();
       if (enemyScript != null)
       {
         enemyScript.TakeDamage((int)bashDamage);
-        playerStats.GainXP(enemyScript.GetXP());
+        //playerStats.GainXP(enemyScript.GetXP());
       }
     }
   }
@@ -65,7 +63,7 @@ public class Barbarian : BasePlayer
         if (enemyScript != null)
         {
           enemyScript.TakeDamage((int)ironMaelstormDamage);
-          playerStats.GainXP(enemyScript.GetXP());
+          //playerStats.GainXP(enemyScript.GetXP());
         }
       }
     }

@@ -100,6 +100,7 @@ public class BasePlayer : MonoBehaviour
     // Common health management
     public void TakeDamage(int damage)
     {
+        
         playerHealth.TakeDamage(damage);
         if (playerHealth.IsDead)
         {

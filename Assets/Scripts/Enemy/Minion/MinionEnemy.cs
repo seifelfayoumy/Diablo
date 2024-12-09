@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
+/**
 public class MinionEnemy : MonoBehaviour
 {
     public int maxHP;
@@ -158,3 +159,4 @@ public class MinionEnemy : MonoBehaviour
         isSlowed = false;
     }
 }
+**/

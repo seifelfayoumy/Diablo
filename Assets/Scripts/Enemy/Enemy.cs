@@ -13,9 +13,9 @@ public class Enemy : MonoBehaviour
 
     private bool isStunned = false;
     private bool isSlowed = false;
+    public bool isInvincible = false;
     private float originalSpeed;
     private NavMeshAgent navMeshAgent;
-    private GameObject player;
 
     void Start()
     {
@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
         {
             originalSpeed = navMeshAgent.speed;
         }
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -39,19 +38,33 @@ public class Enemy : MonoBehaviour
         // Enemy AI logic (e.g., chasing the player) goes here
         // For example:
         // if not stunned, chase the player
+        Debug.Log(isInvincible + " IS THE CONDISTION");
     }
 
     public void TakeDamage(int damage)
     {
-        currentHP -= damage;
-        currentHP = Mathf.Max(0, currentHP);
-        if (healthBar != null)
+        Debug.Log("Setting isInvincible on: " + this.gameObject.name);
+
+        if (isInvincible == true)
         {
-            healthBar.SetHealth(currentHP);
+            Debug.Log("Enemy is Invincible");
         }
-        if (currentHP <= 0)
+
+        else
         {
-            Die();
+            Debug.Log("Cond: " + isInvincible);
+            Debug.Log("Enemy is NOT Invincible");
+            currentHP -= damage;
+            currentHP = Mathf.Max(0, currentHP);
+            Debug.Log(currentHP + " OF ENEMY");
+            if (healthBar != null)
+            {
+                healthBar.SetHealth(currentHP);
+            }
+            if (currentHP <= 0)
+            {
+                Die();
+            }
         }
     }
 

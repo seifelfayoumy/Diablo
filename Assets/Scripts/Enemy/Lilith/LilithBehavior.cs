@@ -15,7 +15,7 @@ public class LilithBehavior : Enemy
 
     public float actionCooldown = 3f; // Cooldown between actions
     private int countAttack = 0; // Tracks the sequence of actions (0 = Summon, 1 = Divebomb)
-
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -24,6 +24,7 @@ public class LilithBehavior : Enemy
 
     void Update()
     {
+
         // Make Lilith look at the player if it exists
         if (player != null)
         {
@@ -32,6 +33,13 @@ public class LilithBehavior : Enemy
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); // Adjust rotation speed as needed
         }
+        if (activeMinions.Count > 0)
+        {
+            Debug.Log(isInvincible);
+            isInvincible = true;
+        }
+    
+
 
         // The attack sequence should only proceed if Lilith has been triggered and is not performing an action
         if (isTriggered && !isPerformingAction && activeMinions.Count == 0)
@@ -120,7 +128,6 @@ public class LilithBehavior : Enemy
         }
     }
 
-
     private Vector3 GetRandomPositionAroundLilith(float radius)
     {
         // Generate a random point within a radius around the Lilith's position
@@ -141,9 +148,13 @@ public class LilithBehavior : Enemy
             yield return null; // Wait until the minion is destroyed
         }
 
-        // Remove the minion from the active list when it's gone
-        activeMinions.Remove(minion);
+        if (activeMinions.Contains(minion))
+        {
+            Debug.Log("Minion destroyed and removed from activeMinions list.");
+            activeMinions.Remove(minion);
+        }
     }
+
 
 
     public void DiveBombAttack()
@@ -159,8 +170,4 @@ public class LilithBehavior : Enemy
             Debug.Log("Player is not within the range for a divebomb attack.");
         }
     }
-
-
-
-
 }

@@ -1332,9 +1332,9 @@ GameObject:
   - component: {fileID: 5757938448842767187}
   - component: {fileID: 4115104187458375402}
   - component: {fileID: 2791124948350446205}
-  - component: {fileID: 3495217957215083855}
+  - component: {fileID: 65536749905921733}
   m_Layer: 0
-  m_Name: 'Maria WProp J J Ong '
+  m_Name: Demon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1349,7 +1349,7 @@ Transform:
   m_GameObject: {fileID: 5820923095862508681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.92, y: -1.31, z: -8.84801}
+  m_LocalPosition: {x: -1.92, y: -1.21, z: -8.84801}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1402,7 +1402,7 @@ MonoBehaviour:
   moveSpeed: 1
   attackCooldown: 2
   sword: {fileID: 5007563878100838842}
---- !u!65 &3495217957215083855
+--- !u!65 &65536749905921733
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1421,8 +1421,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.3772295, z: 1}
-  m_Center: {x: 0, y: 0.68861485, z: 0}
+  m_Size: {x: 2.64, y: 2.64, z: 0.57}
+  m_Center: {x: 0, y: 1.02, z: 0.06}
 --- !u!1 &5905589623772694828
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using TMPro;
 public class HealthBar : MonoBehaviour
 {
     public Slider slider; // Reference to the Slider UI component
-    public Gradient gradient; // Gradient to represent health color change
+    //public Gradient gradient; // Gradient to represent health color change
 
     public TextMeshProUGUI healthText; // Reference to the Text UI component
 
@@ -15,7 +15,7 @@ public class HealthBar : MonoBehaviour
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;
-        slider.value = health;
+        // slider.value = health;
 
     }
 
@@ -23,6 +23,8 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(int health)
     {
         slider.value = health;
+        Debug.Log("Setting health to: " + health);
+        Debug.Log("Setting slider value to: " + slider.value);
     }
 
     public void SetHealthText(int health)

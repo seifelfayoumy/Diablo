@@ -3,14 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Barbarian
-  - Axe
-<<<<<<< HEAD
-  - Sword
-=======
-  - Enemy
->>>>>>> 2eb36e7455075e5c71645659d1b31a68ce8672be
+  tags: []
   layers:
   - Default
   - TransparentFX

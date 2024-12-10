@@ -22,8 +22,10 @@ public class Enemy : MonoBehaviour
         currentHP = maxHP;
         if (healthBar != null)
         {
+            Debug.Log("Setting max HP: " + maxHP);
             healthBar.SetMaxHealth(maxHP);
             healthBar.SetHealth(currentHP);
+            healthBar.SetHealthText(currentHP);
         }
 
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -33,13 +35,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
+  protected virtual void Update()
+  {
+    // Enemy AI logic (e.g., chasing the player) goes here
+    // For example:
+    // if not stunned, chase the player
+    // Debug.Log(isInvincible + " IS THE CONDISTION");
+
+
+    if (healthBar != null)
     {
-        // Enemy AI logic (e.g., chasing the player) goes here
-        // For example:
-        // if not stunned, chase the player
-        Debug.Log(isInvincible + " IS THE CONDISTION");
+      healthBar.SetHealth(currentHP);
+      healthBar.SetHealthText(currentHP);
+      healthBar.SetMaxHealth(maxHP);
+
     }
+  }
+
+
 
     public void TakeDamage(int damage)
     {
@@ -59,7 +72,8 @@ public class Enemy : MonoBehaviour
             Debug.Log(currentHP + " OF ENEMY");
             if (healthBar != null)
             {
-                healthBar.SetHealth(currentHP);
+                // healthBar.SetHealth(currentHP);
+                // healthBar.SetHealthText(currentHP);
             }
             if (currentHP <= 0)
             {

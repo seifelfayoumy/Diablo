@@ -18,10 +18,14 @@ public class DemonBehavior : Enemy
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        // maxHP = 40;
+        // currentHP = maxHP;
     }
 
-    void Update()
+    protected override void  Update()
     {
+        base.Update();
         if (player != null)
         {
             // Calculate distance to the player

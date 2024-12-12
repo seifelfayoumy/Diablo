@@ -30,6 +30,8 @@ public class BasePlayer : MonoBehaviour
     public AudioClip attackSound;
         private AbilityManager abilityManager;
 
+        public bool isInvincible = false;
+
     // Start and Initialization
     protected virtual void Start()
     {
@@ -100,6 +102,11 @@ public class BasePlayer : MonoBehaviour
     // Common health management
     public void TakeDamage(int damage)
     {
+        if (isInvincible)
+        {
+            Debug.Log("Player is invincible!");
+            return;
+        }
         
         playerHealth.TakeDamage(damage);
         if (playerHealth.IsDead)

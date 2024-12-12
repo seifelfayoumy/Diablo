@@ -125,16 +125,39 @@ public class AbilityManager : MonoBehaviour
         if (currentAbility.activationType == ActivationType.SelectEnemy)
         {
           GameObject enemy = hit.collider.gameObject;
+          Vector3 position = enemy.transform.position;
+          Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+          transform.LookAt(lookAt);
+
+          float distanceToEnemy = Vector3.Distance(transform.position, position);
           if(enemy.CompareTag("Enemy"))
           {
+            if(currentAbility.rangeType == RangeType.Small && distanceToEnemy > 5){
+              return;
+            }
+            if(currentAbility.rangeType == RangeType.Medium && distanceToEnemy > 10){
+              return;
+            }
             selectedEnemy = enemy;
             ExecuteAbility(currentAbility, enemy, null);
           }
         }
         else if (currentAbility.activationType == ActivationType.SelectPosition)
         {
+          
           Vector3 position = hit.point;
           selectedPosition = position;
+
+          Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
+          transform.LookAt(lookAt);
+
+          float distanceToEnemy = Vector3.Distance(transform.position, position);
+          if(currentAbility.rangeType == RangeType.Small && distanceToEnemy > 5){
+            return;
+          }
+          if(currentAbility.rangeType == RangeType.Medium && distanceToEnemy > 10){
+            return;
+          }
           ExecuteAbility(currentAbility, null, position);
         }
       }

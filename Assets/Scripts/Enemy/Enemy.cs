@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log("TAKING DAMAGE ON: " + damage);
         Debug.Log("Setting isInvincible on: " + this.gameObject.name);
 
         if (isInvincible == true)

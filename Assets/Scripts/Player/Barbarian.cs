@@ -13,6 +13,8 @@ public class Barbarian : BasePlayer
   public float ironMaelstormDamage = 10f;
   public GameObject shieldObject;
 
+  private bool isCharge = false;
+
   protected override void Start()
   {
     base.Start();
@@ -21,8 +23,6 @@ public class Barbarian : BasePlayer
   // Bash ability targeting an enemy
   public void Bash(GameObject enemy)
   {
-    animator.SetTrigger("Bash");
-    audioSource.PlayOneShot(bashSound);
 
     if (enemy != null)
     {
@@ -37,8 +37,11 @@ public class Barbarian : BasePlayer
         float distanceToEnemy = Vector3.Distance(transform.position, position);
         if (distanceToEnemy <= 5)
         {
+          animator.SetTrigger("Bash");
+          audioSource.PlayOneShot(bashSound);
+
           enemyScript.TakeDamage((int)bashDamage);
-          if(enemyScript.GetHP() <= 0)
+          if (enemyScript.GetHP() <= 0)
             playerStats.GainXP(enemyScript.GetXP());
         }
       }
@@ -55,8 +58,17 @@ public class Barbarian : BasePlayer
     GameObject shield = Instantiate(shieldObject, transform.position, Quaternion.identity);
     shield.transform.SetParent(transform);
     Destroy(shield, 3f);
+
+    isInvincible = true;
+    StartCoroutine(ShieldDuration());
   }
 
+
+  private IEnumerator ShieldDuration()
+  {
+    yield return new WaitForSeconds(3f);
+    isInvincible = false;
+  }
   // Iron Maelstorm ability
   public void IronMaelstorm(GameObject enemy = null, Vector3? position = null)
   {
@@ -73,7 +85,7 @@ public class Barbarian : BasePlayer
         if (enemyScript != null)
         {
           enemyScript.TakeDamage((int)ironMaelstormDamage);
-          if(enemyScript.GetHP() <= 0)
+          if (enemyScript.GetHP() <= 0)
             playerStats.GainXP(enemyScript.GetXP());
         }
       }
@@ -86,13 +98,13 @@ public class Barbarian : BasePlayer
     animator.SetBool("Charge", true);
     Debug.Log("Charging");
     audioSource.PlayOneShot(chargeSound);
-
+    isCharge = true;
     // Implement charging logic
     StartCoroutine(PerformCharge(position));
   }
 
-private IEnumerator PerformCharge(Vector3 position)
-{
+  private IEnumerator PerformCharge(Vector3 position)
+  {
     float originalSpeed = navMeshAgent.speed;
     navMeshAgent.speed = 10f; // Increased speed for charge
 
@@ -102,32 +114,74 @@ private IEnumerator PerformCharge(Vector3 position)
     navMeshAgent.SetDestination(position);
 
 
+
+
     // Move towards the target position, checking both animation and movement completion
     while (true)
     {
 
-        // Check if the animation is finished
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-        {
-            break; // Animation is finished
-        }
+      // Check if the animation is finished
+      if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+      {
+        break; // Animation is finished
+      }
 
-        // Check if the agent has reached the destination (taking stopping distance into account)
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
-        {
-            break; // Agent has completed its path
-        }
+      // Check if the agent has reached the destination (taking stopping distance into account)
+      if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
+      {
+        break; // Agent has completed its path
+      }
 
-        // If neither condition is met, continue waiting
-        yield return null;
+      // If neither condition is met, continue waiting
+      yield return null;
     }
 
-
+    isCharge = false;
 
     // Set the Charge bool to false and reset speed
     animator.SetBool("Charge", false);
     navMeshAgent.speed = originalSpeed;
-}
+  }
+
+
+  protected override void Update()
+  {
+    base.Update();
+    Debug.Log(isCharge);
+    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
+    foreach (var hit in hitColliders)
+    {
+      if (isCharge)
+      {
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+          Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
+          if (enemyScript != null)
+          {
+            if (hit.gameObject.name == "Boss")
+            {
+              enemyScript.TakeDamage(20);
+            }
+            else
+            if (enemyScript.GetHP() <= 0)
+            {
+              playerStats.GainXP(enemyScript.GetXP());
+              Destroy(hit.gameObject);
+            }
+
+
+
+          }
+        }
+        else
+        {
+         // Destroy(hit.gameObject);
+        }
+      }
+    }
+
+  }
+
 
 
 

@@ -4,12 +4,16 @@ using System;
 public enum AbilityType { Basic, Defensive, WildCard, Ultimate }
 public enum ActivationType { Instant, SelectPosition, SelectEnemy }
 
+public enum RangeType { Small, Medium, Large }
+
 [System.Serializable]
 public class Ability
 {
     public string abilityName;
     public AbilityType abilityType;
     public ActivationType activationType;
+
+    public RangeType rangeType;
     public float damage;
     public float cooldown;
     public bool isUnlocked = false;

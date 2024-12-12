@@ -3193,6 +3193,7 @@ MonoBehaviour:
   walkSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   deathSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   attackSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
+  isInvincible: 0
   dashSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   arrowSound: {fileID: 0}
   smokeBombSound: {fileID: 0}
@@ -3277,6 +3278,7 @@ MonoBehaviour:
   - abilityName: Arrow
     abilityType: 0
     activationType: 2
+    rangeType: 2
     damage: 5
     cooldown: 1
     isUnlocked: 1
@@ -3287,16 +3289,18 @@ MonoBehaviour:
   - abilityName: SmokeBomb
     abilityType: 1
     activationType: 0
+    rangeType: 0
     damage: 0
     cooldown: 10
     isUnlocked: 0
     isOnCooldown: 0
     cooldownTimer: 0
-    delayCooldownStart: 0
-    cooldownDelay: 0
+    delayCooldownStart: 1
+    cooldownDelay: 5
   - abilityName: Dash
     abilityType: 2
     activationType: 1
+    rangeType: 2
     damage: 0
     cooldown: 5
     isUnlocked: 0
@@ -3307,13 +3311,14 @@ MonoBehaviour:
   - abilityName: ShowerOfArrows
     abilityType: 3
     activationType: 1
+    rangeType: 2
     damage: 10
     cooldown: 10
     isUnlocked: 0
     isOnCooldown: 0
     cooldownTimer: 0
-    delayCooldownStart: 0
-    cooldownDelay: 0
+    delayCooldownStart: 1
+    cooldownDelay: 3
   player: {fileID: 0}
   playerStats: {fileID: 0}
 --- !u!1 &8900187843006490343

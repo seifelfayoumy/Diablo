@@ -536,34 +536,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[0].rangeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[2].rangeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[3].rangeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[1].cooldownDelay
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[3].cooldownDelay
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[1].delayCooldownStart
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3931270403833125554, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
-      propertyPath: abilities.Array.data[3].delayCooldownStart
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5598774202710310373, guid: 0f692b94e51ea44faa38e38d2a315da3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.4196734

@@ -120,6 +120,34 @@ public class Barbarian : BasePlayer
     while (true)
     {
 
+    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
+    foreach (var hit in hitColliders)
+    {
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+          Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
+          if (enemyScript != null)
+          {
+            if (hit.gameObject.name == "Boss")
+            {
+              enemyScript.TakeDamage(20);
+            }
+            else
+            {
+              playerStats.GainXP(enemyScript.GetXP());
+              Destroy(hit.gameObject);
+            }
+
+
+
+          }
+        }
+        else
+        {
+         // Destroy(hit.gameObject);
+        }
+      
+    }
       // Check if the animation is finished
       if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
       {
@@ -144,43 +172,45 @@ public class Barbarian : BasePlayer
   }
 
 
-  protected override void Update()
-  {
-    base.Update();
-    Debug.Log(isCharge);
-    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
-    foreach (var hit in hitColliders)
-    {
-      if (isCharge)
-      {
-        if (hit.gameObject.CompareTag("Enemy"))
-        {
-          Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
-          if (enemyScript != null)
-          {
-            if (hit.gameObject.name == "Boss")
-            {
-              enemyScript.TakeDamage(20);
-            }
-            else
-            if (enemyScript.GetHP() <= 0)
-            {
-              playerStats.GainXP(enemyScript.GetXP());
-              Destroy(hit.gameObject);
-            }
+
+
+  // protected override void Update()
+  // {
+  //   base.Update();
+  //   Debug.Log(isCharge);
+  //   Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
+  //   foreach (var hit in hitColliders)
+  //   {
+  //     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge"))
+  //     {
+  //       if (hit.gameObject.CompareTag("Enemy"))
+  //       {
+  //         Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
+  //         if (enemyScript != null)
+  //         {
+  //           if (hit.gameObject.name == "Boss")
+  //           {
+  //             enemyScript.TakeDamage(20);
+  //           }
+  //           else
+  //           if (enemyScript.GetHP() <= 0)
+  //           {
+  //             playerStats.GainXP(enemyScript.GetXP());
+  //             Destroy(hit.gameObject);
+  //           }
 
 
 
-          }
-        }
-        else
-        {
-         // Destroy(hit.gameObject);
-        }
-      }
-    }
+  //         }
+  //       }
+  //       else
+  //       {
+  //        // Destroy(hit.gameObject);
+  //       }
+  //     }
+  //   }
 
-  }
+  // }
 
 
 

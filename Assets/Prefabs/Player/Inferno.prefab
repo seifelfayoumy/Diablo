@@ -48,7 +48,7 @@ MonoBehaviour:
   initialDamage: 10
   damagePerSecond: 2
   duration: 5
-  radius: 5
+  radius: 3
 --- !u!1001 &6844806586138082353
 PrefabInstance:
   m_ObjectHideFlags: 0

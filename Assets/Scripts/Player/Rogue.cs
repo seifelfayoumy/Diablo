@@ -100,7 +100,7 @@ public class Rogue : BasePlayer
         navMeshAgent.SetDestination(position);
 
 
-        // Move towards the target position, checking both animation and movement completion
+        //Move towards the target position, checking both animation and movement completion
         while (true)
         {
 

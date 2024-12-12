@@ -11,10 +11,10 @@ public class Enemy : MonoBehaviour
 
     public HealthBar healthBar; // Reference to a HealthBar UI component
 
-    private bool isStunned = false;
+    protected bool isStunned = false;
     private bool isSlowed = false;
     public bool isInvincible = false;
-    private float originalSpeed;
+    protected float originalSpeed = 1f;
     private NavMeshAgent navMeshAgent;
 
     void Start()
@@ -103,6 +103,7 @@ public class Enemy : MonoBehaviour
     {
         if (!isStunned)
         {
+            Debug.Log("Stunned for: " + duration);
             StartCoroutine(StunCoroutine(duration));
         }
     }
@@ -117,8 +118,10 @@ public class Enemy : MonoBehaviour
 
     public void Slow(float multiplier, float duration)
     {
-        if (!isSlowed && navMeshAgent != null)
+        if (!isSlowed)
         {
+            Debug.Log("Slowed for: " + duration);
+            Debug.Log("Speed: " + multiplier);
             StartCoroutine(SlowCoroutine(multiplier, duration));
         }
     }
@@ -126,9 +129,11 @@ public class Enemy : MonoBehaviour
     IEnumerator SlowCoroutine(float multiplier, float duration)
     {
         isSlowed = true;
-        navMeshAgent.speed *= multiplier;
+        float OldSpeed = originalSpeed;
+        originalSpeed *= multiplier;
+        // originalSpeed = navMeshAgent.speed;
         yield return new WaitForSeconds(duration);
-        navMeshAgent.speed = originalSpeed;
+        originalSpeed = OldSpeed;
         isSlowed = false;
     }
 }

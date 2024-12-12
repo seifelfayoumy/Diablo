@@ -5,6 +5,8 @@ public class DemonBehavior : Enemy
 {
     public Animator animator; // Attach the Animator component
     public Transform player; // Reference to the player's transform
+        public Transform playerClone; // Reference to the player's transform
+
     public float attackRange = 5f; // Range to start attacking
     public float detectionRange = 10f; // Range to detect the player
     public float moveSpeed = 3f; // Speed at which the Demon moves towards the player
@@ -26,6 +28,22 @@ public class DemonBehavior : Enemy
     protected override void  Update()
     {
         base.Update();
+        moveSpeed = originalSpeed;
+        Debug.Log("Demon Update"+moveSpeed);
+        if(isStunned)
+        {
+            return;
+        }
+
+        playerClone = GameObject.FindGameObjectWithTag("PlayerClone")?.transform;
+        if(playerClone != null)
+        {
+            player = playerClone;
+        }else
+        {
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        }
+
         if (player != null)
         {
             // Calculate distance to the player

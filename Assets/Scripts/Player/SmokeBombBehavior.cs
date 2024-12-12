@@ -31,7 +31,7 @@ public class SmokeBombBehavior : MonoBehaviour
         while (elapsed < duration)
         {
             yield return new WaitForSeconds(1f);
-            DealDamageOverTime();
+           // DealDamageOverTime();
             elapsed += 1f;
         }
 
@@ -50,8 +50,9 @@ public class SmokeBombBehavior : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage((int)initialDamage);
-                    sorcerer.playerStats.GainXP(enemy.GetXP());
+                    // enemy.TakeDamage((int)initialDamage);
+                    // sorcerer.playerStats.GainXP(enemy.GetXP());
+                    enemy.Stun(5);
                 }
             }
         }

@@ -16,12 +16,13 @@ public class ShowerOfArrows : MonoBehaviour
     {
         // Start the Shower of Arrows effect
         StartCoroutine(ShowerOfArrowsEffect());
-        Destroy(gameObject, 5f); // Destroys the object after 5 seconds
+        Destroy(gameObject, 3f); // Destroys the object after 5 seconds
     }
 
 
     private IEnumerator ShowerOfArrowsEffect()
     {
+        ApplyEffectsToEnemies();
         // Show arrows raining down within the area
         for (int i = 0; i < numberOfArrows; i++)
         {
@@ -30,7 +31,7 @@ public class ShowerOfArrows : MonoBehaviour
         }
 
         // After the visual effect, apply damage and slow to enemies within the radius
-        ApplyEffectsToEnemies();
+
     }
 
     private void SpawnArrow()
@@ -66,7 +67,8 @@ public class ShowerOfArrows : MonoBehaviour
                     enemy.TakeDamage((int)damageAmount);
 
                     // Apply the slow effect to the enemy
-                    StartCoroutine(SlowEnemy(enemy));
+                    //StartCoroutine(SlowEnemy(enemy));
+                    enemy.Slow(slowAmount, slowDuration);
                 }
             }
         }

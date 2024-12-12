@@ -5,7 +5,7 @@ using System.Collections;
 public class CloneBehavior : MonoBehaviour
 {
     public float duration = 5f; // Duration the clone remains active
-    public float explosionDamage = 20f; // Damage dealt upon explosion
+    public float explosionDamage = 10f; // Damage dealt upon explosion
     public float explosionRadius = 5f; // Radius of the explosion
 
     private Sorcerer sorcerer;

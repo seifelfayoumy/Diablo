@@ -29,22 +29,22 @@ public class Arrow : MonoBehaviour
     //     transform.position += transform.forward * speed * Time.deltaTime;
     // }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            // Apply damage to the enemy
-            Enemy enemyScript = other.GetComponent<Enemy>();
-            if (enemyScript != null)
-            {
-                enemyScript.TakeDamage((int)damage);
-                playerStats.GainXP(enemyScript.GetXP());
-            }
+        // if (other.CompareTag("Enemy"))
+        // {
+        //     // Apply damage to the enemy
+        //     Enemy enemyScript = other.GetComponent<Enemy>();
+        //     if (enemyScript != null)
+        //     {
+        //         enemyScript.TakeDamage((int)damage);
+        //         playerStats.GainXP(enemyScript.GetXP());
+        //     }
 
-            // Destroy the fireball after hitting an enemy
-            Destroy(gameObject);
-        }
-        else if (other.CompareTag("Obstacle"))
+        //     // Destroy the fireball after hitting an enemy
+        //     Destroy(gameObject);
+        // }
+        // else if (other.CompareTag("Obstacle"))
         {
             // Destroy fireball if it hits an obstacle (optional)
             Destroy(gameObject);

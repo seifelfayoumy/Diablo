@@ -2702,7 +2702,7 @@ GameObject:
   - component: {fileID: 254131635715889076}
   m_Layer: 0
   m_Name: SorcererClone
-  m_TagString: Untagged
+  m_TagString: PlayerClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2876,7 +2876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 5
-  explosionDamage: 20
+  explosionDamage: 10
   explosionRadius: 5
 --- !u!1 &7379963965449929739
 GameObject:

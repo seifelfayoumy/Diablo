@@ -8,7 +8,7 @@ public class InfernoBehavior : MonoBehaviour
     public float damagePerSecond = 2f; // Damage per second while enemies are within the Inferno
     public float duration = 5f; // Duration of the Inferno
 
-    public float radius = 5f; // Radius of the Inferno effect
+    public float radius = 3f; // Radius of the Inferno effect
 
     private Sorcerer sorcerer;
 

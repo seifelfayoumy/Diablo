@@ -37,18 +37,24 @@ public class HUDManager : MonoBehaviour
     playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
     playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
 
-    if(GameObject.FindGameObjectWithTag("Player").name == "Barbarian")
+
+
+
+    GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+    if (player.GetComponent<Barbarian>() != null)
     {
-        abilitiesPanelBarbarian.SetActive(true);
+      abilitiesPanelBarbarian.SetActive(true);
     }
-    else if(GameObject.FindGameObjectWithTag("Player").name == "Sorcerer")
+    else if (player.GetComponent<Sorcerer>() != null)
     {
-        abilitiesPanelSorcerer.SetActive(true);
+      abilitiesPanelSorcerer.SetActive(true);
     }
-    else if(GameObject.FindGameObjectWithTag("Player").name == "Rogue")
+    else if (player.GetComponent<Rogue>() != null)
     {
-        abilitiesPanelRogue.SetActive(true);
+      abilitiesPanelRogue.SetActive(true);
     }
+
 
     UpdateHUD();
     //get player stats and health components form object tagged Player

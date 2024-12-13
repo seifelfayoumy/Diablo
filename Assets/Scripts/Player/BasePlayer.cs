@@ -102,6 +102,11 @@ public class BasePlayer : MonoBehaviour
     // Common health management
     public void TakeDamage(int damage)
     {
+        if(playerHealth.IsDead)
+        {
+            return;
+        }
+
         if (isInvincible)
         {
             Debug.Log("Player is invincible!");
@@ -111,8 +116,10 @@ public class BasePlayer : MonoBehaviour
         playerHealth.TakeDamage(damage);
         if (playerHealth.IsDead)
         {
-            animator.SetBool("IsDead", true); // Trigger death animation
+            animator.SetTrigger("IsDead"); // Trigger death animation
             audioSource.PlayOneShot(deathSound); // Play death sound
+        }else{
+            animator.SetTrigger("Reaction"); // Trigger hit animation
         }
     }
 

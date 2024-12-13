@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     protected bool isStunned = false;
     private bool isSlowed = false;
     public bool isInvincible = false;
-    protected float originalSpeed = 1f;
+    protected float originalSpeed = 3f;
     private NavMeshAgent navMeshAgent;
 
     void Start()

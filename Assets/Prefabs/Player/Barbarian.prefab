@@ -872,6 +872,7 @@ GameObject:
   - component: {fileID: 7558773638692852083}
   - component: {fileID: 5686881150175876593}
   - component: {fileID: 6079487721747541956}
+  - component: {fileID: 7868327693332727454}
   m_Layer: 0
   m_Name: Barbarian
   m_TagString: Player
@@ -1156,6 +1157,27 @@ MonoBehaviour:
     cooldownDelay: 0
   player: {fileID: 0}
   playerStats: {fileID: 0}
+--- !u!65 &7868327693332727454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2308520113231828281}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 5.04, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2450793562810839690
 GameObject:
   m_ObjectHideFlags: 0

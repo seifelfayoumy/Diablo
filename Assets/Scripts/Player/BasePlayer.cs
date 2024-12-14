@@ -17,7 +17,7 @@ public class BasePlayer : MonoBehaviour
     protected Animator animator;
 
         // Healing Potions and Rune Fragments
-    public int healingPotions = 0;
+    // public int playerStats.healingPotions = 0;
     public int runeFragments = 0;
 
     // Reference to HUDManager for updating UI
@@ -59,6 +59,11 @@ public class BasePlayer : MonoBehaviour
     protected virtual void Update()
     {
         HandleMovement();
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            UseHealingPotion();
+        }
 
     }
 
@@ -130,13 +135,14 @@ public class BasePlayer : MonoBehaviour
 
 
     // Handle picking up items
-   /** void OnTriggerEnter(Collider other)
+   void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Triggered");
         if (other.CompareTag("HealingPotion"))
         {
-            if (healingPotions < 3)
+            if (playerStats.healingPotions < 3)
             {
-                healingPotions++;
+                playerStats.healingPotions++;
                 hudManager.UpdateHUD();
                 Destroy(other.gameObject);
                 // Optionally, play a pickup sound
@@ -150,5 +156,18 @@ public class BasePlayer : MonoBehaviour
             Destroy(other.gameObject);
             // Optionally, play a pickup sound
         }
-    } **/
+    } 
+
+    
+
+    public void UseHealingPotion()
+{
+    if (playerStats.healingPotions > 0 && playerStats.currentHP < playerStats.maxHP)
+    {
+        int healAmount = playerStats.maxHP / 2;
+        playerHealth.Heal(healAmount);
+        playerStats.healingPotions--;
+        hudManager.UpdateHUD();
+    }
+}
 }

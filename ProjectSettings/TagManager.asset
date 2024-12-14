@@ -8,6 +8,7 @@ TagManager:
   - Sword
   - PlayerClone
   - HealingPotion
+  - RuneFragment
   layers:
   - Default
   - TransparentFX

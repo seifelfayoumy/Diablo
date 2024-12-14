@@ -18,7 +18,7 @@ public class BasePlayer : MonoBehaviour
 
         // Healing Potions and Rune Fragments
     // public int playerStats.healingPotions = 0;
-    public int runeFragments = 0;
+    // public int playerStats.runeFragments = 0;
 
     // Reference to HUDManager for updating UI
     private HUDManager hudManager;
@@ -151,7 +151,7 @@ public class BasePlayer : MonoBehaviour
         else if (other.CompareTag("RuneFragment"))
         {
             // Assuming each Rune Fragment is unique per camp
-            runeFragments++;
+            playerStats.runeFragments++;
             hudManager.UpdateHUD();
             Destroy(other.gameObject);
             // Optionally, play a pickup sound

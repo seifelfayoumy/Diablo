@@ -22,9 +22,9 @@ public class LilithBehavior : Enemy
         player = GameObject.FindGameObjectWithTag("Player")?.transform; // Find the player GameObject
     }
 
-    void Update()
+    protected void Update()
     {
-
+        base.Update();
         // Make Lilith look at the player if it exists
         if (player != null)
         {
@@ -77,6 +77,7 @@ public class LilithBehavior : Enemy
         {
             // Perform Divebomb
             animator.SetTrigger("Divebomb");
+            DiveBombAttack();
             yield return new WaitForSeconds(1f); // Wait for the divebomb animation
             countAttack = 0; // Reset to summon in the next cycle
         }
@@ -160,7 +161,7 @@ public class LilithBehavior : Enemy
     public void DiveBombAttack()
     {
         // Check if the player is within a radius of 10 units around Lilith
-        if (player != null && Vector3.Distance(transform.position, player.position) <= 10f)
+        if (player != null && Vector3.Distance(transform.position, player.position) <= 20f)
         {
             Debug.Log("Divebomb attack executed on player: " + player.GetComponent<BasePlayer>());
             player.GetComponent<BasePlayer>().TakeDamage(20);

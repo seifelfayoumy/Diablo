@@ -1,30 +1,49 @@
-using UnityEngine;
-using UnityEngine.AI;
 using System.Collections;
+using UnityEngine;
 
-public class MinionEnemy : Enemy
+public class MinionBehavior : Enemy
 {
-    public Animator animator;
-    public float detectionRange = 10f;
-    public float moveSpeed = 1f;
-    public float attackRange = 2f;
-    public float attackCooldown = 2f;
-    private float lastAttackTime = 0f;
-    public bool isAlerted;
+    public Animator animator; // Attach the Animator component
     public Transform player; // Reference to the player's transform
+        public Transform playerClone; // Reference to the player's transform
 
-    public Vector3 CampPosition; // Store the enemy's original position
-
-void Start()
+    public float attackRange = 5f; // Range to start attacking
+    public float detectionRange = 10f; // Range to detect the player
+    public float moveSpeed = 3f; // Speed at which the Demon moves towards the player
+    public float attackCooldown = 2f; // Cooldown time between attacks
+    private int countA = 0; // Counter to track attack sequences
+    private float lastAttackTime = 0f; // Time of the last attack
+    public GameObject sword; // Reference to the sword object
+    void Start()
     {
         animator = GetComponent<Animator>();
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        // maxHP = 40;
+        // currentHP = maxHP;
     }
 
-    void Update()
+    protected override void  Update()
     {
+        base.Update();
+        moveSpeed = originalSpeed;
+        Debug.Log("Demon Update"+moveSpeed);
+        if(isStunned)
+        {
+            return;
+        }
+
+        playerClone = GameObject.FindGameObjectWithTag("PlayerClone")?.transform;
+        if(playerClone != null)
+        {
+            player = playerClone;
+        }else
+        {
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        }
+
         if (player != null)
         {
             // Calculate distance to the player
@@ -41,19 +60,34 @@ void Start()
             {
                 // Move towards the player
                 transform.position += direction * moveSpeed * Time.deltaTime;
-                animator.SetBool("IsWalking", true); // Trigger moving animation
+                animator.SetBool("Iswalking", true); // Trigger moving animation
 
             }
             else
             {
              
-                animator.SetBool("IsWalking", false); // Stop moving animation when not chasing
+                animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
             }
 
             // Check if the player is within attack range
             if (distanceToPlayer <= attackRange && Time.time >= lastAttackTime + attackCooldown)
             {
-                animator.SetTrigger("Attack");
+                // if (countA < 2)
+                // {
+                   // sword.SetActive(true);
+                   // Debug.Log("COUNT " + countA);
+                    animator.SetTrigger("Punch"); // Trigger sword attack
+                    SwordAttack();
+                    // countA++;
+                // }
+                // else
+                // {
+                //     //sword.SetActive(false);
+                //    // Debug.Log("COUNT " + countA);
+                //     animator.SetTrigger("Throw"); // Trigger throw attack
+                //     countA = 0; // Reset count
+                // }
+
                 // Update the time of the last attack
                 lastAttackTime = Time.time;
             }
@@ -61,4 +95,17 @@ void Start()
 
 
     }
+    public void SwordAttack()
+    {
+        Debug.Log(player.GetComponent<BasePlayer>());
+        player.GetComponent<BasePlayer>().TakeDamage(5);
+    }
+    public void ThrowAttack()
+    {
+        Debug.Log(player.GetComponent<BasePlayer>());
+        player.GetComponent<BasePlayer>().TakeDamage(15);
+    }
+
+
+
 }

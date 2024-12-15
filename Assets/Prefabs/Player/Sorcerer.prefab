@@ -1890,6 +1890,7 @@ GameObject:
   - component: {fileID: 7000361444055819601}
   - component: {fileID: 1740382569368529864}
   - component: {fileID: 6403424960607495188}
+  - component: {fileID: -3084116915240066784}
   m_Layer: 0
   m_Name: Sorcerer
   m_TagString: Player
@@ -1973,8 +1974,6 @@ MonoBehaviour:
   playerStats: {fileID: 498009945210046940}
   playerHealth: {fileID: 7000361444055819601}
   audioSource: {fileID: 1740382569368529864}
-  healingPotions: 0
-  runeFragments: 0
   walkSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   deathSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
   attackSound: {fileID: 8300000, guid: 0f2c431844d194cb6a53408d949a73dc, type: 3}
@@ -2178,6 +2177,27 @@ MonoBehaviour:
     cooldownDelay: 5
   player: {fileID: 0}
   playerStats: {fileID: 0}
+--- !u!65 &-3084116915240066784
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397528824199192356}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4403706022330819539
 GameObject:
   m_ObjectHideFlags: 0

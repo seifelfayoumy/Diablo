@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class MinionBehavior : Enemy
 {
-    public Animator animator; // Attach the Animator component
     public Transform player; // Reference to the player's transform
-        public Transform playerClone; // Reference to the player's transform
+    public Transform playerClone; // Reference to the player's transform
 
     public float attackRange = 5f; // Range to start attacking
     public float detectionRange = 10f; // Range to detect the player

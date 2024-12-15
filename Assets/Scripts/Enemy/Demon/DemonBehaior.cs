@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class DemonBehavior : Enemy
 {
-    public Animator animator; // Attach the Animator component
     public Transform player; // Reference to the player's transform
         public Transform playerClone; // Reference to the player's transform
 

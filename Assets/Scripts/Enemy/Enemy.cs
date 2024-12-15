@@ -5,6 +5,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
+    public Animator animator;
     public int maxHP;
     public int currentHP;
     public int xpReward;
@@ -83,6 +84,10 @@ public class Enemy : MonoBehaviour
             {
                 Die();
             }
+            else
+            {
+                animator.SetTrigger("Reaction"); // Trigger death animation
+            }
         }
     }
 
@@ -102,7 +107,9 @@ public class Enemy : MonoBehaviour
         {
             campManager.EnemyDied();
         }
-        Destroy(gameObject);
+        animator.SetTrigger("IsDead"); // Trigger death animation
+        // audioSource.PlayOneShot(deathSound); // Play death sound
+        Destroy(gameObject, 2.5f);
     }
 
 
@@ -119,7 +126,9 @@ public class Enemy : MonoBehaviour
     {
         isStunned = true;
         // Optional: Play stun animation or effect
+        animator.SetBool("IsStunned", true);
         yield return new WaitForSeconds(duration);
+        animator.SetBool("IsStunned", false);
         isStunned = false;
     }
 

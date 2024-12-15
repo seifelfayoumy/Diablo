@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LilithBehavior : Enemy
 {
-    private Animator animator;
     private Transform player; // Reference to the player's transform
     public GameObject minionPrefab; // Reference to the minion prefab
     public float spawnRadius = 15f; // Radius within which minions will be spawned

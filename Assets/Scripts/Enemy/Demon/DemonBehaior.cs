@@ -14,8 +14,9 @@ public class DemonBehavior : Enemy
     private int countA = 0; // Counter to track attack sequences
     private float lastAttackTime = 0f; // Time of the last attack
     public GameObject sword; // Reference to the sword object
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         animator = GetComponent<Animator>();
 
         // Find the player by tag, ensure player exists
@@ -59,7 +60,8 @@ public class DemonBehavior : Enemy
             if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
             {
                 // Move towards the player
-                transform.position += direction * moveSpeed * Time.deltaTime;
+                //transform.position += direction * moveSpeed * Time.deltaTime;
+                navMeshAgent.destination = player.position;
                 animator.SetBool("Iswalking", true); // Trigger moving animation
 
             }

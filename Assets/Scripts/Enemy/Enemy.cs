@@ -17,9 +17,9 @@ public class Enemy : MonoBehaviour
     private bool isSlowed = false;
     public bool isInvincible = false;
     protected float originalSpeed = 3f;
-    private NavMeshAgent navMeshAgent;
+    protected NavMeshAgent navMeshAgent;
 
-    void Start()
+    protected virtual void Start()
     {
         currentHP = maxHP;
         if (healthBar != null)
@@ -31,9 +31,10 @@ public class Enemy : MonoBehaviour
         }
 
         navMeshAgent = GetComponent<NavMeshAgent>();
+        Debug.Log(navMeshAgent.speed + " IS THE SPEED");
         if (navMeshAgent != null)
         {
-            originalSpeed = navMeshAgent.speed;
+            navMeshAgent.speed = originalSpeed;
         }
     }
 

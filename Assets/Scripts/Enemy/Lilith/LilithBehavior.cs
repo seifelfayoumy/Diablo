@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class LilithBehavior : Enemy
 {
-    private Animator animator;
+    public GameObject spikesPrefab; // Reference to the player's transform
     private Transform player; // Reference to the player's transform
     public GameObject minionPrefab; // Reference to the minion prefab
+    public GameObject shieldObject;
+    public HealthBar shieldHealthbar;
+    private int maxShieldHP = 50;
+    private int currentShieldHP = 50;
+
     public float spawnRadius = 15f; // Radius within which minions will be spawned
 
     private bool isPerformingAction = false; // To prevent overlapping actions
@@ -55,6 +60,14 @@ public class LilithBehavior : Enemy
         {
             StartCoroutine(PerformNextAction());
         }
+
+    if (shieldHealthbar != null)
+    {
+      shieldHealthbar.SetHealth(currentShieldHP);
+      shieldHealthbar.SetHealthText(currentShieldHP);
+      shieldHealthbar.SetMaxHealth(maxShieldHP);
+
+    }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,10 +87,14 @@ public class LilithBehavior : Enemy
     {
         isPerformingAction = true;
 
+
+
         if(activeMinions.Count != 0)
         {
             countAttack = 1;
         }
+
+        countAttack = 3;
 
         if (countAttack == 0 && activeMinions.Count == 0)
         {
@@ -93,6 +110,13 @@ public class LilithBehavior : Enemy
             animator.SetTrigger("Divebomb");
             DiveBombAttack();
             yield return new WaitForSeconds(1f); // Wait for the divebomb animation
+            countAttack = 0; // Reset to summon in the next cycle
+        } else if (countAttack == 3)
+        {
+            // Perform Blood Spikes
+            animator.SetTrigger("BloodSpikes");
+            doBloodSpikes();
+            yield return new WaitForSeconds(1f); // Wait for the spikes animation
             countAttack = 0; // Reset to summon in the next cycle
         }
 
@@ -183,6 +207,25 @@ public class LilithBehavior : Enemy
         else
         {
             Debug.Log("Player is not within the range for a divebomb attack.");
+        }
+    }
+
+    public void doBloodSpikes()
+    {
+        //new Vector3(0.2f, 0.5f,-1.4f)
+        GameObject spikes = Instantiate(spikesPrefab, new Vector3(7f, 0.5f,-0.3f), transform.rotation);
+        spikes.SetActive(true);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 12f);
+        foreach (var hit in hitColliders)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                BasePlayer player = hit.GetComponent<BasePlayer>();
+                if (player != null)
+                {
+                    player.TakeDamage(30);
+                }
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;  // Needed for checking UI interaction
+using UnityEngine.SceneManagement;
 
 public class BasePlayer : MonoBehaviour
 {
@@ -109,6 +110,7 @@ public class BasePlayer : MonoBehaviour
     {
         if(playerHealth.IsDead)
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
             return;
         }
 

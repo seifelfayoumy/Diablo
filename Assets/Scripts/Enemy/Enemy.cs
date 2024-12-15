@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     public int maxHP;
     public int currentHP;
     public int xpReward;
+    public CampManager campManager;
+
 
     public HealthBar healthBar; // Reference to a HealthBar UI component
 
@@ -95,9 +97,13 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        // Handle death, e.g., play death animation, disable AI, drop loot, etc.
+        if (campManager != null)
+        {
+            campManager.EnemyDied();
+        }
         Destroy(gameObject);
     }
+
 
     public void Stun(float duration)
     {

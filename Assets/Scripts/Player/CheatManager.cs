@@ -6,7 +6,8 @@ public class CheatManager : MonoBehaviour
     private BasePlayer player;
     private PlayerStats playerStats;
     private AbilityManager abilityManager;
-
+    public GameObject pausePanel; // Assign the PausePanel in the Inspector
+    private bool isPaused = false;
     void Start()
     {
         player = FindObjectOfType<BasePlayer>();
@@ -16,6 +17,17 @@ public class CheatManager : MonoBehaviour
 
     void Update()
     {
+
+
+        // Toggle Pause when Escape is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+                ResumeGame();
+            else
+                PauseGame();
+        }
+
         // Heal: Press "H"
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -84,4 +96,19 @@ public class CheatManager : MonoBehaviour
             Debug.Log("Cheat: Gained 100 XP");
         }
     }
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;       // Stop time
+        pausePanel.SetActive(true); // Show Pause Panel
+        isPaused = true;
+        Debug.Log("Game Paused");
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;        // Resume time
+        pausePanel.SetActive(false); // Hide Pause Panel
+        isPaused = false;
+        Debug.Log("Game Resumed");
+    }
+
 }

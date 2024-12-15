@@ -16,16 +16,22 @@ public class LilithBehavior : Enemy
     public float actionCooldown = 3f; // Cooldown between actions
     private int countAttack = 0; // Tracks the sequence of actions (0 = Summon, 1 = Divebomb)
     
-    void Start()
+    protected override void Start()
     {
+        // base.Start();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform; // Find the player GameObject
+
     }
 
-    protected void Update()
+    protected override void Update()
     {
         base.Update();
         // Make Lilith look at the player if it exists
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        }
         if (player != null)
         {
             Vector3 direction = player.position - transform.position;
@@ -35,14 +41,17 @@ public class LilithBehavior : Enemy
         }
         if (activeMinions.Count > 0)
         {
-            Debug.Log(isInvincible);
             isInvincible = true;
+            // Debug.Log("Lilith is invincible while minions are active.");
+        }else
+        {
+            isInvincible = false;
         }
     
 
 
         // The attack sequence should only proceed if Lilith has been triggered and is not performing an action
-        if (isTriggered && !isPerformingAction && activeMinions.Count == 0)
+        if (isTriggered && !isPerformingAction)
         {
             StartCoroutine(PerformNextAction());
         }
@@ -65,7 +74,12 @@ public class LilithBehavior : Enemy
     {
         isPerformingAction = true;
 
-        if (countAttack == 0)
+        if(activeMinions.Count != 0)
+        {
+            countAttack = 1;
+        }
+
+        if (countAttack == 0 && activeMinions.Count == 0)
         {
             // Summon minions
             animator.SetTrigger("Summon");
@@ -161,7 +175,7 @@ public class LilithBehavior : Enemy
     public void DiveBombAttack()
     {
         // Check if the player is within a radius of 10 units around Lilith
-        if (player != null && Vector3.Distance(transform.position, player.position) <= 20f)
+        if (player != null && Vector3.Distance(transform.position, player.position) <= 10f)
         {
             Debug.Log("Divebomb attack executed on player: " + player.GetComponent<BasePlayer>());
             player.GetComponent<BasePlayer>().TakeDamage(20);

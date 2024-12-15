@@ -164,6 +164,7 @@ public class BasePlayer : MonoBehaviour
 {
     if (playerStats.healingPotions > 0 && playerStats.currentHP < playerStats.maxHP)
     {
+        animator.SetTrigger("Heal"); // Trigger potion use animation
         int healAmount = playerStats.maxHP / 2;
         playerHealth.Heal(healAmount);
         playerStats.healingPotions--;

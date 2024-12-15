@@ -30,7 +30,6 @@ public class DemonBehavior : Enemy
     {
         base.Update();
         moveSpeed = originalSpeed;
-        Debug.Log("Demon Update"+moveSpeed);
         if(isStunned)
         {
             return;

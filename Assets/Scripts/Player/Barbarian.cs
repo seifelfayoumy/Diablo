@@ -120,34 +120,34 @@ public class Barbarian : BasePlayer
     while (true)
     {
 
-    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
-    foreach (var hit in hitColliders)
-    {
-        if (hit.gameObject.CompareTag("Enemy"))
-        {
-          Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
-          if (enemyScript != null)
+      Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f); // Example range
+      foreach (var hit in hitColliders)
+      {
+          if (hit.gameObject.CompareTag("Enemy"))
           {
-            if (hit.gameObject.name == "Boss")
+            Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
+            if (enemyScript != null)
             {
-              enemyScript.TakeDamage(20);
+              if (hit.gameObject.name == "Boss")
+              {
+                enemyScript.TakeDamage(20);
+              }
+              else
+              {
+                playerStats.GainXP(enemyScript.GetXP());
+                enemyScript.Die();
+              }
+
+
+
             }
-            else
-            {
-              playerStats.GainXP(enemyScript.GetXP());
-              Destroy(hit.gameObject);
-            }
-
-
-
           }
-        }
-        else
-        {
-         // Destroy(hit.gameObject);
-        }
-      
-    }
+          else
+          {
+          // Destroy(hit.gameObject);
+          }
+        
+      }
       // Check if the animation is finished
       if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
       {

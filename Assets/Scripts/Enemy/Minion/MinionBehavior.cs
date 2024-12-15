@@ -5,7 +5,6 @@ public class MinionBehavior : Enemy
 {
     public Transform player; // Reference to the player's transform
     public Transform playerClone; // Reference to the player's transform
-
     public float attackRange = 5f; // Range to start attacking
     public float detectionRange = 10f; // Range to detect the player
     public float moveSpeed = 3f; // Speed at which the Demon moves towards the player
@@ -13,6 +12,7 @@ public class MinionBehavior : Enemy
     private int countA = 0; // Counter to track attack sequences
     private float lastAttackTime = 0f; // Time of the last attack
     public GameObject sword; // Reference to the sword object
+
     protected override void Start()
     {
         base.Start();
@@ -20,25 +20,27 @@ public class MinionBehavior : Enemy
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        // maxHP = 40;
-        // currentHP = maxHP;
     }
 
     protected override void  Update()
     {
         base.Update();
         moveSpeed = originalSpeed;
+        
         if(isStunned)
         {
             return;
         }
 
+        if(base.currentHP <=0)
+            return;
+
         playerClone = GameObject.FindGameObjectWithTag("PlayerClone")?.transform;
         if(playerClone != null)
         {
             player = playerClone;
-        }else
+        }
+        else
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
         }
@@ -57,16 +59,12 @@ public class MinionBehavior : Enemy
             // Check if the player is within detection range
             if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
             {
-                
                 // Move towards the player
-                //transform.position += direction * moveSpeed * Time.deltaTime;
                 navMeshAgent.destination = player.position;
                 animator.SetBool("Iswalking", true); // Trigger moving animation
-
             }
             else
             {
-             
                 animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
             }
 
@@ -93,20 +91,17 @@ public class MinionBehavior : Enemy
                 lastAttackTime = Time.time;
             }
         }
-
-
     }
+
     public void SwordAttack()
     {
         Debug.Log(player.GetComponent<BasePlayer>());
         player.GetComponent<BasePlayer>().TakeDamage(5);
     }
+
     public void ThrowAttack()
     {
         Debug.Log(player.GetComponent<BasePlayer>());
         player.GetComponent<BasePlayer>().TakeDamage(15);
     }
-
-
-
 }

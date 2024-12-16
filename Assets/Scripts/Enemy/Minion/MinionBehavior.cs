@@ -40,7 +40,7 @@ public class MinionBehavior : Enemy
             return;        
         }
 
-        if(!isAlerted)
+        if(!isAlerted && SceneManager.GetActiveScene().name == "MainLevel")
         {
             return;
         }

@@ -146,8 +146,10 @@ public class Enemy : MonoBehaviour
         isSlowed = true;
         float OldSpeed = originalSpeed;
         originalSpeed *= multiplier;
+        navMeshAgent.speed = originalSpeed;
         yield return new WaitForSeconds(duration);
         originalSpeed = OldSpeed;
+        navMeshAgent.speed = originalSpeed;
         isSlowed = false;
     }
 

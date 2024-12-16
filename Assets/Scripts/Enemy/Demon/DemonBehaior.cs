@@ -35,9 +35,16 @@ public class DemonBehavior : Enemy
             return;
         }
 
-        if(base.currentHP <=0)
+        if(base.currentHP <=0){
             return;
+        }
+         
 
+        if(!isAlerted)
+        {
+            return;
+        }
+        
         playerClone = GameObject.FindGameObjectWithTag("PlayerClone")?.transform;
         if(playerClone != null)
         {

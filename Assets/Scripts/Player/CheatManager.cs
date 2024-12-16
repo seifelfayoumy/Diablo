@@ -126,6 +126,11 @@ public class CheatManager : MonoBehaviour
     }
     public void RestartGame()
     {
+    GameObject characterInstance = GameObject.FindGameObjectWithTag("Player");
+      if(characterInstance != null)
+      {
+        Destroy(characterInstance);
+      }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
         Time.timeScale = 1;
     }

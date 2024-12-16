@@ -41,13 +41,24 @@ public class BasePlayer : MonoBehaviour
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        
-        // Initialize player stats (could be assigned from Inspector)
-        if (playerStats != null)
-        {
-            playerStats.maxHP = 100; // Example default value, to be set dynamically
-            playerStats.currentHP = playerStats.maxHP;
-        }
+
+    // Initialize player stats (could be assigned from Inspector)
+    if (playerStats != null && SceneManager.GetActiveScene().name == "MainLevel")
+    {
+      playerStats.maxHP = 100; // Example default value, to be set dynamically
+      playerStats.currentHP = playerStats.maxHP;
+    }
+    else if (playerStats != null && SceneManager.GetActiveScene().name == "BossLevel")
+    {
+      playerStats.maxHP = 400; // Example default value, to be set dynamically
+      playerStats.currentHP = playerStats.maxHP;
+      foreach (var ability in abilityManager.abilities)
+      {
+        ability.isUnlocked = true;
+      }
+      playerStats.level = 4;
+      playerStats.runeFragments = 3;
+    }
 
         if (playerHealth != null)
         {

@@ -38,5 +38,6 @@ public class PlayerStats : MonoBehaviour
         maxHP += 100;  // Increase max HP per level
         currentHP = maxHP;  // Heal the player when leveling up
         requiredXP = 100 * level;
+        FindObjectOfType<HUDManager>().UpdateHUD();
     }
 }

@@ -9,7 +9,7 @@ public class MinionBehavior : Enemy
     public float attackRange = 5f; // Range to start attacking
     public float detectionRange = 10f; // Range to detect the player
     public float moveSpeed = 3f; // Speed at which the Demon moves towards the player
-    public float attackCooldown = 2f; // Cooldown time between attacks
+    public float attackCooldown = 5f; // Cooldown time between attacks
     private int countA = 0; // Counter to track attack sequences
     private float lastAttackTime = 0f; // Time of the last attack
     public GameObject sword; // Reference to the sword object
@@ -21,6 +21,7 @@ public class MinionBehavior : Enemy
         base.Start();
         animator = GetComponent<Animator>();
         spawnPosition = this.transform.position;
+        attackCooldown = 5f; // Cooldown time between attacks
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -69,11 +70,18 @@ public class MinionBehavior : Enemy
                 float distanceToSpawnPosition = Vector3.Distance(transform.position, spawnPosition);
 
                 // Check if the player is within detection range
-                if (distanceToPlayerFromCampfire <= detectionRange && distanceToPlayer > attackRange)
+                if (distanceToPlayerFromCampfire <= detectionRange)
                 {
-                    // Move towards the player
-                    navMeshAgent.destination = player.position;
-                    animator.SetBool("Iswalking", true); // Trigger moving animation
+                    if(distanceToPlayer > attackRange)
+                    {
+                        // Move towards the player
+                        navMeshAgent.destination = player.position;
+                        animator.SetBool("Iswalking", true); // Trigger moving animation
+                    }
+                    else
+                    {
+                        animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
+                    }
                 }
                 else
                 {

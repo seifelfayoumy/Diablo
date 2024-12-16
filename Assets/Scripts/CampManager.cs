@@ -6,6 +6,7 @@ public class CampManager : MonoBehaviour
     private int enemiesRemaining;
     public GameObject runeFragmentPrefab;
     public Transform runeFragmentSpawnPoint;
+    bool isSpawned = false;
 
     void Start()
     {
@@ -26,6 +27,9 @@ public class CampManager : MonoBehaviour
 
     void SpawnRuneFragment()
     {
+        if(isSpawned)
+            return;
+        isSpawned = true;
         Instantiate(runeFragmentPrefab, runeFragmentSpawnPoint.position, Quaternion.identity);
         Debug.Log("All enemies cleared! Rune Fragment spawned.");
     }

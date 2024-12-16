@@ -1,6 +1,8 @@
 // InfernoBehavior.cs
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class InfernoBehavior : MonoBehaviour
 {
@@ -50,7 +52,8 @@ public class InfernoBehavior : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage((int)initialDamage);
-                    sorcerer.playerStats.GainXP(enemy.GetXP());
+                    if(enemy.GetHP() <= 0)
+                        sorcerer.playerStats.GainXP(enemy.GetXP());
                 }
             }
         }
@@ -69,7 +72,21 @@ public class InfernoBehavior : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage((int)damagePerSecond);
-                    sorcerer.playerStats.GainXP(enemy.GetXP());
+                }
+            }
+        }
+
+        HashSet<Collider> uniqueColliders = new HashSet<Collider>(hitColliders);
+
+        foreach (var hit in uniqueColliders)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    if(enemy.GetHP() <= 0)
+                        sorcerer.playerStats.GainXP(enemy.GetXP());
                 }
             }
         }

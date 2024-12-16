@@ -124,7 +124,7 @@ public class CheatManager : MonoBehaviour
     }
     public void mainMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
     public void GameOver()
     {

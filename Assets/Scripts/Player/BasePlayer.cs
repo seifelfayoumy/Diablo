@@ -42,7 +42,7 @@ public class BasePlayer : MonoBehaviour
         // Initialize player stats (could be assigned from Inspector)
         if (playerStats != null)
         {
-            playerStats.maxHP = 200; // Example default value, to be set dynamically
+            playerStats.maxHP = 100; // Example default value, to be set dynamically
             playerStats.currentHP = playerStats.maxHP;
         }
 

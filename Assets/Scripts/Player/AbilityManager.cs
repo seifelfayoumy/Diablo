@@ -15,6 +15,10 @@ public class AbilityManager : MonoBehaviour
   private Vector3 selectedPosition;
   private GameObject selectedEnemy;
 
+  private bool defensiveW;
+  private bool wildCardQ;
+  private bool ultimateE;
+
   void Start()
   {
     if (player == null)
@@ -96,25 +100,31 @@ public class AbilityManager : MonoBehaviour
 
   void HandleInput()
   {
-    if (Input.GetKeyDown(KeyCode.W))
+    if(!defensiveW && !wildCardQ && !ultimateE)
     {
+      if (Input.GetKeyDown(KeyCode.W))
+      {
+        var ability = abilities.Find(a => a.abilityType == AbilityType.Defensive);
+        var abilityName = ability.abilityName;
+        defensiveW = true;
+        UseAbility(abilityName);
+      }
+      if (Input.GetKeyDown(KeyCode.Q))
+      {
+        var ability = abilities.Find(a => a.abilityType == AbilityType.WildCard);
+        var abilityName = ability.abilityName;
+        wildCardQ = true;
+        UseAbility(abilityName);
+      }
+      if (Input.GetKeyDown(KeyCode.E))
+      {
+        var ability = abilities.Find(a => a.abilityType == AbilityType.Ultimate);
+        var abilityName = ability.abilityName;
+        ultimateE = true;
+        UseAbility(abilityName);
+      }
+    }
 
-      var ability = abilities.Find(a => a.abilityType == AbilityType.Defensive);
-      var abilityName = ability.abilityName;
-      UseAbility(abilityName);
-    }
-    if (Input.GetKeyDown(KeyCode.Q))
-    {
-      var ability = abilities.Find(a => a.abilityType == AbilityType.WildCard);
-      var abilityName = ability.abilityName;
-      UseAbility(abilityName);
-    }
-    if (Input.GetKeyDown(KeyCode.E))
-    {
-      var ability = abilities.Find(a => a.abilityType == AbilityType.Ultimate);
-      var abilityName = ability.abilityName;
-      UseAbility(abilityName);
-    }
     // If currently selecting a target, wait for right-click
     if (isSelectingTarget && Input.GetMouseButtonDown(1))
     {
@@ -178,6 +188,9 @@ public class AbilityManager : MonoBehaviour
         if (ability.activationType == ActivationType.Instant)
         {
           ability.Use();
+          defensiveW = false;
+          wildCardQ = false;
+          ultimateE = false;
         }
         else if (ability.activationType == ActivationType.SelectEnemy || ability.activationType == ActivationType.SelectPosition)
         {
@@ -186,6 +199,12 @@ public class AbilityManager : MonoBehaviour
           // Optional: Provide UI feedback to select target
         }
       }
+      else
+      {
+        defensiveW = false;
+        wildCardQ = false;
+        ultimateE = false;
+      }
     }
   }
 
@@ -193,6 +212,9 @@ public class AbilityManager : MonoBehaviour
   void ExecuteAbility(Ability ability, GameObject enemy, Vector3? position)
   {
     ability.Use(enemy, position);
+    defensiveW = false;
+    wildCardQ = false;
+    ultimateE = false;
   }
 
   // Unlock a specific ability

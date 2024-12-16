@@ -34,4 +34,9 @@ public class AudioManager : MonoBehaviour
     {
         SFXSrc.PlayOneShot(clip);
     }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        musicSrc.PlayOneShot(clip);
+    }
 }

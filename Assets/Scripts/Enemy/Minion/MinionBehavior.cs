@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MinionBehavior : Enemy
 {
@@ -13,10 +14,13 @@ public class MinionBehavior : Enemy
     private float lastAttackTime = 0f; // Time of the last attack
     public GameObject sword; // Reference to the sword object
 
+    public Vector3 spawnPosition;
+
     protected override void Start()
     {
         base.Start();
         animator = GetComponent<Animator>();
+        spawnPosition = this.transform.position;
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -56,36 +60,61 @@ public class MinionBehavior : Enemy
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 
-            // Check if the player is within detection range
-            if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
+
+
+            if(SceneManager.GetActiveScene().name == "MainLevel")
             {
-                // Move towards the player
-                navMeshAgent.destination = player.position;
-                animator.SetBool("Iswalking", true); // Trigger moving animation
+                // Calculate distance to the player from Campfire
+                float distanceToPlayerFromCampfire = Vector3.Distance(campManager.runeFragmentSpawnPoint.position, player.position);
+                float distanceToSpawnPosition = Vector3.Distance(transform.position, spawnPosition);
+
+                // Check if the player is within detection range
+                if (distanceToPlayerFromCampfire <= detectionRange && distanceToPlayer > attackRange)
+                {
+                    // Move towards the player
+                    navMeshAgent.destination = player.position;
+                    animator.SetBool("Iswalking", true); // Trigger moving animation
+                }
+                else
+                {
+                    if(distanceToSpawnPosition > 1)
+                    {
+                        // Face the spawn position
+                        Vector3 direction1 = (spawnPosition - transform.position).normalized;
+                        direction1.y = 0; // Prevent rotation in the y-axis
+                        Quaternion lookRotation1 = Quaternion.LookRotation(direction1);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation1, Time.deltaTime * 5f);
+
+                        // Move towards their spawn position
+                        navMeshAgent.destination = spawnPosition;
+                        animator.SetBool("Iswalking", true); // Trigger moving animation
+                    }
+                    else
+                    {
+                        animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
+                    }
+                }
             }
-            else
+            else if(SceneManager.GetActiveScene().name == "BossLevel")
             {
-                animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
+                // Check if the player is within detection range
+                if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
+                {
+                    // Move towards the player
+                    navMeshAgent.destination = player.position;
+                    animator.SetBool("Iswalking", true); // Trigger moving animation
+                }
+                else
+                {
+                    animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
+                }
             }
 
             // Check if the player is within attack range
             if (distanceToPlayer <= attackRange && Time.time >= lastAttackTime + attackCooldown)
             {
-                // if (countA < 2)
-                // {
-                   // sword.SetActive(true);
-                   // Debug.Log("COUNT " + countA);
-                    animator.SetTrigger("Punch"); // Trigger sword attack
-                    SwordAttack();
-                    // countA++;
-                // }
-                // else
-                // {
-                //     //sword.SetActive(false);
-                //    // Debug.Log("COUNT " + countA);
-                //     animator.SetTrigger("Throw"); // Trigger throw attack
-                //     countA = 0; // Reset count
-                // }
+                animator.SetTrigger("Punch"); // Trigger sword attack
+                SwordAttack();
 
                 // Update the time of the last attack
                 lastAttackTime = Time.time;

@@ -96,6 +96,11 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        Collider collider = this.gameObject.GetComponent<Collider>();
+        if(collider.enabled == false)
+        {
+            return;
+        }
         if (campManager != null)
         {
             campManager.EnemyDied();
@@ -103,7 +108,6 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("IsDead");
         audioManager.PlaySFX(audioManager.enemyDiesSFX);
         
-        Collider collider = this.gameObject.GetComponent<Collider>();
         collider.enabled = false;
 
         if(isAlerted)

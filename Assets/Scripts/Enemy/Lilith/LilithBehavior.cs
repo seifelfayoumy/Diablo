@@ -341,7 +341,7 @@ public class LilithBehavior : Enemy
 
   public void doBloodSpikes()
   {
-    GameObject spikes = Instantiate(spikesPrefab, new Vector3(7f, 0.5f, -0.3f), transform.rotation);
+    GameObject spikes = Instantiate(spikesPrefab, new Vector3(-80f, 0.5f, -0.75f), transform.rotation);
     spikes.SetActive(true);
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 12f);
     foreach (var hit in hitColliders)

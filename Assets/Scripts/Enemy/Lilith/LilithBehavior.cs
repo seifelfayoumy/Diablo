@@ -29,7 +29,9 @@ public class LilithBehavior : Enemy
   public float actionCooldown = 10f; // Cooldown between actions
   private int countAttack = 0; // Tracks the sequence of actions (0 = Summon, 1 = Divebomb)
 
-  protected override void Start()
+    public GameObject gameWon; // Assign the GameOverPanel in the Inspector
+
+    protected override void Start()
   {
     // base.Start();
     animator = GetComponent<Animator>();
@@ -356,7 +358,11 @@ public class LilithBehavior : Enemy
         if (currentHP <= 0)
         {
           animator.SetTrigger("IsDead");
-            audioManager.PlaySFX(audioManager.bossDiesSFX);
+                    Time.timeScale = 0f;
+                    gameWon.SetActive(true); // Show Game Over Panel
+
+
+                    audioManager.PlaySFX(audioManager.bossDiesSFX);
         }
       }
     }

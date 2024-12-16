@@ -25,7 +25,7 @@ public class DemonBehavior : Enemy
     base.Start();
     animator = GetComponent<Animator>();
     spawnPosition = this.transform.position;
-    attackCooldown = 5f; // Cooldown time between attacks
+    attackCooldown = 10f; // Cooldown time between attacks
 
     // Find the player by tag, ensure player exists
     player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -96,7 +96,7 @@ public class DemonBehavior : Enemy
         {
           // Move towards the player
           navMeshAgent.destination = player.position;
-          animator.SetBool("Iswalking", true); // Trigger moving animation
+          animator.SetBool("IsRunning", true); // Trigger moving animation
         }
         else
         {
@@ -111,7 +111,7 @@ public class DemonBehavior : Enemy
             // // Move towards their spawn position
             // navMeshAgent.destination = spawnPosition;
             // animator.SetBool("Iswalking", true); // Trigger moving animation
-
+            animator.SetBool("IsRunning", false); // Trigger moving animation
             animator.SetBool("Iswalking", true); // Stop moving animation when not chasing
             angle += originalSpeed * Time.deltaTime / radius;  // speed here is the distance per second along the circle's edge
             if (angle >= 360f) angle -= 360f;  // Keep the angle within 0-360 degrees

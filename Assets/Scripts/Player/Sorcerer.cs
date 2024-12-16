@@ -39,19 +39,17 @@ public class Sorcerer : BasePlayer
     public void Fireball(GameObject enemy)
     {
         animator.SetTrigger("IsFireball");
-        // audioSource.PlayOneShot(fireballSound);
         
         StartCoroutine(FireballSpawn(enemy));
     }
 
     IEnumerator FireballSpawn(GameObject enemy)
     {
-        // Adjust rotation
-        Vector3 position = enemy.transform.position;
-        Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
-        transform.LookAt(lookAt);
-
         yield return new WaitForSeconds(2f);
+
+        // Adjust rotation
+        Vector3 lookAt = new Vector3(enemy.transform.position.x, transform.position.y, enemy.transform.position.z);
+        transform.LookAt(lookAt);
         
         // Spawn fireball in front of the player with Y = 1
         Vector3 spawnPosition = transform.position + transform.forward * 2f; // 2f is the distance in front of the player
@@ -64,10 +62,8 @@ public class Sorcerer : BasePlayer
         if (fireballScript != null)
         {
             fireballScript.Initialize(10, 5, enemy, playerStats);
-            Debug.Log("Fireball");
         }
 
-        
         if (enemy != null)
         {
             Enemy enemyScript = enemy.GetComponent<Enemy>();

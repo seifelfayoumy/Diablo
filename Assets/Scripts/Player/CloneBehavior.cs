@@ -28,7 +28,7 @@ public class CloneBehavior : MonoBehaviour
 
     private void Explode()
     {
-        // Optional: Play explosion animation or effect here
+        sorcerer.audioManager.PlaySFX(sorcerer.audioManager.explosionSFX);
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (var hit in hitColliders)
@@ -39,7 +39,8 @@ public class CloneBehavior : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage((int)explosionDamage);
-                    sorcerer.playerStats.GainXP(enemy.GetXP());
+                    if(enemy.GetHP() <= 0)
+                        sorcerer.playerStats.GainXP(enemy.GetXP());
                 }
             }
         }

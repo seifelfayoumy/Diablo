@@ -21,7 +21,7 @@ public class MinionBehavior : Enemy
         base.Start();
         animator = GetComponent<Animator>();
         spawnPosition = this.transform.position;
-        attackCooldown = 5f; // Cooldown time between attacks
+        attackCooldown = 7f; // Cooldown time between attacks
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -82,11 +82,11 @@ public class MinionBehavior : Enemy
                     {
                         // Move towards the player
                         navMeshAgent.destination = player.position;
-                        animator.SetBool("Iswalking", true); // Trigger moving animation
+                        animator.SetBool("IsRunning", true); // Trigger moving animation
                     }
                     else
                     {
-                        animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
+                        animator.SetBool("IsRunning", false); // Stop moving animation when not chasing
                     }
                 }
                 else
@@ -101,6 +101,7 @@ public class MinionBehavior : Enemy
 
                         // Move towards their spawn position
                         navMeshAgent.destination = spawnPosition;
+                        animator.SetBool("IsRunning", false); // Stop moving animation when not chasing
                         animator.SetBool("Iswalking", true); // Trigger moving animation
                     }
                     else
@@ -112,15 +113,15 @@ public class MinionBehavior : Enemy
             else if(SceneManager.GetActiveScene().name == "BossLevel")
             {
                 // Check if the player is within detection range
-                if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
+                if (distanceToPlayer > attackRange)
                 {
                     // Move towards the player
                     navMeshAgent.destination = player.position;
-                    animator.SetBool("Iswalking", true); // Trigger moving animation
+                    animator.SetBool("IsRunning", true); // Trigger moving animation
                 }
                 else
                 {
-                    animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
+                    animator.SetBool("IsRunning", false); // Stop moving animation when not chasing
                 }
             }
 

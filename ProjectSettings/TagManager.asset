@@ -9,6 +9,7 @@ TagManager:
   - PlayerClone
   - HealingPotion
   - RuneFragment
+  - Audio
   layers:
   - Default
   - TransparentFX

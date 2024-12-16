@@ -39,7 +39,7 @@ public class Sorcerer : BasePlayer
     public void Fireball(GameObject enemy)
     {
         animator.SetTrigger("IsFireball");
-        audioSource.PlayOneShot(fireballSound);
+        // audioSource.PlayOneShot(fireballSound);
         
         StartCoroutine(FireballSpawn(enemy));
     }
@@ -57,6 +57,7 @@ public class Sorcerer : BasePlayer
         Vector3 spawnPosition = transform.position + transform.forward * 2f; // 2f is the distance in front of the player
         spawnPosition.y = 1f;  // Set Y to 1
 
+        audioManager.PlaySFX(audioManager.fireballSFX);
         GameObject fireball = Instantiate(fireballPrefab, spawnPosition, transform.rotation);
 
         Fireball fireballScript = fireball.GetComponent<Fireball>();
@@ -82,7 +83,7 @@ public class Sorcerer : BasePlayer
     // Teleport ability to a position
     public void Teleport(Vector3 position)
     {
-        audioSource.PlayOneShot(teleportSound);
+        // audioSource.PlayOneShot(teleportSound);
 
         navMeshAgent.Warp(position);
     }
@@ -90,7 +91,7 @@ public class Sorcerer : BasePlayer
     // Clone ability at a position
     public void Clone(Vector3 position)
     {
-        audioSource.PlayOneShot(cloneSound);
+        audioManager.PlaySFX(audioManager.cloneSFX);
 
         // Instantiate clone
         GameObject clone = Instantiate(clonePrefab, position, Quaternion.identity);
@@ -105,7 +106,7 @@ public class Sorcerer : BasePlayer
     public void Inferno(Vector3 position)
     {
         animator.SetTrigger("IsInferno");
-        audioSource.PlayOneShot(infernoSound);
+        audioManager.PlaySFX(audioManager.infernoSFX);
 
         // Adjust rotation
         Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);

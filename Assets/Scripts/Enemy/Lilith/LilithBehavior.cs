@@ -100,6 +100,7 @@ public class LilithBehavior : Enemy
         {
             // Summon minions
             animator.SetTrigger("Summon");
+            audioManager.PlaySFX(audioManager.summonSFX);
             yield return new WaitForSeconds(1f); // Wait for the summon animation
             SummonMinions();
             countAttack++;
@@ -108,13 +109,15 @@ public class LilithBehavior : Enemy
         {
             // Perform Divebomb
             animator.SetTrigger("Divebomb");
+            audioManager.PlaySFX(audioManager.bossStompsDownSFX);
             DiveBombAttack();
             yield return new WaitForSeconds(1f); // Wait for the divebomb animation
             countAttack = 0; // Reset to summon in the next cycle
         } else if (countAttack == 3)
         {
             // Perform Blood Spikes
-            animator.SetTrigger("BloodSpikes");
+            animator.SetTrigger("IsSwinging");
+            audioManager.PlaySFX(audioManager.bossSwingHandsSFX);
             doBloodSpikes();
             yield return new WaitForSeconds(1f); // Wait for the spikes animation
             countAttack = 0; // Reset to summon in the next cycle

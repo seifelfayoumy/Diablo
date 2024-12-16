@@ -12,35 +12,32 @@ public class BasePlayer : MonoBehaviour
     // Health Variables
     public PlayerStats playerStats; // Reference to stats for health management
     public PlayerHealth playerHealth; // Reference to health management
-    public AudioSource audioSource;
 
     // Animation Variables
     protected Animator animator;
 
-        // Healing Potions and Rune Fragments
+    // Healing Potions and Rune Fragments
     // public int playerStats.healingPotions = 0;
     // public int playerStats.runeFragments = 0;
 
     // Reference to HUDManager for updating UI
     private HUDManager hudManager;
 
+    private AbilityManager abilityManager;
 
-    // Sound Effects
-    public AudioClip walkSound;
-    public AudioClip deathSound;
-    public AudioClip attackSound;
-        private AbilityManager abilityManager;
+    public bool isInvincible = false;
 
-        public bool isInvincible = false;
+    public AudioManager audioManager;
 
     // Start and Initialization
     protected virtual void Start()
     {
-                abilityManager = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+        abilityManager = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityManager>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
         
         // Initialize player stats (could be assigned from Inspector)
         if (playerStats != null)
@@ -99,10 +96,6 @@ public class BasePlayer : MonoBehaviour
 
             bool isWalking = navMeshAgent.velocity != Vector3.zero;
             animator.SetBool("IsWalking", isWalking);
-            if (isWalking && !audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(walkSound); // Play walk sound
-            }
     }
 
     // Common health management
@@ -124,9 +117,10 @@ public class BasePlayer : MonoBehaviour
         if (playerHealth.IsDead)
         {
             animator.SetTrigger("IsDead"); // Trigger death animation
-            audioSource.PlayOneShot(deathSound); // Play death sound
+            audioManager.PlaySFX(audioManager.wandererDiesSFX);
         }else{
             animator.SetTrigger("Reaction"); // Trigger hit animation
+            audioManager.PlaySFX(audioManager.wandererDamageSFX);
         }
     }
 
@@ -139,38 +133,35 @@ public class BasePlayer : MonoBehaviour
     // Handle picking up items
    void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered");
         if (other.CompareTag("HealingPotion"))
         {
             if (playerStats.healingPotions < 3)
             {
                 playerStats.healingPotions++;
                 hudManager.UpdateHUD();
+                audioManager.PlaySFX(audioManager.pickupSFX);
                 Destroy(other.gameObject);
-                // Optionally, play a pickup sound
             }
         }
         else if (other.CompareTag("RuneFragment"))
         {
-            // Assuming each Rune Fragment is unique per camp
             playerStats.runeFragments++;
             hudManager.UpdateHUD();
+            audioManager.PlaySFX(audioManager.pickupSFX);
             Destroy(other.gameObject);
-            // Optionally, play a pickup sound
         }
     } 
 
-    
-
     public void UseHealingPotion()
-{
-    if (playerStats.healingPotions > 0 && playerStats.currentHP < playerStats.maxHP)
     {
-        animator.SetTrigger("Heal"); // Trigger potion use animation
-        int healAmount = playerStats.maxHP / 2;
-        playerHealth.Heal(healAmount);
-        playerStats.healingPotions--;
-        hudManager.UpdateHUD();
+        if (playerStats.healingPotions > 0 && playerStats.currentHP < playerStats.maxHP)
+        {
+            animator.SetTrigger("Heal");
+            audioManager.PlaySFX(audioManager.healingPotionSFX);
+            int healAmount = playerStats.maxHP / 2;
+            playerHealth.Heal(healAmount);
+            playerStats.healingPotions--;
+            hudManager.UpdateHUD();
+        }
     }
-}
 }

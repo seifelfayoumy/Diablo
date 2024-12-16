@@ -28,7 +28,6 @@ public class Rogue : BasePlayer
     public void Arrow(GameObject enemy)
     {
         animator.SetTrigger("IsArrow");
-        audioSource.PlayOneShot(arrowSound);
 
         //wait for the animation to play
         StartCoroutine(PerformArrow(enemy));
@@ -45,13 +44,13 @@ public class Rogue : BasePlayer
         Vector3 spawnPosition = transform.position; // 2f is the distance in front of the player
         spawnPosition.y = 1f;  // Set Y to 1
 
+        audioManager.PlaySFX(audioManager.arrowFiredSFX);
         GameObject arrow = Instantiate(arrowPrefab, spawnPosition, transform.rotation);
 
         Arrow arrowScript = arrow.GetComponent<Arrow>();
         if (arrowScript != null)
         {
             arrowScript.Initialize(10, 5, enemy, playerStats);
-            Debug.Log("Fireball");
         }
 
         if (enemy != null)
@@ -66,12 +65,11 @@ public class Rogue : BasePlayer
         }
     }
 
-
     // Smoke Bomb ability
     public void SmokeBomb(GameObject enemy = null, Vector3? position = null)
     {
         animator.SetTrigger("IsSmoke");
-        audioSource.PlayOneShot(smokeBombSound);
+        // audioSource.PlayOneShot(smokeBombSound);
 
         GameObject inferno = Instantiate(smokeBombPrefab, transform.position, Quaternion.identity);
         SmokeBombBehavior infernoBehavior = inferno.GetComponent<SmokeBombBehavior>();
@@ -86,8 +84,7 @@ public class Rogue : BasePlayer
     public void Dash(Vector3 position)
     {
         animator.SetBool("IsDash", true);
-        Debug.Log("Dashing");
-        audioSource.PlayOneShot(dashSound);
+        audioManager.PlaySFX(audioManager.chargeDashSFX);
 
         // Implement charging logic
         StartCoroutine(PerformDash(position));
@@ -135,9 +132,10 @@ public class Rogue : BasePlayer
     public void ShowerOfArrows(Vector3 position)
     {
         animator.SetTrigger("IsShower");
-        audioSource.PlayOneShot(showerOfArrowsSound);
+        // audioSource.PlayOneShot(showerOfArrowsSound);
 
         // Implement area damage and slow effect
+        audioManager.PlaySFX(audioManager.arrowFiredSFX);
         GameObject shower = Instantiate(showerArrowsPrefab, position, Quaternion.identity);
 
         // Collider[] hitColliders = Physics.OverlapSphere(position, 5f); // Example range

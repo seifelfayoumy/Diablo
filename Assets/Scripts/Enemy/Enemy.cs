@@ -16,8 +16,12 @@ public class Enemy : MonoBehaviour
     protected float originalSpeed = 3f;
     protected NavMeshAgent navMeshAgent;
 
+    public AudioManager audioManager;
+
     protected virtual void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        
         currentHP = maxHP;
         if (healthBar != null)
         {
@@ -95,7 +99,7 @@ public class Enemy : MonoBehaviour
             campManager.EnemyDied();
         }
         animator.SetTrigger("IsDead");
-        // audioSource.PlayOneShot(deathSound); // Play death sound
+        audioManager.PlaySFX(audioManager.enemyDiesSFX);
         
         Collider collider = this.gameObject.GetComponent<Collider>();
         collider.enabled = false;

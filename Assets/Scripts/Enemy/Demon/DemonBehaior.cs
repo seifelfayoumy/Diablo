@@ -81,6 +81,7 @@ public class DemonBehavior : Enemy
                     //sword.SetActive(false);
                    // Debug.Log("COUNT " + countA);
                     animator.SetTrigger("Throw"); // Trigger throw attack
+                    audioManager.PlaySFX(audioManager.explosionSFX);
                     countA = 0; // Reset count
                 }
 

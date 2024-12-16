@@ -5,10 +5,6 @@ using System.Collections;
 public class Barbarian : BasePlayer
 {
   // Ability-specific variables
-  public AudioClip shieldSound;
-  public AudioClip bashSound;
-  public AudioClip chargeSound;
-  public AudioClip ironMaelstormSound;
   public float bashDamage = 5f;
   public float ironMaelstormDamage = 10f;
   public GameObject shieldObject;
@@ -38,7 +34,7 @@ public class Barbarian : BasePlayer
         if (distanceToEnemy <= 5)
         {
           animator.SetTrigger("Bash");
-          audioSource.PlayOneShot(bashSound);
+          // audioSource.PlayOneShot(bashSound);
 
           enemyScript.TakeDamage((int)bashDamage);
           if (enemyScript.GetHP() <= 0)
@@ -52,7 +48,7 @@ public class Barbarian : BasePlayer
   public void Shield(GameObject enemy = null, Vector3? position = null)
   {
     animator.SetTrigger("Shield");
-    audioSource.PlayOneShot(shieldSound);
+    audioManager.PlaySFX(audioManager.shieldActivateSFX);
 
     // Spawn and activate shield
     GameObject shield = Instantiate(shieldObject, transform.position, Quaternion.identity);
@@ -73,7 +69,7 @@ public class Barbarian : BasePlayer
   public void IronMaelstorm(GameObject enemy = null, Vector3? position = null)
   {
     animator.SetTrigger("IronMaelstorm");
-    audioSource.PlayOneShot(ironMaelstormSound);
+    // audioSource.PlayOneShot(ironMaelstormSound);
 
     // Area damage around the player
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
@@ -96,8 +92,7 @@ public class Barbarian : BasePlayer
   public void Charge(Vector3 position)
   {
     animator.SetBool("Charge", true);
-    Debug.Log("Charging");
-    audioSource.PlayOneShot(chargeSound);
+    audioManager.PlaySFX(audioManager.chargeDashSFX);
     isCharge = true;
     // Implement charging logic
     StartCoroutine(PerformCharge(position));

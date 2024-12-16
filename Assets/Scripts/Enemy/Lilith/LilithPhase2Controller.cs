@@ -19,8 +19,11 @@ public class LilithPhase2Controller : MonoBehaviour
 
     private bool isReflectiveAuraActive = false;
 
+    AudioManager audioManager;
+
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         animator = GetComponent<Animator>();
 
         if (player != null)
@@ -129,12 +132,14 @@ public class LilithPhase2Controller : MonoBehaviour
 
     private void PlaySummoning()
     {
-        animator.Play("Summoning");
+        animator.SetTrigger("Summon");
+        audioManager.PlaySFX(audioManager.summonSFX);
     }
 
     private void PlayBloodSpikes()
     {
-        animator.Play("Divebomb");
+        animator.SetTrigger("IsSwinging");
+        audioManager.PlaySFX(audioManager.bossSwingHandsSFX);
 
         if (playerStats != null)
         {
@@ -151,7 +156,8 @@ public class LilithPhase2Controller : MonoBehaviour
 
     private void PlayReflectiveAura()
     {
-        animator.Play("Cast Spell");
+        animator.SetTrigger("IsCasting");
+        audioManager.PlaySFX(audioManager.bossCastSpellSFX);
 
         if (playerStats != null)
         {
@@ -175,7 +181,8 @@ public class LilithPhase2Controller : MonoBehaviour
 
     private void PlayGettingDamaged()
     {
-        animator.Play("Getting Damaged Reaction");
+        animator.SetTrigger("Reaction");
+        audioManager.PlaySFX(audioManager.bossHitSFX);
     }
 
     private void PlayShieldReform()
@@ -186,7 +193,7 @@ public class LilithPhase2Controller : MonoBehaviour
             activeShield.transform.SetParent(transform); // Attach the shield to Lilith
         }
 
-        animator.Play("Reformation/Resurrected"); // Play reformation animation
+        animator.SetTrigger("IsResurrect");
     }
 
     private void PlayShieldBreak()
@@ -197,7 +204,8 @@ public class LilithPhase2Controller : MonoBehaviour
             activeShield = null;   // Clear the reference
         }
 
-        animator.Play("Getting Damaged Reaction"); // Play a fallback animation
+        animator.SetTrigger("Reaction");
+        audioManager.PlaySFX(audioManager.bossHitSFX);
     }
 
     private void PlayStunned()
@@ -212,7 +220,8 @@ public class LilithPhase2Controller : MonoBehaviour
             Destroy(activeShield); // Clean up the shield on death
         }
 
-        animator.Play("Dying");
+        animator.SetTrigger("IsDead");
+        audioManager.PlaySFX(audioManager.bossDiesSFX);
         // Handle boss defeat logic
     }
 }

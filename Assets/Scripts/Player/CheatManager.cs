@@ -127,6 +127,8 @@ public class CheatManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
+
+
         Time.timeScale = 1;
     }
     public void mainMenu()

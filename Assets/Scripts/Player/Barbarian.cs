@@ -123,7 +123,7 @@ public class Barbarian : BasePlayer
             Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
             if (enemyScript != null)
             {
-              if (hit.gameObject.name == "Boss")
+              if (hit.gameObject.name == "Lilith")
               {
                 enemyScript.TakeDamage(20);
               }

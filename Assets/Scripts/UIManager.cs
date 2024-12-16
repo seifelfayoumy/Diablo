@@ -68,8 +68,12 @@ public class UIManager : MonoBehaviour
 
   private void SelectCharacter(GameObject characterPrefab)
   {
-    // Spawn the selected character
-    GameObject characterInstance = Instantiate(characterPrefab, Vector3.zero, Quaternion.identity);
+
+        // Spawn the selected character at the specified position
+        Vector3 spawnPosition = new Vector3(-81f, 0f, 7.7f);
+
+        // Spawn the selected character
+        GameObject characterInstance = Instantiate(characterPrefab, spawnPosition, Quaternion.identity);
 
     DontDestroyOnLoad(characterInstance);
     // Attach the camera follow script

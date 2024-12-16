@@ -111,7 +111,8 @@ public class Barbarian : BasePlayer
 
 
 
-    // Move towards the target position, checking both animation and movement completion
+        // Move towards the target position, checking both animation and movement completion
+        bool hitBoss = false;
     while (true)
     {
 
@@ -123,15 +124,18 @@ public class Barbarian : BasePlayer
             Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
             if (enemyScript != null)
             {
-              if (hit.gameObject.name == "Boss")
+              if (hit.gameObject.name == "Lilith" && !hitBoss)
               {
+                            hitBoss= true;
+                            Debug.Log("Lilith hit charge");
                 enemyScript.TakeDamage(20);
               }
-              else
-              {
+              else if (hit.gameObject.name != "Lilith")
+                        {
                 playerStats.GainXP(enemyScript.GetXP());
                 enemyScript.Die();
-              }
+                            Debug.Log("Lilith ISNT hit charge");
+                        }
 
 
 

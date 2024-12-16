@@ -889,6 +889,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1030692063636000166, guid: d735529d1f3dcbd4da17ee0355383baf, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3416409288016669998, guid: d735529d1f3dcbd4da17ee0355383baf, type: 3}
       propertyPath: gameWon
       value: 

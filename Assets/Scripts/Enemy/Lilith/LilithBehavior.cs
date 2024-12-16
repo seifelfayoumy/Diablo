@@ -264,6 +264,7 @@ public class LilithBehavior : Enemy
     if (currentPhase == BossPhase.Phase1)
     {
       audioManager.PlaySFX(audioManager.bossHitSFX);
+      animator.SetTrigger("Reaction");
       currentHP -= damage;
       currentHP = Mathf.Max(0, currentHP);
 
@@ -314,6 +315,7 @@ public class LilithBehavior : Enemy
       else
       {
         audioManager.PlaySFX(audioManager.bossHitSFX);
+        animator.SetTrigger("Reaction");
         currentHP -= damage;
         currentHP = Mathf.Max(0, currentHP);
 

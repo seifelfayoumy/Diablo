@@ -11,9 +11,11 @@ public class ShowerOfArrows : MonoBehaviour
     public float spawnInterval = 0.1f; // Interval between each arrow spawn (visual)
     public float height = 10f; // Height from which arrows fall
     public int numberOfArrows = 30; // Number of arrows to spawn during the effect
+    private BasePlayer player;
 
     private void Start()
     {
+        player = FindObjectOfType<BasePlayer>();
         // Start the Shower of Arrows effect
         StartCoroutine(ShowerOfArrowsEffect());
         Destroy(gameObject, 3f); // Destroys the object after 5 seconds
@@ -65,10 +67,10 @@ public class ShowerOfArrows : MonoBehaviour
                 {
                     // Deal damage to the enemy
                     enemy.TakeDamage((int)damageAmount);
-
-                    // Apply the slow effect to the enemy
-                    //StartCoroutine(SlowEnemy(enemy));
                     enemy.Slow(slowAmount, slowDuration);
+
+                    if(enemy.GetHP() <= 0)
+                        player.playerStats.GainXP(enemy.GetXP());
                 }
             }
         }
@@ -76,17 +78,7 @@ public class ShowerOfArrows : MonoBehaviour
 
     private IEnumerator SlowEnemy(Enemy enemy)
     {
-      enemy.Slow(slowAmount, slowDuration);
-        // Save the original speed
-        // float originalSpeed = enemy.GetMovementSpeed();
-
-        // // Apply slow speed
-        // enemy.SetMovementSpeed(originalSpeed * slowAmount);
-
-        // // Wait for the duration of the slow effect
+        enemy.Slow(slowAmount, slowDuration);
         yield return new WaitForSeconds(slowDuration);
-
-        // // Reset the speed back to normal
-        // enemy.SetMovementSpeed(originalSpeed);
     }
 }

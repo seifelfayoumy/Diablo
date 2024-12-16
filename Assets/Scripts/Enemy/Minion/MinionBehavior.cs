@@ -112,7 +112,7 @@ public class MinionBehavior : Enemy
             else if(SceneManager.GetActiveScene().name == "BossLevel")
             {
                 // Check if the player is within detection range
-                if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
+                if (distanceToPlayer > attackRange)
                 {
                     // Move towards the player
                     navMeshAgent.destination = player.position;

@@ -77,38 +77,30 @@ public class DemonBehavior : Enemy
       Quaternion lookRotation = Quaternion.LookRotation(direction);
       transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 
-      if (SceneManager.GetActiveScene().name == "MainLevel")
-      {
-        float distanceToPlayerFromCampfire = Vector3.Distance(campManager.runeFragmentSpawnPoint.position, player.position);
-        float distanceToSpawnPosition = Vector3.Distance(transform.position, spawnPosition);
+      float distanceToPlayerFromCampfire = Vector3.Distance(campManager.runeFragmentSpawnPoint.position, player.position);
+      float distanceToSpawnPosition = Vector3.Distance(transform.position, spawnPosition);
 
-        if (distanceToPlayerFromCampfire <= detectionRange && distanceToPlayer > attackRange)
+      if (distanceToPlayerFromCampfire <= detectionRange)
+      {
+        if(distanceToPlayer > attackRange)
         {
           navMeshAgent.destination = player.position;
           animator.SetBool("IsRunning", true);
         }
         else
         {
-            animator.SetBool("IsRunning", false);
-            animator.SetBool("Iswalking", true);
-            angle += originalSpeed * Time.deltaTime / radius;
-            if (angle >= 360f) angle -= 360f;
-
-            Vector3 newPos = campManager.transform.position + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
-            navMeshAgent.destination = newPos;
+          animator.SetBool("IsRunning", false);
         }
       }
-      else if (SceneManager.GetActiveScene().name == "BossLevel")
+      else
       {
-        if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
-        {
-          navMeshAgent.destination = player.position;
-          animator.SetBool("Iswalking", true);
-        }
-        else
-        {
-          animator.SetBool("Iswalking", false);
-        }
+        animator.SetBool("IsRunning", false);
+        animator.SetBool("Iswalking", true);
+        angle += originalSpeed * Time.deltaTime / radius;
+        if (angle >= 360f) angle -= 360f;
+
+        Vector3 newPos = campManager.transform.position + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+        navMeshAgent.destination = newPos;
       }
 
       if (distanceToPlayer <= attackRange && Time.time >= lastAttackTime + attackCooldown)

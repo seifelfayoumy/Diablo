@@ -1,5 +1,6 @@
 // CheatManager.cs
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheatManager : MonoBehaviour
 {
@@ -109,6 +110,15 @@ public class CheatManager : MonoBehaviour
         pausePanel.SetActive(false); // Hide Pause Panel
         isPaused = false;
         Debug.Log("Game Resumed");
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
+        Time.timeScale = 1;
+    }
+    public void mainMenu()
+    {
+        SceneManager.LoadScene(1);
     }
 
 }

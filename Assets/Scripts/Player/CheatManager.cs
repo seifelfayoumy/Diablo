@@ -9,6 +9,7 @@ public class CheatManager : MonoBehaviour
     private AbilityManager abilityManager;
     public GameObject pausePanel; // Assign the PausePanel in the Inspector
     private bool isPaused = false;
+     public GameObject gameOverPanel; // Assign the GameOverPanel in the Inspector
     void Start()
     {
         player = FindObjectOfType<BasePlayer>();
@@ -19,6 +20,12 @@ public class CheatManager : MonoBehaviour
     void Update()
     {
 
+        if(player.playerHealth.IsDead)
+        {
+            Time.timeScale = 1f; // Ensure time scale is normal
+            gameOverPanel.SetActive(true); // Show Game Over Panel
+            Debug.Log("Game Over!");
+        }
 
         // Toggle Pause when Escape is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -119,6 +126,12 @@ public class CheatManager : MonoBehaviour
     public void mainMenu()
     {
         SceneManager.LoadScene(1);
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 1f; // Ensure time scale is normal
+        gameOverPanel.SetActive(true); // Show Game Over Panel
+        Debug.Log("Game Over!");
     }
 
 }

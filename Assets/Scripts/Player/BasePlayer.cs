@@ -29,6 +29,9 @@ public class BasePlayer : MonoBehaviour
 
     public AudioManager audioManager;
 
+    //game over panal
+    public GameObject gameOverPanel; // Assign the GameOverPanel in the Inspector
+
     // Start and Initialization
     protected virtual void Start()
     {
@@ -118,6 +121,7 @@ public class BasePlayer : MonoBehaviour
         {
             animator.SetTrigger("IsDead"); // Trigger death animation
             audioManager.PlaySFX(audioManager.wandererDiesSFX);
+
         }else{
             animator.SetTrigger("Reaction"); // Trigger hit animation
             audioManager.PlaySFX(audioManager.wandererDamageSFX);
@@ -163,5 +167,11 @@ public class BasePlayer : MonoBehaviour
             playerStats.healingPotions--;
             hudManager.UpdateHUD();
         }
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 1f; // Ensure time scale is normal
+        gameOverPanel.SetActive(true); // Show Game Over Panel
+        Debug.Log("Game Over!");
     }
 }

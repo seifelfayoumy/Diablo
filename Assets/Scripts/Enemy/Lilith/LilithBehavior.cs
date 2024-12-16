@@ -140,6 +140,7 @@ public class LilithBehavior : Enemy
   private void TransitionToPhase2()
   {
     animator.SetTrigger("IsDead");
+    audioManager.PlaySFX(audioManager.bossDiesSFX);
     StartCoroutine(Resurrect());
     StartCoroutine(StartPhase2());
   }
@@ -262,6 +263,7 @@ public class LilithBehavior : Enemy
 
     if (currentPhase == BossPhase.Phase1)
     {
+      audioManager.PlaySFX(audioManager.bossHitSFX);
       currentHP -= damage;
       currentHP = Mathf.Max(0, currentHP);
 
@@ -311,17 +313,16 @@ public class LilithBehavior : Enemy
       }
       else
       {
+        audioManager.PlaySFX(audioManager.bossHitSFX);
         currentHP -= damage;
         currentHP = Mathf.Max(0, currentHP);
 
         if (currentHP <= 0)
         {
           animator.SetTrigger("IsDead");
-                    Time.timeScale = 0f;
-                    gameWon.SetActive(true);
-
-
-                    audioManager.PlaySFX(audioManager.bossDiesSFX);
+          audioManager.PlaySFX(audioManager.bossDiesSFX);
+          Time.timeScale = 0f;
+          gameWon.SetActive(true);
         }
       }
     }

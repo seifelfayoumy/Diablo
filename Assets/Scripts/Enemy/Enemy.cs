@@ -146,8 +146,10 @@ public class Enemy : MonoBehaviour
         isSlowed = true;
         float OldSpeed = originalSpeed;
         originalSpeed *= multiplier;
+        navMeshAgent.speed = originalSpeed;
         yield return new WaitForSeconds(duration);
         originalSpeed = OldSpeed;
+        navMeshAgent.speed = originalSpeed;
         isSlowed = false;
     }
 
@@ -162,9 +164,15 @@ public class Enemy : MonoBehaviour
                 Enemy otherEnemy = collider.GetComponent<Enemy>();
                 if (otherEnemy != null && !otherEnemy.isAlerted)
                 {
+                    if((collider.gameObject.GetComponent<DemonBehavior>() != null
+                    && this.gameObject.GetComponent<DemonBehavior>() != null)
+                    || (collider.gameObject.GetComponent<MinionBehavior>() != null
+                    && this.gameObject.GetComponent<MinionBehavior>() != null))
+                    {
                     otherEnemy.isAlerted = true;
                     Debug.Log(gameObject.name + " alerted " + otherEnemy.gameObject.name);
                     break;
+                    }
                 }
             }
         }

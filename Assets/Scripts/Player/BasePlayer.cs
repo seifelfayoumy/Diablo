@@ -1,26 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;  // Needed for checking UI interaction
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class BasePlayer : MonoBehaviour
 {
-    // Movement Variables
     public float moveSpeed = 3.5f;
     protected NavMeshAgent navMeshAgent;
     
-    // Health Variables
-    public PlayerStats playerStats; // Reference to stats for health management
-    public PlayerHealth playerHealth; // Reference to health management
+    public PlayerStats playerStats;
+    public PlayerHealth playerHealth;
 
-    // Animation Variables
     protected Animator animator;
 
-    // Healing Potions and Rune Fragments
-    // public int playerStats.healingPotions = 0;
-    // public int playerStats.runeFragments = 0;
-
-    // Reference to HUDManager for updating UI
     private HUDManager hudManager;
 
     private AbilityManager abilityManager;
@@ -29,10 +21,8 @@ public class BasePlayer : MonoBehaviour
 
     public AudioManager audioManager;
 
-    //game over panal
-    public GameObject gameOverPanel; // Assign the GameOverPanel in the Inspector
+    public GameObject gameOverPanel;
 
-    // Start and Initialization
     protected virtual void Start()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -42,15 +32,14 @@ public class BasePlayer : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-    // Initialize player stats (could be assigned from Inspector)
     if (playerStats != null && SceneManager.GetActiveScene().name == "MainLevel")
     {
-      playerStats.maxHP = 100; // Example default value, to be set dynamically
+      playerStats.maxHP = 100;
       playerStats.currentHP = playerStats.maxHP;
     }
     else if (playerStats != null && SceneManager.GetActiveScene().name == "BossLevel")
     {
-      playerStats.maxHP = 400; // Example default value, to be set dynamically
+      playerStats.maxHP = 400;
       playerStats.currentHP = playerStats.maxHP;
       foreach (var ability in abilityManager.abilities)
       {
@@ -62,12 +51,11 @@ public class BasePlayer : MonoBehaviour
 
         if (playerHealth != null)
         {
-            playerHealth.Initialize(playerStats); // Initialize with stats
+            playerHealth.Initialize(playerStats);
         }
          hudManager = FindObjectOfType<HUDManager>();
     }
 
-    // Update function for movement
     protected virtual void Update()
     {
         HandleMovement();
@@ -79,7 +67,6 @@ public class BasePlayer : MonoBehaviour
 
     }
 
-    // Handle movement logic (click-to-move)
     private void HandleMovement()
     {
         if (navMeshAgent.enabled && Input.GetMouseButtonDown(0))
@@ -88,39 +75,26 @@ public class BasePlayer : MonoBehaviour
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                return; // Do nothing if clicking on UI
+                return;
             }
-            
             if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) )
             {
-                // If the click is on the UI layer, don't do anything
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI"))
                 {
                     return;
                 }
-
                 Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 transform.LookAt(lookAt);
 
                 navMeshAgent.destination = hit.point;
             }
-
-
         }
-
             bool isWalking = navMeshAgent.velocity != Vector3.zero;
             animator.SetBool("IsWalking", isWalking);
     }
 
-    // Common health management
     public void TakeDamage(int damage)
     {
-        if(playerHealth.IsDead)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
-            return;
-        }
-
         if (isInvincible)
         {
             Debug.Log("Player is invincible!");
@@ -130,11 +104,11 @@ public class BasePlayer : MonoBehaviour
         playerHealth.TakeDamage(damage);
         if (playerHealth.IsDead)
         {
-            animator.SetTrigger("IsDead"); // Trigger death animation
+            animator.SetTrigger("IsDead");
             audioManager.PlaySFX(audioManager.wandererDiesSFX);
 
         }else{
-            animator.SetTrigger("Reaction"); // Trigger hit animation
+            animator.SetTrigger("Reaction");
             audioManager.PlaySFX(audioManager.wandererDamageSFX);
         }
     }
@@ -144,8 +118,6 @@ public class BasePlayer : MonoBehaviour
         playerHealth.Heal(amount);
     }
 
-
-    // Handle picking up items
    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("HealingPotion"))
@@ -181,8 +153,8 @@ public class BasePlayer : MonoBehaviour
     }
     public void GameOver()
     {
-        Time.timeScale = 1f; // Ensure time scale is normal
-        gameOverPanel.SetActive(true); // Show Game Over Panel
+        Time.timeScale = 1f;
+        gameOverPanel.SetActive(true);
         Debug.Log("Game Over!");
     }
 }

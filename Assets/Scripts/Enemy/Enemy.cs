@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
     protected float originalSpeed = 3f;
     protected NavMeshAgent navMeshAgent;
     public bool isAlerted = false;
-       // i have a unity class that has this:      public bool isAlerted = false;, is there a way in the update method to set its value randomly? what i want to do is the following. i have many enemies with this value i want them to randomly be either alreted or not alerted but i should have a maximum of 5 alerted enemied at the same time
 
     public AudioManager audioManager;
 
@@ -68,11 +67,6 @@ public class Enemy : MonoBehaviour
             currentHP -= damage;
             currentHP = Mathf.Max(0, currentHP);
             Debug.Log(currentHP + " OF ENEMY");
-            if (healthBar != null)
-            {
-                // healthBar.SetHealth(currentHP);
-                // healthBar.SetHealthText(currentHP);
-            }
             if (currentHP <= 0)
             {
                 Die();
@@ -152,7 +146,6 @@ public class Enemy : MonoBehaviour
         isSlowed = true;
         float OldSpeed = originalSpeed;
         originalSpeed *= multiplier;
-        // originalSpeed = navMeshAgent.speed;
         yield return new WaitForSeconds(duration);
         originalSpeed = OldSpeed;
         isSlowed = false;
@@ -164,15 +157,14 @@ public class Enemy : MonoBehaviour
 
         foreach (var collider in nearbyEnemies)
         {
-            if (collider.CompareTag("Enemy"))  // Check if it's an enemy
+            if (collider.CompareTag("Enemy"))
             {
                 Enemy otherEnemy = collider.GetComponent<Enemy>();
-                if (otherEnemy != null && !otherEnemy.isAlerted)  // If enemy is not alerted
+                if (otherEnemy != null && !otherEnemy.isAlerted)
                 {
-                    // Set this enemy as alerted and break the loop
                     otherEnemy.isAlerted = true;
                     Debug.Log(gameObject.name + " alerted " + otherEnemy.gameObject.name);
-                    break;  // Only alert one enemy
+                    break;
                 }
             }
         }

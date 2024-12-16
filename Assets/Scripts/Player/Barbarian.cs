@@ -4,7 +4,6 @@ using System.Collections;
 
 public class Barbarian : BasePlayer
 {
-  // Ability-specific variables
   public float bashDamage = 5f;
   public float ironMaelstormDamage = 10f;
   public GameObject shieldObject;
@@ -16,7 +15,6 @@ public class Barbarian : BasePlayer
     base.Start();
   }
 
-  // Bash ability targeting an enemy
   public void Bash(GameObject enemy)
   {
 
@@ -25,7 +23,6 @@ public class Barbarian : BasePlayer
       Enemy enemyScript = enemy.GetComponent<Enemy>();
       if (enemyScript != null)
       {
-        // Adjust rotation
         Vector3 position = enemy.transform.position;
         Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
         transform.LookAt(lookAt);
@@ -34,7 +31,6 @@ public class Barbarian : BasePlayer
         if (distanceToEnemy <= 5)
         {
           animator.SetTrigger("Bash");
-          // audioSource.PlayOneShot(bashSound);
 
           enemyScript.TakeDamage((int)bashDamage);
           if (enemyScript.GetHP() <= 0)
@@ -44,13 +40,11 @@ public class Barbarian : BasePlayer
     }
   }
 
-  // Shield ability
   public void Shield(GameObject enemy = null, Vector3? position = null)
   {
     animator.SetTrigger("Shield");
     audioManager.PlaySFX(audioManager.shieldActivateSFX);
 
-    // Spawn and activate shield
     GameObject shield = Instantiate(shieldObject, transform.position, Quaternion.identity);
     shield.transform.SetParent(transform);
     Destroy(shield, 3f);
@@ -65,14 +59,12 @@ public class Barbarian : BasePlayer
     yield return new WaitForSeconds(3f);
     isInvincible = false;
   }
-  // Iron Maelstorm ability
+
   public void IronMaelstorm(GameObject enemy = null, Vector3? position = null)
   {
     animator.SetTrigger("IronMaelstorm");
-    // audioSource.PlayOneShot(ironMaelstormSound);
 
-    // Area damage around the player
-    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
+    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f);
     foreach (var hit in hitColliders)
     {
       if (hit.CompareTag("Enemy"))
@@ -88,35 +80,28 @@ public class Barbarian : BasePlayer
     }
   }
 
-  // Charge ability towards a position
   public void Charge(Vector3 position)
   {
     animator.SetBool("Charge", true);
     audioManager.PlaySFX(audioManager.chargeDashSFX);
     isCharge = true;
-    // Implement charging logic
     StartCoroutine(PerformCharge(position));
   }
 
   private IEnumerator PerformCharge(Vector3 position)
   {
     float originalSpeed = navMeshAgent.speed;
-    navMeshAgent.speed = 10f; // Increased speed for charge
+    navMeshAgent.speed = 10f;
 
-    // Adjust rotation
     Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
     transform.LookAt(lookAt);
     navMeshAgent.SetDestination(position);
 
-
-
-
-        // Move towards the target position, checking both animation and movement completion
-        bool hitBoss = false;
+    bool hitBoss = false;
     while (true)
     {
 
-      Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f); // Example range
+      Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f);
       foreach (var hit in hitColliders)
       {
           if (hit.gameObject.CompareTag("Enemy"))
@@ -136,82 +121,25 @@ public class Barbarian : BasePlayer
                 enemyScript.Die();
                             Debug.Log("Lilith ISNT hit charge");
                         }
-
-
-
             }
           }
-          else
-          {
-          // Destroy(hit.gameObject);
-          }
-        
       }
-      // Check if the animation is finished
       if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
       {
-        break; // Animation is finished
+        break;
       }
 
-      // Check if the agent has reached the destination (taking stopping distance into account)
       if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
       {
-        break; // Agent has completed its path
+        break;
       }
 
-      // If neither condition is met, continue waiting
       yield return null;
     }
 
     isCharge = false;
 
-    // Set the Charge bool to false and reset speed
     animator.SetBool("Charge", false);
     navMeshAgent.speed = originalSpeed;
   }
-
-
-
-
-  // protected override void Update()
-  // {
-  //   base.Update();
-  //   Debug.Log(isCharge);
-  //   Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f); // Example range
-  //   foreach (var hit in hitColliders)
-  //   {
-  //     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Charge"))
-  //     {
-  //       if (hit.gameObject.CompareTag("Enemy"))
-  //       {
-  //         Enemy enemyScript = hit.gameObject.GetComponent<Enemy>();
-  //         if (enemyScript != null)
-  //         {
-  //           if (hit.gameObject.name == "Boss")
-  //           {
-  //             enemyScript.TakeDamage(20);
-  //           }
-  //           else
-  //           if (enemyScript.GetHP() <= 0)
-  //           {
-  //             playerStats.GainXP(enemyScript.GetXP());
-  //             Destroy(hit.gameObject);
-  //           }
-
-
-
-  //         }
-  //       }
-  //       else
-  //       {
-  //        // Destroy(hit.gameObject);
-  //       }
-  //     }
-  //   }
-
-  // }
-
-
-
-
 }

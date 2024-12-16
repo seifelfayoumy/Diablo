@@ -1,14 +1,13 @@
-// InfernoBehavior.cs
 using UnityEngine;
 using System.Collections;
 
 public class SmokeBombBehavior : MonoBehaviour
 {
-    public float initialDamage = 10f; // Initial damage when Inferno is cast
-    public float damagePerSecond = 2f; // Damage per second while enemies are within the Inferno
-    public float duration = 5f; // Duration of the Inferno
+    public float initialDamage = 10f;
+    public float damagePerSecond = 2f;
+    public float duration = 5f;
 
-    public float radius = 5f; // Radius of the Inferno effect
+    public float radius = 5f;
 
     private Rogue sorcerer;
 
@@ -24,19 +23,14 @@ public class SmokeBombBehavior : MonoBehaviour
 
     private IEnumerator SmokeRoutine()
     {
-        // Deal initial damage to enemies within the radius
         DealInitialDamage();
 
         float elapsed = 0f;
         while (elapsed < duration)
         {
             yield return new WaitForSeconds(1f);
-           // DealDamageOverTime();
             elapsed += 1f;
         }
-
-        // Optional: Play inferno end animation or effect here
-
         Destroy(gameObject);
     }
 
@@ -50,14 +44,10 @@ public class SmokeBombBehavior : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    // enemy.TakeDamage((int)initialDamage);
-                    // sorcerer.playerStats.GainXP(enemy.GetXP());
                     enemy.Stun(5);
                 }
             }
         }
-
-        Debug.Log("Inferno cast, dealing initial damage to enemies.");
     }
 
     private void DealDamageOverTime()
@@ -75,9 +65,5 @@ public class SmokeBombBehavior : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Inferno deals damage over time to enemies within the radius.");
     }
-
-    // Optional: Visual representation (e.g., particle effects) can be added here
 }

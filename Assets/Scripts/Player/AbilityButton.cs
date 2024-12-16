@@ -1,4 +1,3 @@
-// AbilityButton.cs
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -40,11 +39,9 @@ public class AbilityButton : MonoBehaviour
         }
         else
         {
-          // Attempt to unlock the ability
           if (abilityManager.GetPlayerStats().abilityPoints > 0)
           {
             abilityManager.UnlockAbility(abilityName);
-            // Optionally, play an unlock sound or animation
           }
         }
       }

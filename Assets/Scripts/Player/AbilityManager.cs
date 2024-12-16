@@ -1,11 +1,10 @@
-// AbilityManager.cs
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
 public class AbilityManager : MonoBehaviour
 {
-  public List<Ability> abilities; // List of all abilities for the player
+  public List<Ability> abilities;
 
   public BasePlayer player;
   public PlayerStats playerStats;
@@ -32,13 +31,11 @@ public class AbilityManager : MonoBehaviour
 
   void Update()
   {
-    // Update cooldowns
     foreach (var ability in abilities)
     {
       ability.UpdateCooldown(Time.deltaTime);
     }
 
-    // Handle ability activation and target selection
     HandleInput();
   }
 
@@ -46,7 +43,6 @@ public class AbilityManager : MonoBehaviour
   {
     foreach (var ability in abilities)
     {
-      // Assign the UseAbilityAction delegate based on abilityName
       switch (ability.abilityName)
       {
         // Barbarian Abilities
@@ -125,7 +121,6 @@ public class AbilityManager : MonoBehaviour
       }
     }
 
-    // If currently selecting a target, wait for right-click
     if (isSelectingTarget && Input.GetMouseButtonDown(1))
     {
       RaycastHit hit;
@@ -176,7 +171,6 @@ public class AbilityManager : MonoBehaviour
     }
   }
 
-  // Public method to use an ability by name
   public void UseAbility(string abilityName)
   {
     var ability = abilities.Find(a => a.abilityName == abilityName);
@@ -184,7 +178,6 @@ public class AbilityManager : MonoBehaviour
     {
       if (ability.isUnlocked && !ability.isOnCooldown)
       {
-        // Check activation type
         if (ability.activationType == ActivationType.Instant)
         {
           ability.Use();
@@ -196,7 +189,6 @@ public class AbilityManager : MonoBehaviour
         {
           isSelectingTarget = true;
           currentAbility = ability;
-          // Optional: Provide UI feedback to select target
         }
       }
       else
@@ -208,7 +200,6 @@ public class AbilityManager : MonoBehaviour
     }
   }
 
-  // Execute the ability after target selection
   void ExecuteAbility(Ability ability, GameObject enemy, Vector3? position)
   {
     ability.Use(enemy, position);
@@ -217,7 +208,6 @@ public class AbilityManager : MonoBehaviour
     ultimateE = false;
   }
 
-  // Unlock a specific ability
   public void UnlockAbility(string abilityName)
   {
     var ability = abilities.Find(a => a.abilityName == abilityName);
@@ -225,18 +215,15 @@ public class AbilityManager : MonoBehaviour
     {
       ability.isUnlocked = true;
       playerStats.abilityPoints--;
-      // Update HUD
       FindObjectOfType<HUDManager>().UpdateHUD();
     }
   }
 
-  // Get an ability by name
   public Ability GetAbility(string abilityName)
   {
     return abilities.Find(a => a.abilityName == abilityName);
   }
 
-  // Accessor for PlayerStats
   public PlayerStats GetPlayerStats()
   {
     return playerStats;

@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
     }
     public void QuitGame()

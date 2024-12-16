@@ -3,44 +3,36 @@ using System.Collections;
 
 public class ShowerOfArrows : MonoBehaviour
 {
-    public GameObject arrowPrefab; // Arrow prefab to spawn
-    public float damageAmount = 10f; // Damage dealt by arrows
-    public float radius = 0.1f; // Radius of the effect (how big the area is)
-    public float slowAmount = 0.25f; // Amount to slow enemies down
-    public float slowDuration = 3f; // Duration for which the enemy is slowed
-    public float spawnInterval = 0.1f; // Interval between each arrow spawn (visual)
-    public float height = 10f; // Height from which arrows fall
-    public int numberOfArrows = 30; // Number of arrows to spawn during the effect
+    public GameObject arrowPrefab;
+    public float damageAmount = 10f;
+    public float radius = 0.1f;
+    public float slowAmount = 0.25f;
+    public float slowDuration = 3f;
+    public float spawnInterval = 0.1f;
+    public float height = 10f;
+    public int numberOfArrows = 30;
     private BasePlayer player;
 
     private void Start()
     {
         player = FindObjectOfType<BasePlayer>();
-        // Start the Shower of Arrows effect
         StartCoroutine(ShowerOfArrowsEffect());
-        Destroy(gameObject, 3f); // Destroys the object after 5 seconds
+        Destroy(gameObject, 3f);
     }
 
 
     private IEnumerator ShowerOfArrowsEffect()
     {
         ApplyEffectsToEnemies();
-        // Show arrows raining down within the area
         for (int i = 0; i < numberOfArrows; i++)
         {
             SpawnArrow();
             yield return new WaitForSeconds(spawnInterval);
         }
-
-        // After the visual effect, apply damage and slow to enemies within the radius
-
     }
 
     private void SpawnArrow()
     {
-        // Generate a random position within the ring's area
-        // float angle = Random.Range(0f, 2f * Mathf.PI);
-        // Generate a random position within the ring's area
         float angle = Random.Range(0f, 2f * Mathf.PI);
         float distance = Random.Range(radius*-1f, radius);
 
@@ -49,14 +41,12 @@ public class ShowerOfArrows : MonoBehaviour
             transform.position.y + height,
             transform.position.z + distance * Mathf.Sin(angle)
         );
-        // Instantiate the arrow and set its destination directly downwards
         GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
-        Destroy(arrow, 5f); // Destroy arrow after some time (if not colliding)
+        Destroy(arrow, 5f);
     }
 
     private void ApplyEffectsToEnemies()
     {
-        // Find all enemies within the radius
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
         foreach (var hit in hitColliders)
         {
@@ -65,7 +55,6 @@ public class ShowerOfArrows : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    // Deal damage to the enemy
                     enemy.TakeDamage((int)damageAmount);
                     enemy.Slow(slowAmount, slowDuration);
 

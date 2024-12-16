@@ -1,17 +1,16 @@
-// PlayerStats.cs
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
     public int level = 1;
     public int currentXP = 0;
-    public int requiredXP = 100; // Initial XP required to level up
+    public int requiredXP = 100;
     public int abilityPoints = 0;
     public int maxHP = 100;
     public int currentHP;
 
-    public int healingPotions = 0; // Added
-    public int runeFragments = 0; // Added
+    public int healingPotions = 0;
+    public int runeFragments = 0;
 
     private void Start()
     {
@@ -35,8 +34,8 @@ public class PlayerStats : MonoBehaviour
     {
         level++;
         abilityPoints++;
-        maxHP += 100;  // Increase max HP per level
-        currentHP = maxHP;  // Heal the player when leveling up
+        maxHP += 100;
+        currentHP = maxHP;
         requiredXP = 100 * level;
         FindObjectOfType<HUDManager>().UpdateHUD();
     }

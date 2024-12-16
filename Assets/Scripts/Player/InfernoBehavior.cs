@@ -1,4 +1,3 @@
-// InfernoBehavior.cs
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,11 +5,11 @@ using System.Collections.Generic;
 
 public class InfernoBehavior : MonoBehaviour
 {
-    public float initialDamage = 10f; // Initial damage when Inferno is cast
-    public float damagePerSecond = 2f; // Damage per second while enemies are within the Inferno
-    public float duration = 5f; // Duration of the Inferno
+    public float initialDamage = 10f;
+    public float damagePerSecond = 2f;
+    public float duration = 5f;
 
-    public float radius = 3f; // Radius of the Inferno effect
+    public float radius = 3f;
 
     private Sorcerer sorcerer;
 
@@ -25,7 +24,6 @@ public class InfernoBehavior : MonoBehaviour
 
     private IEnumerator InfernoRoutine()
     {
-        // Deal initial damage to enemies within the radius
         DealInitialDamage();
 
         float elapsed = 0f;
@@ -35,9 +33,6 @@ public class InfernoBehavior : MonoBehaviour
             DealDamageOverTime();
             elapsed += 1f;
         }
-
-        // Optional: Play inferno end animation or effect here
-
         Destroy(gameObject);
     }
 
@@ -57,8 +52,6 @@ public class InfernoBehavior : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Inferno cast, dealing initial damage to enemies.");
     }
 
     private void DealDamageOverTime()
@@ -90,9 +83,5 @@ public class InfernoBehavior : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Inferno deals damage over time to enemies within the radius.");
     }
-
-    // Optional: Visual representation (e.g., particle effects) can be added here
 }

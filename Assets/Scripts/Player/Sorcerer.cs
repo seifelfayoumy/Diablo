@@ -1,45 +1,32 @@
-// Sorcerer.cs
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
 public class Sorcerer : BasePlayer
 {
-    // Sorcerer-specific abilities
     public AudioClip fireballSound;
     public AudioClip teleportSound;
     public AudioClip cloneSound;
     public AudioClip infernoSound;
 
-    public GameObject clonePrefab; // Assign the Clone prefab in the Inspector
-    public GameObject infernoPrefab; // Assign the Inferno prefab in the Inspector
+    public GameObject clonePrefab;
+    public GameObject infernoPrefab;
 
     public float fireballDamage = 5f;
     public float infernoInitialDamage = 10f;
     public float infernoDamagePerSecond = 2f;
     public float infernoDuration = 5f;
 
-    public GameObject fireballPrefab; // Assign the enemy GameObject in the Inspector
+    public GameObject fireballPrefab;
 
     protected override void Start()
     {
         base.Start();
     }
 
-    // public void Update()
-    // {
-    //     if(Input.GetKeyDown(KeyCode.J))
-    //     {
-    //         Inferno(transform.position);
-    //         Debug.Log("Inferno");
-    //     }
-    // }
-
-    // Fireball ability targeting an enemy
     public void Fireball(GameObject enemy)
     {
         animator.SetTrigger("IsFireball");
-        // audioSource.PlayOneShot(fireballSound);
         
         StartCoroutine(FireballSpawn(enemy));
     }
@@ -48,13 +35,11 @@ public class Sorcerer : BasePlayer
     {
         yield return new WaitForSeconds(2f);
 
-        // Adjust rotation
         Vector3 lookAt = new Vector3(enemy.transform.position.x, transform.position.y, enemy.transform.position.z);
         transform.LookAt(lookAt);
         
-        // Spawn fireball in front of the player with Y = 1
-        Vector3 spawnPosition = transform.position + transform.forward * 2f; // 2f is the distance in front of the player
-        spawnPosition.y = 1f;  // Set Y to 1
+        Vector3 spawnPosition = transform.position + transform.forward * 2f;
+        spawnPosition.y = 1f;
 
         audioManager.PlaySFX(audioManager.fireballSFX);
         GameObject fireball = Instantiate(fireballPrefab, spawnPosition, transform.rotation);
@@ -77,20 +62,15 @@ public class Sorcerer : BasePlayer
         }
     }
 
-    // Teleport ability to a position
     public void Teleport(Vector3 position)
     {
-        // audioSource.PlayOneShot(teleportSound);
-
         navMeshAgent.Warp(position);
     }
 
-    // Clone ability at a position
     public void Clone(Vector3 position)
     {
         audioManager.PlaySFX(audioManager.cloneSFX);
 
-        // Instantiate clone
         GameObject clone = Instantiate(clonePrefab, position, Quaternion.identity);
         CloneBehavior cloneBehavior = clone.GetComponent<CloneBehavior>();
         if (cloneBehavior != null)
@@ -99,17 +79,14 @@ public class Sorcerer : BasePlayer
         }
     }
 
-    // Inferno ability at a position
     public void Inferno(Vector3 position)
     {
         animator.SetTrigger("IsInferno");
         audioManager.PlaySFX(audioManager.infernoSFX);
 
-        // Adjust rotation
         Vector3 lookAt = new Vector3(position.x, transform.position.y, position.z);
         transform.LookAt(lookAt);
 
-        // Instantiate Inferno effect
         GameObject inferno = Instantiate(infernoPrefab, position, Quaternion.identity);
         InfernoBehavior infernoBehavior = inferno.GetComponent<InfernoBehavior>();
         if (infernoBehavior != null)

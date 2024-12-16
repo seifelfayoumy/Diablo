@@ -18,58 +18,50 @@ public class Ability
     public float cooldown;
     public bool isUnlocked = false;
     public bool isOnCooldown = false;
-    public float cooldownTimer = 0f; // Changed to public
+    public float cooldownTimer = 0f;
 
-    public bool delayCooldownStart = false; // New flag to specify delayed cooldown start
-    public float cooldownDelay = 0f; // Time to delay cooldown start
+    public bool delayCooldownStart = false;
+    public float cooldownDelay = 0f;
 
-    private float delayTimer = 0f; // Timer to track the cooldown delay
+    private float delayTimer = 0f;
 
-    public Action<GameObject, Vector3?> UseAbilityAction; // Delegate for ability behavior
+    public Action<GameObject, Vector3?> UseAbilityAction;
 
-    // Method to use the ability
     public void Use(GameObject enemy = null, Vector3? position = null)
     {
         if (isUnlocked && !isOnCooldown)
         {
-            // Execute ability action
             UseAbilityAction?.Invoke(enemy, position);
 
-            // If cooldown is delayed, start the delay timer
             if (delayCooldownStart)
             {
                 isOnCooldown = true;
                 cooldownTimer = cooldown;
-                delayTimer = cooldownDelay;  // Set delay timer instead of cooldown immediately
+                delayTimer = cooldownDelay;
             }
             else
             {
-                // No delay, start the cooldown immediately
                 isOnCooldown = true;
                 cooldownTimer = cooldown;
             }
         }
     }
 
-    // Update cooldown timer
     public void UpdateCooldown(float deltaTime)
     {
         if (isOnCooldown)
         {
             if (delayCooldownStart)
             {
-                // Handle the cooldown delay
                 delayTimer -= deltaTime;
                 if (delayTimer <= 0f)
                 {
-                    // Once the delay is over, start the actual cooldown timer
                     cooldownTimer = cooldown;
-                    delayCooldownStart = false; // Reset the delay flag
+                    delayCooldownStart = false;
                 }
             }
             else
             {
-                // Regular cooldown countdown
                 cooldownTimer -= deltaTime;
                 if (cooldownTimer <= 0f)
                 {
@@ -80,7 +72,6 @@ public class Ability
         }
     }
 
-    // Get remaining cooldown
     public float GetCooldownRemaining()
     {
         return cooldownTimer;

@@ -1,4 +1,3 @@
-// CheatManager.cs
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,9 +6,9 @@ public class CheatManager : MonoBehaviour
     private BasePlayer player;
     private PlayerStats playerStats;
     private AbilityManager abilityManager;
-    public GameObject pausePanel; // Assign the PausePanel in the Inspector
+    public GameObject pausePanel;
     private bool isPaused = false;
-     public GameObject gameOverPanel; // Assign the GameOverPanel in the Inspector
+     public GameObject gameOverPanel;
     public AudioManager audioManager;
     void Start()
     {
@@ -21,15 +20,12 @@ public class CheatManager : MonoBehaviour
 
     void Update()
     {
-
         if(player.playerHealth.IsDead)
         {
-            Time.timeScale = 1f; // Ensure time scale is normal
-            gameOverPanel.SetActive(true); // Show Game Over Panel
-            Debug.Log("Game Over!");
+            Time.timeScale = 1f;
+            gameOverPanel.SetActive(true);
         }
 
-        // Toggle Pause when Escape is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -38,7 +34,6 @@ public class CheatManager : MonoBehaviour
                 PauseGame();
         }
 
-        // Heal: Press "H"
         if (Input.GetKeyDown(KeyCode.H))
         {
             player.Heal(20);
@@ -46,7 +41,6 @@ public class CheatManager : MonoBehaviour
             Debug.Log("Cheat: Healed 20 HP");
         }
 
-        // Decrement Health: Press "D"
         if (Input.GetKeyDown(KeyCode.D))
         {
             player.TakeDamage(20);
@@ -54,21 +48,18 @@ public class CheatManager : MonoBehaviour
             Debug.Log("Cheat: Took 20 Damage");
         }
 
-        // Toggle Invincibility: Press "I"
         if (Input.GetKeyDown(KeyCode.I))
         {
             player.playerHealth.SetInvincibility(!player.playerHealth.isInvincible);
             Debug.Log($"Cheat: Invincibility {(player.playerHealth.isInvincible ? "Enabled" : "Disabled")}");
         }
 
-        // Toggle Slow Motion: Press "M"
         if (Input.GetKeyDown(KeyCode.M))
         {
             Time.timeScale = (Time.timeScale == 1f) ? 0.5f : 1f;
             Debug.Log($"Cheat: Slow Motion {(Time.timeScale == 0.5f ? "Enabled" : "Disabled")}");
         }
 
-        // Toggle Cool Down: Press "C"
         if (Input.GetKeyDown(KeyCode.C))
         {
             foreach (var ability in abilityManager.abilities)
@@ -79,7 +70,6 @@ public class CheatManager : MonoBehaviour
             Debug.Log("Cheat: Toggle Cooldowns");
         }
 
-        // Unlock Abilities: Press "U"
         if (Input.GetKeyDown(KeyCode.U))
         {
             foreach (var ability in abilityManager.abilities)
@@ -90,7 +80,6 @@ public class CheatManager : MonoBehaviour
             Debug.Log("Cheat: All Abilities Unlocked");
         }
 
-        // Gain Ability Points: Press "A"
         if (Input.GetKeyDown(KeyCode.A))
         {
             playerStats.abilityPoints += 1;
@@ -98,7 +87,6 @@ public class CheatManager : MonoBehaviour
             Debug.Log("Cheat: Gained 1 Ability Point");
         }
 
-        // Gain XP: Press "X"
         if (Input.GetKeyDown(KeyCode.X))
         {
             playerStats.GainXP(100);
@@ -108,8 +96,8 @@ public class CheatManager : MonoBehaviour
     }
     public void PauseGame()
     {
-        Time.timeScale = 0f;       // Stop time
-        pausePanel.SetActive(true); // Show Pause Panel
+        Time.timeScale = 0f;
+        pausePanel.SetActive(true); 
         isPaused = true;
         Debug.Log("Game Paused");
         audioManager.StopMusic();
@@ -117,8 +105,8 @@ public class CheatManager : MonoBehaviour
     }
     public void ResumeGame()
     {
-        Time.timeScale = 1f;        // Resume time
-        pausePanel.SetActive(false); // Hide Pause Panel
+        Time.timeScale = 1f;
+        pausePanel.SetActive(false);
         isPaused = false;
         Debug.Log("Game Resumed");
         audioManager.StopMusic();
@@ -126,9 +114,12 @@ public class CheatManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads the current scene
-
-
+      GameObject characterInstance = GameObject.FindGameObjectWithTag("Player");
+      if(characterInstance != null)
+      {
+        Destroy(characterInstance);
+      }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
     }
     public void mainMenu()
@@ -137,9 +128,8 @@ public class CheatManager : MonoBehaviour
     }
     public void GameOver()
     {
-        Time.timeScale = 1f; // Ensure time scale is normal
-        gameOverPanel.SetActive(true); // Show Game Over Panel
+        Time.timeScale = 1f;
+        gameOverPanel.SetActive(true);
         Debug.Log("Game Over!");
     }
-
 }

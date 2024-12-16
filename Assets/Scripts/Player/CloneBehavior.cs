@@ -1,12 +1,11 @@
-// CloneBehavior.cs
 using UnityEngine;
 using System.Collections;
 
 public class CloneBehavior : MonoBehaviour
 {
-    public float duration = 5f; // Duration the clone remains active
-    public float explosionDamage = 10f; // Damage dealt upon explosion
-    public float explosionRadius = 5f; // Radius of the explosion
+    public float duration = 5f;
+    public float explosionDamage = 10f;
+    public float explosionRadius = 5f;
 
     private Sorcerer sorcerer;
 
@@ -18,7 +17,6 @@ public class CloneBehavior : MonoBehaviour
 
     private IEnumerator CloneRoutine()
     {
-        // Optional: Play clone spawn animation or effect here
 
         yield return new WaitForSeconds(duration);
 
@@ -44,7 +42,5 @@ public class CloneBehavior : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Clone exploded, dealing damage to nearby enemies.");
     }
 }

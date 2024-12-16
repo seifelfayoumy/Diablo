@@ -39,7 +39,6 @@ public class Sorcerer : BasePlayer
     public void Fireball(GameObject enemy)
     {
         animator.SetTrigger("IsFireball");
-        // audioSource.PlayOneShot(fireballSound);
         
         StartCoroutine(FireballSpawn(enemy));
     }

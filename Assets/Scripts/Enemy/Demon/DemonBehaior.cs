@@ -4,8 +4,7 @@ using UnityEngine;
 public class DemonBehavior : Enemy
 {
     public Transform player; // Reference to the player's transform
-        public Transform playerClone; // Reference to the player's transform
-
+    public Transform playerClone; // Reference to the player's transform
     public float attackRange = 5f; // Range to start attacking
     public float detectionRange = 10f; // Range to detect the player
     public float moveSpeed = 3f; // Speed at which the Demon moves towards the player
@@ -13,6 +12,7 @@ public class DemonBehavior : Enemy
     private int countA = 0; // Counter to track attack sequences
     private float lastAttackTime = 0f; // Time of the last attack
     public GameObject sword; // Reference to the sword object
+
     protected override void Start()
     {
         base.Start();
@@ -20,9 +20,6 @@ public class DemonBehavior : Enemy
 
         // Find the player by tag, ensure player exists
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        // maxHP = 40;
-        // currentHP = maxHP;
     }
 
     protected override void  Update()
@@ -33,6 +30,9 @@ public class DemonBehavior : Enemy
         {
             return;
         }
+
+        if(base.currentHP <=0)
+            return;
 
         playerClone = GameObject.FindGameObjectWithTag("PlayerClone")?.transform;
         if(playerClone != null)
@@ -58,14 +58,11 @@ public class DemonBehavior : Enemy
             if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
             {
                 // Move towards the player
-                //transform.position += direction * moveSpeed * Time.deltaTime;
                 navMeshAgent.destination = player.position;
                 animator.SetBool("Iswalking", true); // Trigger moving animation
-
             }
             else
             {
-             
                 animator.SetBool("Iswalking", false); // Stop moving animation when not chasing
             }
 

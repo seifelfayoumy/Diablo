@@ -38,6 +38,10 @@ public class Rogue : BasePlayer
     {
         yield return new WaitForSeconds(2f); // Wait for the animation to reach the point where the arrow is fired
 
+        // Adjust rotation
+        Vector3 lookAt = new Vector3(enemy.transform.position.x, transform.position.y, enemy.transform.position.z);
+        transform.LookAt(lookAt);
+
         Vector3 spawnPosition = transform.position; // 2f is the distance in front of the player
         spawnPosition.y = 1f;  // Set Y to 1
 

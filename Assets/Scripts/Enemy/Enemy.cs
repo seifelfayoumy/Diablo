@@ -1,4 +1,3 @@
-// Enemy.cs
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
@@ -10,10 +9,7 @@ public class Enemy : MonoBehaviour
     public int currentHP;
     public int xpReward;
     public CampManager campManager;
-
-
-    public HealthBar healthBar; // Reference to a HealthBar UI component
-
+    public HealthBar healthBar;
     protected bool isStunned = false;
     private bool isSlowed = false;
     public bool isInvincible = false;
@@ -39,24 +35,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-  protected virtual void Update()
-  {
-    // Enemy AI logic (e.g., chasing the player) goes here
-    // For example:
-    // if not stunned, chase the player
-    // Debug.Log(isInvincible + " IS THE CONDISTION");
-
-
-    if (healthBar != null)
+    protected virtual void Update()
     {
-      healthBar.SetHealth(currentHP);
-      healthBar.SetHealthText(currentHP);
-      healthBar.SetMaxHealth(maxHP);
-
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHP);
+            healthBar.SetHealthText(currentHP);
+            healthBar.SetMaxHealth(maxHP);
+        }
     }
-  }
-
-
 
     public void TakeDamage(int damage)
     {
@@ -86,7 +73,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                animator.SetTrigger("Reaction"); // Trigger death animation
+                animator.SetTrigger("Reaction");
             }
         }
     }
@@ -101,17 +88,20 @@ public class Enemy : MonoBehaviour
         return xpReward;
     }
 
-    void Die()
+    public void Die()
     {
         if (campManager != null)
         {
             campManager.EnemyDied();
         }
-        animator.SetTrigger("IsDead"); // Trigger death animation
+        animator.SetTrigger("IsDead");
         // audioSource.PlayOneShot(deathSound); // Play death sound
+        
+        Collider collider = this.gameObject.GetComponent<Collider>();
+        collider.enabled = false;
+
         Destroy(gameObject, 2.5f);
     }
-
 
     public void Stun(float duration)
     {
@@ -125,7 +115,6 @@ public class Enemy : MonoBehaviour
     IEnumerator StunCoroutine(float duration)
     {
         isStunned = true;
-        // Optional: Play stun animation or effect
         animator.SetBool("IsStunned", true);
         yield return new WaitForSeconds(duration);
         animator.SetBool("IsStunned", false);

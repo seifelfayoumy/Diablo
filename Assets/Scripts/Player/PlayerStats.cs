@@ -20,6 +20,8 @@ public class PlayerStats : MonoBehaviour
 
     public void GainXP(int amount)
     {
+        if(level == 4)
+            return;
         currentXP += amount;
 
         while (currentXP >= requiredXP)

@@ -39,4 +39,9 @@ public class AudioManager : MonoBehaviour
     {
         musicSrc.PlayOneShot(clip);
     }
+
+    public void StopMusic()
+    {
+        musicSrc.Stop();
+    }
 }

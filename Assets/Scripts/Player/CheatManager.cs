@@ -10,8 +10,10 @@ public class CheatManager : MonoBehaviour
     public GameObject pausePanel; // Assign the PausePanel in the Inspector
     private bool isPaused = false;
      public GameObject gameOverPanel; // Assign the GameOverPanel in the Inspector
+    public AudioManager audioManager;
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         player = FindObjectOfType<BasePlayer>();
         playerStats = player.GetComponent<PlayerStats>();
         abilityManager = FindObjectOfType<AbilityManager>();
@@ -110,6 +112,8 @@ public class CheatManager : MonoBehaviour
         pausePanel.SetActive(true); // Show Pause Panel
         isPaused = true;
         Debug.Log("Game Paused");
+        audioManager.StopMusic();
+        audioManager.PlayMusic(audioManager.menuMusic);
     }
     public void ResumeGame()
     {
@@ -117,6 +121,8 @@ public class CheatManager : MonoBehaviour
         pausePanel.SetActive(false); // Hide Pause Panel
         isPaused = false;
         Debug.Log("Game Resumed");
+        audioManager.StopMusic();
+        audioManager.PlayMusic(audioManager.mainLevelMusic);
     }
     public void RestartGame()
     {

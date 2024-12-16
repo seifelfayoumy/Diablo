@@ -14,11 +14,14 @@ public class CampManager : MonoBehaviour
 
     public void EnemyDied()
     {
+        Debug.Log(enemiesRemaining);
         enemiesRemaining--;
         if (enemiesRemaining <= 0)
         {
             SpawnRuneFragment();
         }
+        Debug.Log("new:" + enemiesRemaining);
+
     }
 
     void SpawnRuneFragment()

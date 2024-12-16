@@ -115,7 +115,7 @@ public class LilithBehavior : Enemy
     }
     else if (currentPhase == BossPhase.Phase2)
     {
-      if (countAttack == 0)
+      if (countAttack == 0 && isAuraActive == false)
       {
         animator.SetTrigger("IsSwinging");
         audioManager.PlaySFX(audioManager.bossSwingHandsSFX);

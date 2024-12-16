@@ -1,15 +1,14 @@
-// PlayerHealth.cs
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
     private PlayerStats stats;
-    public bool isInvincible = false; // Added
+    public bool isInvincible = false;
 
     public void Initialize(PlayerStats playerStats)
     {
         stats = playerStats;
-        stats.currentHP = stats.maxHP; // Initialize health to max HP
+        stats.currentHP = stats.maxHP;
     }
 
     public void TakeDamage(int damage)
@@ -18,19 +17,17 @@ public class PlayerHealth : MonoBehaviour
             return;
 
         stats.currentHP -= damage;
-        stats.currentHP = Mathf.Max(0, stats.currentHP); // Ensure health doesn't go below 0
-       // Debug.Log(stats.currentHP);
+        stats.currentHP = Mathf.Max(0, stats.currentHP);
     }
 
     public void Heal(int amount)
     {
         stats.currentHP += amount;
-        stats.currentHP = Mathf.Min(stats.currentHP, stats.maxHP); // Ensure health doesn't exceed max HP
+        stats.currentHP = Mathf.Min(stats.currentHP, stats.maxHP);
     }
 
-    public bool IsDead => stats.currentHP <= 0; // Property to check if the player is dead
+    public bool IsDead => stats.currentHP <= 0;
 
-    // Method to set invincibility
     public void SetInvincibility(bool value)
     {
         isInvincible = value;

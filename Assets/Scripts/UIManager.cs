@@ -25,14 +25,12 @@ public class UIManager : MonoBehaviour
   private void Start()
   {
     mainCamera = Camera.main;
-    //check if there is player in the scene
     if (GameObject.FindGameObjectWithTag("Player") != null)
     {
       GameObject characterInstance = GameObject.FindGameObjectWithTag("Player");
         Debug.Log("Character Instance: " + characterInstance.transform.position);
         characterInstance.transform.position = Vector3.zero;
         Debug.Log("Character Instance: " + characterInstance.transform.position);
-      // Attach the camera follow script
       CameraFollow cameraFollow = mainCamera.GetComponent<CameraFollow>();
       Debug.Log("Camera Follow: " + cameraFollow);
       if (cameraFollow == null)
@@ -42,7 +40,6 @@ public class UIManager : MonoBehaviour
       }
       cameraFollow.target = characterInstance.transform;
 
-      // Disable the choice canvas
       choiceCanvas.gameObject.SetActive(false);
       HUDManager.SetActive(true);
       GenericCanvas.SetActive(true);
@@ -53,10 +50,8 @@ public class UIManager : MonoBehaviour
     }else{
 
     
-    // Freeze the game at the start
     Time.timeScale = 0f;
 
-    // Assign button listeners
     barbarianButton.onClick.AddListener(() => SelectCharacter(barbarianPrefab));
     sorcererButton.onClick.AddListener(() => SelectCharacter(sorcererPrefab));
     rogueButton.onClick.AddListener(() => SelectCharacter(roguePrefab));
@@ -69,14 +64,11 @@ public class UIManager : MonoBehaviour
   private void SelectCharacter(GameObject characterPrefab)
   {
 
-        // Spawn the selected character at the specified position
         Vector3 spawnPosition = new Vector3(-81f, 0f, 7.7f);
 
-        // Spawn the selected character
         GameObject characterInstance = Instantiate(characterPrefab, spawnPosition, Quaternion.identity);
 
     DontDestroyOnLoad(characterInstance);
-    // Attach the camera follow script
     CameraFollow cameraFollow = mainCamera.GetComponent<CameraFollow>();
     if (cameraFollow == null)
     {
@@ -84,12 +76,10 @@ public class UIManager : MonoBehaviour
     }
     cameraFollow.target = characterInstance.transform;
 
-    // Disable the choice canvas
     choiceCanvas.gameObject.SetActive(false);
     HUDManager.SetActive(true);
     GenericCanvas.SetActive(true);
 
-    // Unfreeze the game
     Time.timeScale = 1f;
   }
 }

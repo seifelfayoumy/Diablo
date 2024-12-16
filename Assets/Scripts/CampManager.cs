@@ -21,8 +21,6 @@ public class CampManager : MonoBehaviour
         {
             SpawnRuneFragment();
         }
-        Debug.Log("new:" + enemiesRemaining);
-
     }
 
     void SpawnRuneFragment()
@@ -31,6 +29,5 @@ public class CampManager : MonoBehaviour
             return;
         isSpawned = true;
         Instantiate(runeFragmentPrefab, runeFragmentSpawnPoint.position, Quaternion.identity);
-        Debug.Log("All enemies cleared! Rune Fragment spawned.");
     }
 }

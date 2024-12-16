@@ -31,12 +31,23 @@ public class BasePlayer : MonoBehaviour
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        
-        if (playerStats != null)
-        {
-            playerStats.maxHP = 100;
-            playerStats.currentHP = playerStats.maxHP;
-        }
+
+    if (playerStats != null && SceneManager.GetActiveScene().name == "MainLevel")
+    {
+      playerStats.maxHP = 100;
+      playerStats.currentHP = playerStats.maxHP;
+    }
+    else if (playerStats != null && SceneManager.GetActiveScene().name == "BossLevel")
+    {
+      playerStats.maxHP = 400;
+      playerStats.currentHP = playerStats.maxHP;
+      foreach (var ability in abilityManager.abilities)
+      {
+        ability.isUnlocked = true;
+      }
+      playerStats.level = 4;
+      playerStats.runeFragments = 3;
+    }
 
         if (playerHealth != null)
         {

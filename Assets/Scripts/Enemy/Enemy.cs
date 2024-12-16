@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public bool isInvincible = false;
     protected float originalSpeed = 3f;
     protected NavMeshAgent navMeshAgent;
+    public bool isAlerted = false;
+       // i have a unity class that has this:      public bool isAlerted = false;, is there a way in the update method to set its value randomly? what i want to do is the following. i have many enemies with this value i want them to randomly be either alreted or not alerted but i should have a maximum of 5 alerted enemied at the same time
 
     public AudioManager audioManager;
 
@@ -94,6 +96,11 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        Collider collider = this.gameObject.GetComponent<Collider>();
+        if(collider.enabled == false)
+        {
+            return;
+        }
         if (campManager != null)
         {
             campManager.EnemyDied();
@@ -101,8 +108,13 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("IsDead");
         audioManager.PlaySFX(audioManager.enemyDiesSFX);
         
-        Collider collider = this.gameObject.GetComponent<Collider>();
         collider.enabled = false;
+
+        if(isAlerted)
+        {
+            AlertNearbyEnemy();
+        }
+
 
         Destroy(gameObject, 2.5f);
     }
@@ -144,5 +156,25 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(duration);
         originalSpeed = OldSpeed;
         isSlowed = false;
+    }
+
+    void AlertNearbyEnemy()
+    {
+        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, 20);
+
+        foreach (var collider in nearbyEnemies)
+        {
+            if (collider.CompareTag("Enemy"))  // Check if it's an enemy
+            {
+                Enemy otherEnemy = collider.GetComponent<Enemy>();
+                if (otherEnemy != null && !otherEnemy.isAlerted)  // If enemy is not alerted
+                {
+                    // Set this enemy as alerted and break the loop
+                    otherEnemy.isAlerted = true;
+                    Debug.Log(gameObject.name + " alerted " + otherEnemy.gameObject.name);
+                    break;  // Only alert one enemy
+                }
+            }
+        }
     }
 }

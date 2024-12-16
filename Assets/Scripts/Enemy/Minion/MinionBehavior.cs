@@ -37,8 +37,14 @@ public class MinionBehavior : Enemy
             return;
         }
 
-        if(base.currentHP <=0)
+        if(base.currentHP <=0){
+            return;        
+        }
+
+        if(!isAlerted && SceneManager.GetActiveScene().name == "MainLevel")
+        {
             return;
+        }
 
         playerClone = GameObject.FindGameObjectWithTag("PlayerClone")?.transform;
         if(playerClone != null)

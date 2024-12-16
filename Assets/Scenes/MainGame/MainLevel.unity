@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -130,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -393,6 +398,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 229224088}
@@ -458,6 +467,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 1519618841}
@@ -522,6 +535,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -893,6 +910,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 1519618841}
@@ -1075,6 +1096,10 @@ PrefabInstance:
     - target: {fileID: 2090080794548957445, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
+      propertyPath: isAlerted
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: campManager
@@ -2301,6 +2326,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 704536742}
@@ -2365,6 +2394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -2777,7 +2810,7 @@ PrefabInstance:
       objectReference: {fileID: 704536742}
     - target: {fileID: 5757938448842767187, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -71.24
+      value: -72.23
       objectReference: {fileID: 0}
     - target: {fileID: 5757938448842767187, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2785,7 +2818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5757938448842767187, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 73.840004
+      value: 76.2
       objectReference: {fileID: 0}
     - target: {fileID: 5757938448842767187, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2976,6 +3009,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -3258,6 +3295,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 229224088}
@@ -3369,6 +3410,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -3496,6 +3541,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -3815,6 +3864,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 704536742}
@@ -3828,7 +3881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5757938448842767187, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 71.1
+      value: 66.97
       objectReference: {fileID: 0}
     - target: {fileID: 5757938448842767187, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3997,6 +4050,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -4801,6 +4858,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 1020972949}
@@ -4865,6 +4926,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -5315,6 +5380,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 704536742}
@@ -5380,6 +5449,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 1020972949}
@@ -5444,6 +5517,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -5817,6 +5894,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -6750,6 +6831,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791124948350446205, guid: 90460660380fd974cb63228d0d28dc26, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 229224088}
@@ -6932,6 +7017,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
@@ -7431,6 +7520,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
       objectReference: {fileID: 704536742}
@@ -7526,6 +7619,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
+      propertyPath: isAlerted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1045642562972440546, guid: 752a333ae109d4f63815fd6d4b52c34f, type: 3}
       propertyPath: campManager
       value: 
